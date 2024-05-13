@@ -39,7 +39,7 @@ namespace Lib
             _mapRandom = new Random(seed);
             MapWidth = width;
             MapHeight = height;
-            _FillingPercentage = 50;
+            _FillingPercentage = 60;
             Map = new int[MapWidth, MapHeight];
         }
 
@@ -47,6 +47,7 @@ namespace Lib
         {
             seed = mapseed;
             _mapRandom = new Random(mapseed);
+            SimplexNoise.Noise.Seed = mapseed;
             _FillingPercentage = 50;
             MapWidth = 25;
             MapHeight = 25;
@@ -57,6 +58,7 @@ namespace Lib
         {
             Console.WriteLine(MapWidth + " x " + MapHeight);
             GenerateNoise();
+
 
             for (int i = 0; i < 5; i++)
             {
@@ -70,14 +72,19 @@ namespace Lib
         private void GenerateNoise()
         {
 
+            float[,] vals = SimplexNoise.Noise.Calc2D(MapHeight, MapWidth, 0.1f);
+
             for (int x = 1; x < MapWidth; x++)
             {
                 for (int y = 1; y < MapHeight; y++)
                 {
-                    Console.WriteLine("x " + x + " y " + y);
-                    Map[x, y] = (_mapRandom.Next(0, 100) < _FillingPercentage) ? 1 : 0;
+                    //Console.WriteLine("x " + x + " y " + y);
+                    // Map[x, y] = (_mapRandom.Next(0, 100) < _FillingPercentage) ? 1 : 0;
+                    Map[x,y] = vals[x, y] < 255 * (_FillingPercentage * 0.01) ? 1 : 0;
+                    
                 }
             }
+
         }
 
         private int getNeighborsCellCount(int x, int y, int[,] map)

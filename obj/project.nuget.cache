@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "JwLJx0zgON3816e22baU9q+GkcglsjXbc9TLFYNmzLH1YKPdUGIwRZ50ScQ1BIl7mBF1/lfhyiW5wKoi4sdEWQ==",
+  "dgSpecHash": "tcPJ6SDkwAcmsfIRIaydYiRzONhaukzbpHR1AavDPPlypK+IZPFEicKpC9qcxVAnJ9ptu3pIUjA3a60KduyKEA==",
   "success": true,
   "projectFilePath": "C:\\Users\\screw\\source\\repos\\DungeonCrawlProject\\DungeonCrawlProject.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\screw\\.nuget\\packages\\simplexnoise\\2.0.0\\simplexnoise.2.0.0.nupkg.sha512"
+  ],
   "logs": []
 }

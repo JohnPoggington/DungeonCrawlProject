@@ -10,3 +10,4 @@ C:\Users\screw\source\repos\DungeonCrawlProject\Lib\obj\Debug\net8.0\Lib.dll
 C:\Users\screw\source\repos\DungeonCrawlProject\Lib\obj\Debug\net8.0\refint\Lib.dll
 C:\Users\screw\source\repos\DungeonCrawlProject\Lib\obj\Debug\net8.0\Lib.pdb
 C:\Users\screw\source\repos\DungeonCrawlProject\Lib\obj\Debug\net8.0\ref\Lib.dll
+C:\Users\screw\source\repos\DungeonCrawlProject\Lib\obj\Debug\net8.0\Lib.csproj.AssemblyReference.cache

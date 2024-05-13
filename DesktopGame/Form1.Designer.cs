@@ -31,21 +31,23 @@
             listBox1 = new ListBox();
             button1 = new Button();
             pictureBox1 = new PictureBox();
+            TileTable = new TableLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // listBox1
             // 
+            listBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             listBox1.FormattingEnabled = true;
             listBox1.HorizontalScrollbar = true;
             listBox1.Location = new Point(12, 12);
             listBox1.Name = "listBox1";
-            listBox1.Size = new Size(684, 555);
+            listBox1.Size = new Size(277, 555);
             listBox1.TabIndex = 0;
             // 
             // button1
             // 
-            button1.Location = new Point(702, 408);
+            button1.Location = new Point(295, 191);
             button1.Name = "button1";
             button1.Size = new Size(86, 26);
             button1.TabIndex = 1;
@@ -55,17 +57,34 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.Location = new Point(702, 12);
+            pictureBox1.Location = new Point(295, 12);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(183, 173);
             pictureBox1.TabIndex = 2;
             pictureBox1.TabStop = false;
+            pictureBox1.Click += pictureBox1_Click;
+            // 
+            // TileTable
+            // 
+            TileTable.Anchor = AnchorStyles.None;
+            TileTable.ColumnCount = 1;
+            TileTable.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 16F));
+            TileTable.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
+            TileTable.GrowStyle = TableLayoutPanelGrowStyle.FixedSize;
+            TileTable.Location = new Point(484, 12);
+            TileTable.Name = "TileTable";
+            TileTable.RowCount = 1;
+            TileTable.RowStyles.Add(new RowStyle(SizeType.Absolute, 16F));
+            TileTable.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            TileTable.Size = new Size(1020, 555);
+            TileTable.TabIndex = 3;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 19F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(897, 576);
+            ClientSize = new Size(1516, 576);
+            Controls.Add(TileTable);
             Controls.Add(pictureBox1);
             Controls.Add(button1);
             Controls.Add(listBox1);
@@ -80,5 +99,6 @@
         private ListBox listBox1;
         private Button button1;
         private PictureBox pictureBox1;
+        private TableLayoutPanel TileTable;
     }
 }
