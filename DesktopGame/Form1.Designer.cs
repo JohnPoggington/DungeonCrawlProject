@@ -32,6 +32,7 @@
             button1 = new Button();
             pictureBox1 = new PictureBox();
             TileTable = new TableLayoutPanel();
+            flowLayoutPanel1 = new FlowLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -66,24 +67,35 @@
             // 
             // TileTable
             // 
-            TileTable.Anchor = AnchorStyles.None;
+            TileTable.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            TileTable.AutoSize = true;
             TileTable.ColumnCount = 1;
             TileTable.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 16F));
             TileTable.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
             TileTable.GrowStyle = TableLayoutPanelGrowStyle.FixedSize;
-            TileTable.Location = new Point(484, 12);
+            TileTable.Location = new Point(565, 12);
+            TileTable.Margin = new Padding(0);
             TileTable.Name = "TileTable";
             TileTable.RowCount = 1;
             TileTable.RowStyles.Add(new RowStyle(SizeType.Absolute, 16F));
             TileTable.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            TileTable.Size = new Size(1020, 555);
+            TileTable.Size = new Size(942, 552);
             TileTable.TabIndex = 3;
+            // 
+            // flowLayoutPanel1
+            // 
+            flowLayoutPanel1.Anchor = AnchorStyles.None;
+            flowLayoutPanel1.Location = new Point(295, 267);
+            flowLayoutPanel1.Name = "flowLayoutPanel1";
+            flowLayoutPanel1.Size = new Size(258, 297);
+            flowLayoutPanel1.TabIndex = 0;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 19F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1516, 576);
+            Controls.Add(flowLayoutPanel1);
             Controls.Add(TileTable);
             Controls.Add(pictureBox1);
             Controls.Add(button1);
@@ -92,6 +104,7 @@
             Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -100,5 +113,6 @@
         private Button button1;
         private PictureBox pictureBox1;
         private TableLayoutPanel TileTable;
+        private FlowLayoutPanel flowLayoutPanel1;
     }
 }

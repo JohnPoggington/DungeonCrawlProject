@@ -27,7 +27,7 @@ namespace Lib
             _mapRandom = new Random(seed);
             MapWidth = 25;
             MapHeight = 25;
-            _FillingPercentage = 50;
+            _FillingPercentage = 35;
             Map = new int[MapWidth, MapHeight];
 
 
@@ -36,6 +36,7 @@ namespace Lib
         public Dungeon(int width, int height)
         {
             seed = Environment.TickCount;
+            
             _mapRandom = new Random(seed);
             MapWidth = width;
             MapHeight = height;
@@ -72,6 +73,7 @@ namespace Lib
         private void GenerateNoise()
         {
 
+            SimplexNoise.Noise.Seed = seed;
             float[,] vals = SimplexNoise.Noise.Calc2D(MapHeight, MapWidth, 0.1f);
 
             for (int x = 1; x < MapWidth; x++)

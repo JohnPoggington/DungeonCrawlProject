@@ -12,14 +12,17 @@ namespace DungeonCrawlProject
 
         private void button1_Click(object sender, EventArgs e)
         {
-            int width = 100;
-            int height = 100;
+            int width = 40;
+            int height = 40;
             Dungeon dungeon = new Dungeon(width, height);
             MessageBox.Show(Dungeon.MapWidth + " x " + Dungeon.MapHeight);
 
             var bmp = new Bitmap(Dungeon.MapWidth, Dungeon.MapHeight, System.Drawing.Imaging.PixelFormat.Format8bppIndexed);
 
             var palette = bmp.Palette;
+            TileTable.Hide();
+
+            TileTable.SuspendLayout();
 
             for (int i = TileTable.Controls.Count - 1; i >= 0; --i)
                 TileTable.Controls[i].Dispose();
@@ -36,9 +39,11 @@ namespace DungeonCrawlProject
 
 
             bmp.Palette = palette;
+            
 
 
             listBox1.Items.Clear();
+            
 
             //for (int i = 0; i < 100; i++)
             //{
@@ -54,6 +59,7 @@ namespace DungeonCrawlProject
             for (int x = 1; x < Dungeon.MapWidth; x++)
             {
                 String map = "";
+                
                 for (int y = 1; y < Dungeon.MapHeight; y++)
 
                 {
@@ -64,7 +70,17 @@ namespace DungeonCrawlProject
                     tile.Width = 16;
                     tile.Height = 16;
                     tile.SizeMode = PictureBoxSizeMode.Zoom;
-                    TileTable.Controls.Add(tile,y,x);
+                    tile.WaitOnLoad = true;
+                    TileTable.Controls.Add(tile, y, x);
+
+                    //flowLayoutPanel1.Controls.Add(tile);
+                    //if (y == Dungeon.MapHeight - 1)
+                    //{
+                    //    PictureBox lastTile = tile;
+                    //    flowLayoutPanel1.Controls.Add(lastTile);
+                    //    flowLayoutPanel1.SetFlowBreak(tile, true);
+                    //}
+                    //else flowLayoutPanel1.Controls.Add(tile);
                 }
                 listBox1.Items.Add(map);
             }
@@ -74,6 +90,9 @@ namespace DungeonCrawlProject
                 col.SizeType = SizeType.Absolute;
                 col.Width = 16;
             }
+            TileTable.ResumeLayout();
+            TileTable.Show();
+            MessageBox.Show($"Tiles {TileTable.Controls.Count}");
 
         }
 
