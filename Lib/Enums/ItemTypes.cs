@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lib
+namespace Lib.Enums
 {
-    public enum WalkingDirection
+    public enum ItemTypes
     {
-        North,
-        South,
-        East,
-        West
+        Weapon,
+        Armor,
+        Consumable
     }
 }

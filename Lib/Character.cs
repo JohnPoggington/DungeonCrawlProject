@@ -5,6 +5,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using Lib.Enums;
 
 namespace Lib
 {
@@ -13,10 +14,15 @@ namespace Lib
         public String Name { get; set; }
         public int CurHealth { get; set; }
         public int MaxHealth { get; set; }
+        public int CurMana { get; set; }
+        public int MaxMana { get; set; }
         public int Level { get; set; }
         public Point Position { get; set; }
         public int PhysicalResist { get; set; }
+        public int FireResist { get; set; }
+        public int MagicResist { get; set; }
         public int Dexterity { get; set; }
+        public int Strength { get; set; }
         public List<Item> Items { get; set; }
 
         public int MaxItemWeight { get; set; }

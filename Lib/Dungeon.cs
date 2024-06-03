@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Lib.Enums;
 
 namespace Lib
 {
@@ -71,9 +72,9 @@ namespace Lib
                 int x = ent.Position.X;
                 int y = ent.Position.Y;
 
-                Console.WriteLine(Map[x - 1, y + 1] + "" + Map[x, y + 1] + Map[x + 1, y + 1]);
-                Console.WriteLine(Map[x - 1, y] + "P" + Map[x + 1, y]);
-                Console.WriteLine(Map[x - 1, y - 1] + "" + Map[x, y - 1] + Map[x + 1, y - 1]);
+                //Console.WriteLine(Map[x - 1, y + 1] + "" + Map[x, y + 1] + Map[x + 1, y + 1]);
+                //Console.WriteLine(Map[x - 1, y] + "P" + Map[x + 1, y]);
+                //Console.WriteLine(Map[x - 1, y - 1] + "" + Map[x, y - 1] + Map[x + 1, y - 1]);
 
                 switch (direction)
                 {
@@ -151,8 +152,14 @@ namespace Lib
                     Level = 1,
                     MaxHealth = 20,
                     CurHealth = 20,
+                    MaxMana = 5,
+                    CurMana = 5,
                     Dexterity = 3,
                     PhysicalResist = 1,
+                    MagicResist = 1,
+                    FireResist = 1,
+                    Strength = 5,
+                    Experience = 0,
                     MaxItemWeight = 20,
                     Position = new System.Drawing.Point(xrand, yrand),
                     Items = new List<Item>()

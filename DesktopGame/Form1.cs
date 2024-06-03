@@ -1,4 +1,5 @@
 using Lib;
+using Lib.Enums;
 using System.Drawing.Imaging;
 
 namespace DungeonCrawlProject
@@ -8,12 +9,66 @@ namespace DungeonCrawlProject
         public Form1()
         {
             InitializeComponent();
+            this.Text = "Game";
         }
 
         private Dungeon dungeon;
 
+        private void UpdatePlayerStats()
+        {
+            Player p = dungeon.GetPlayer();
+
+            PlayerStats.Text = p.Name;
+            HealthBar.Maximum = p.MaxHealth;
+            HealthBar.Value = p.CurHealth;
+
+            ManaBar.Maximum = p.MaxMana;
+            ManaBar.Value = p.CurMana;
+
+            LevelLabel.Text = p.Level.ToString();
+
+            XPLabel.Text = p.Experience.ToString() + "/" + p.XPToNextLevel();
+
+            TotalXPLabel.Text = p.TotalExperience.ToString();
+
+            PhysResistLabel.Text = p.PhysicalResist.ToString();
+            FireResistLabel.Text = p.FireResist.ToString();
+            MagicResistLabel.Text = p.MagicResist.ToString();
+
+            DexterityLabel.Text = p.Dexterity.ToString();
+
+            StrengthLabel.Text = p.Strength.ToString();
+        }
+
+        private void AwardXP(int amount)
+        {
+            
+            dungeon.GetPlayer().AwardXP(amount);
+            UpdatePlayerStats();
+        }
+
+        private void SetDelegates()
+        {
+            dungeon.GetPlayer().OnLevelUp += (lvl) => { MessageBox.Show($"Level Up! Twoja postaæ ma poziom {lvl}!"); };
+        }
+
+        /// INIT WORLD
         private void button1_Click(object sender, EventArgs e)
         {
+            Form2 f2 = new Form2();
+            DialogResult result = f2.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                Player p = f2.CreatedPlayer;
+                MessageBox.Show($"{p.Name} str{p.Strength}");
+            }
+            else if (result == DialogResult.TryAgain)
+            {
+                //DialogResult result2 = f2.ShowDialog();
+                MessageBox.Show("Try again");
+            }
+            
             int width = 40;
             int height = 40;
             dungeon = new Dungeon(width, height);
@@ -84,7 +139,7 @@ namespace DungeonCrawlProject
 
             }
 
-            //TileTable.Controls.AddRange(_mapTiles);
+
 
             foreach (ColumnStyle col in styles)
             {
@@ -95,9 +150,12 @@ namespace DungeonCrawlProject
             TileTable.Show();
             MessageBox.Show($"Tiles {TileTable.Controls.Count}");
             MovementBox.Enabled = true;
-            CharacterStats.Text = dungeon.GetPlayer().Name;
-            HealthBar.Maximum = dungeon.GetPlayer().MaxHealth;
-            HealthBar.Value = dungeon.GetPlayer().CurHealth;
+
+            UpdatePlayerStats();
+            SetDelegates();
+            PlayerStats.Visible = true;
+            ItemTable.Visible = true;
+
 
         }
 
@@ -175,7 +233,7 @@ namespace DungeonCrawlProject
 
                 //TileTable.Controls.Add(tile,entity.Position.X,entity.Position.Y);
             }
-            catch ( Lib.Exceptions.IllegalMovementException e ) { MessageBox.Show("Illegal move"); }
+            catch (Lib.Exceptions.IllegalMovementException e) { MessageBox.Show("Illegal move"); }
 
 
         }
@@ -193,6 +251,11 @@ namespace DungeonCrawlProject
         private void MoveSouth_Click(object sender, EventArgs e)
         {
             MoveChar(WalkingDirection.South, dungeon.GetPlayer());
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            AwardXP(500);
         }
     }
 }
