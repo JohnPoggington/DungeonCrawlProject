@@ -40,19 +40,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\User\\.nuget\\packages\\": {}
+    "C:\\Users\\screw\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\User\\Source\\Repos\\JohnPoggington\\DungeonCrawlProject\\Lib\\Lib.csproj",
+      "projectUniqueName": "C:\\Users\\screw\\source\\repos\\DungeonCrawlProject\\Lib\\Lib.csproj",
       "projectName": "Lib",
-      "projectPath": "C:\\Users\\User\\Source\\Repos\\JohnPoggington\\DungeonCrawlProject\\Lib\\Lib.csproj",
-      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\User\\Source\\Repos\\JohnPoggington\\DungeonCrawlProject\\Lib\\obj\\",
+      "projectPath": "C:\\Users\\screw\\source\\repos\\DungeonCrawlProject\\Lib\\Lib.csproj",
+      "packagesPath": "C:\\Users\\screw\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\screw\\source\\repos\\DungeonCrawlProject\\Lib\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\screw\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

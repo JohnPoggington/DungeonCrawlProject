@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lib
+namespace Lib.MapObjects
 {
     public class Spikes : IEntity
     {

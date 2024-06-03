@@ -71,14 +71,14 @@ namespace Lib
                 int x = ent.Position.X;
                 int y = ent.Position.Y;
 
-                Console.WriteLine(Map[x-1,y+1] + "" + Map[x,y+1] + Map[x+1,y+1]);
-                Console.WriteLine(Map[x-1,y] + "P" + Map[x+1,y]);
+                Console.WriteLine(Map[x - 1, y + 1] + "" + Map[x, y + 1] + Map[x + 1, y + 1]);
+                Console.WriteLine(Map[x - 1, y] + "P" + Map[x + 1, y]);
                 Console.WriteLine(Map[x - 1, y - 1] + "" + Map[x, y - 1] + Map[x + 1, y - 1]);
 
                 switch (direction)
                 {
                     case WalkingDirection.North: { 
-                            if (y+1 < MapHeight && !Entites.Any(check => check.Position.Equals(new System.Drawing.Point(x,y+1)) && Map[x,y+1] == 1))
+                            if (y-1 > 0 && !Entites.Any(check => check.Position.Equals(new System.Drawing.Point(x,y+1))) && Map[x,y - 1] == 1)
                             {
                                 ent.Move(WalkingDirection.North);
                             }
@@ -87,7 +87,7 @@ namespace Lib
                         };
                     case WalkingDirection.South:
                         {
-                            if (y - 1  > 0 && !Entites.Any(check => check.Position.Equals(new System.Drawing.Point(x, y - 1)) && Map[x, y - 1] == 1))
+                            if (y + 1  < MapHeight && !Entites.Any(check => check.Position.Equals(new System.Drawing.Point(x, y - 1))) && Map[x, y + 1] == 1)
                             {
                                 ent.Move(WalkingDirection.South);
                             }
@@ -96,7 +96,7 @@ namespace Lib
                         };
                     case WalkingDirection.East:
                         {
-                            if (x + 1 < MapWidth && !Entites.Any(check => check.Position.Equals(new System.Drawing.Point(x + 1, y)) && Map[x + 1, y] == 1))
+                            if (x + 1 < MapWidth && !Entites.Any(check => check.Position.Equals(new System.Drawing.Point(x + 1, y))) && Map[x + 1, y] == 1)
                             {
                                 ent.Move(WalkingDirection.East);
                             }
@@ -105,7 +105,7 @@ namespace Lib
                         };
                     case WalkingDirection.West:
                         {
-                            if (x - 1 > 0 && !Entites.Any(check => check.Position.Equals(new System.Drawing.Point(x - 1, y)) && Map[x - 1, y] == 1))
+                            if (x - 1 > 0 && !Entites.Any(check => check.Position.Equals(new System.Drawing.Point(x - 1, y))) && Map[x - 1, y] == 1)
                             {
                                 ent.Move(WalkingDirection.West);
                             }

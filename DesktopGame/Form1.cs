@@ -19,9 +19,6 @@ namespace DungeonCrawlProject
             dungeon = new Dungeon(width, height);
             MessageBox.Show(Dungeon.MapWidth + " x " + Dungeon.MapHeight);
 
-            var bmp = new Bitmap(Dungeon.MapWidth, Dungeon.MapHeight, System.Drawing.Imaging.PixelFormat.Format8bppIndexed);
-
-            var palette = bmp.Palette;
             TileTable.Hide();
 
             TileTable.SuspendLayout();
@@ -44,19 +41,17 @@ namespace DungeonCrawlProject
             dungeon.GenerateMap();
 
 
-            bmp.Palette = palette;
-
 
 
             listBox1.Items.Clear();
 
             //PictureBox[] _mapTiles = new PictureBox[Dungeon.MapWidth];
 
-            for (int x = 1; x < Dungeon.MapWidth; x++)
+            for (int x = 1; x < Dungeon.MapHeight; x++)
             {
                 String map = "";
 
-                for (int y = Dungeon.MapHeight-1; y > 0; y--)
+                for (int y = 1; y < Dungeon.MapWidth; y++)
 
                 {
                     map += dungeon.Map[x, y];
@@ -99,6 +94,10 @@ namespace DungeonCrawlProject
             TileTable.ResumeLayout();
             TileTable.Show();
             MessageBox.Show($"Tiles {TileTable.Controls.Count}");
+            MovementBox.Enabled = true;
+            CharacterStats.Text = dungeon.GetPlayer().Name;
+            HealthBar.Maximum = dungeon.GetPlayer().MaxHealth;
+            HealthBar.Value = dungeon.GetPlayer().CurHealth;
 
         }
 
@@ -148,6 +147,29 @@ namespace DungeonCrawlProject
                 if (oldtile != null)
                 {
                     setTile(ref oldtile, oldX, oldY);
+
+                }
+
+                listBox1.Items.Clear();
+
+                for (int x = 1; x < Dungeon.MapWidth; x++)
+                {
+                    String map = "";
+
+                    for (int y = 1; y < Dungeon.MapHeight; y++)
+
+                    {
+                        Player p = dungeon.GetPlayer();
+                        if (p.Position.X == x && p.Position.Y == y)
+                            map += "P";
+                        else
+                            map += dungeon.Map[x, y];
+
+
+                    }
+
+                    listBox1.Items.Add(map);
+                    //TileTable.Controls.AddRange(_mapTiles);
 
                 }
 
