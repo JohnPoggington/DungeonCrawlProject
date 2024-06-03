@@ -4,13 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lib
+namespace Lib.Exceptions
 {
-    public enum WalkingDirection
+    public class IllegalMovementException : Exception
     {
-        North,
-        South,
-        East,
-        West
+
     }
 }

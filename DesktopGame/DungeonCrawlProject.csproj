@@ -11,11 +11,13 @@
 
   <ItemGroup>
     <None Remove="Resources\Tiles\floor.png" />
+    <None Remove="Resources\Tiles\player.png" />
     <None Remove="Resources\Tiles\wall.png" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Resources\Tiles\floor.png" />
+    <EmbeddedResource Include="Resources\Tiles\player.png" />
     <EmbeddedResource Include="Resources\Tiles\wall.png" />
   </ItemGroup>
 

@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Lib
 {
-    public enum WalkingDirection
+    public interface IEntity
     {
-        North,
-        South,
-        East,
-        West
+        public Point Position { get; set; }
+
+        public void Move(WalkingDirection direction);
     }
 }

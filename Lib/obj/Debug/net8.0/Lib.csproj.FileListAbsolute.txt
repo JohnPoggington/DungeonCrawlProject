@@ -11,3 +11,16 @@ C:\Users\screw\source\repos\DungeonCrawlProject\Lib\obj\Debug\net8.0\refint\Lib.
 C:\Users\screw\source\repos\DungeonCrawlProject\Lib\obj\Debug\net8.0\Lib.pdb
 C:\Users\screw\source\repos\DungeonCrawlProject\Lib\obj\Debug\net8.0\ref\Lib.dll
 C:\Users\screw\source\repos\DungeonCrawlProject\Lib\obj\Debug\net8.0\Lib.csproj.AssemblyReference.cache
+C:\Users\User\Source\Repos\JohnPoggington\DungeonCrawlProject\Lib\bin\Debug\net8.0\Lib.deps.json
+C:\Users\User\Source\Repos\JohnPoggington\DungeonCrawlProject\Lib\bin\Debug\net8.0\Lib.dll
+C:\Users\User\Source\Repos\JohnPoggington\DungeonCrawlProject\Lib\bin\Debug\net8.0\Lib.pdb
+C:\Users\User\Source\Repos\JohnPoggington\DungeonCrawlProject\Lib\obj\Debug\net8.0\Lib.csproj.AssemblyReference.cache
+C:\Users\User\Source\Repos\JohnPoggington\DungeonCrawlProject\Lib\obj\Debug\net8.0\Lib.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\User\Source\Repos\JohnPoggington\DungeonCrawlProject\Lib\obj\Debug\net8.0\Lib.AssemblyInfoInputs.cache
+C:\Users\User\Source\Repos\JohnPoggington\DungeonCrawlProject\Lib\obj\Debug\net8.0\Lib.AssemblyInfo.cs
+C:\Users\User\Source\Repos\JohnPoggington\DungeonCrawlProject\Lib\obj\Debug\net8.0\Lib.csproj.CoreCompileInputs.cache
+C:\Users\User\Source\Repos\JohnPoggington\DungeonCrawlProject\Lib\obj\Debug\net8.0\Lib.sourcelink.json
+C:\Users\User\Source\Repos\JohnPoggington\DungeonCrawlProject\Lib\obj\Debug\net8.0\Lib.dll
+C:\Users\User\Source\Repos\JohnPoggington\DungeonCrawlProject\Lib\obj\Debug\net8.0\refint\Lib.dll
+C:\Users\User\Source\Repos\JohnPoggington\DungeonCrawlProject\Lib\obj\Debug\net8.0\Lib.pdb
+C:\Users\User\Source\Repos\JohnPoggington\DungeonCrawlProject\Lib\obj\Debug\net8.0\ref\Lib.dll
