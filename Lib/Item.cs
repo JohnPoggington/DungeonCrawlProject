@@ -9,10 +9,12 @@ namespace Lib
 {
     public abstract class Item
     {
-        public abstract string Name { get; set; }
+        public string Name { get; set; }
         public int Weight { get; set; }
 
         public ItemTypes Type { get; set; }
+
+        public abstract void Use();
         
     }
 }

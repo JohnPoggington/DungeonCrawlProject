@@ -27,6 +27,9 @@ namespace DungeonCrawlProject
         private int _Dexterity;
         private int _Strength;
         private int _Points;
+        private int _PhysResist;
+        private int _MagicResist;
+        private int _FireResist;
 
         public Player CreatedPlayer { get; private set; }
 
@@ -50,6 +53,10 @@ namespace DungeonCrawlProject
             DexterityLabel.Text = _Dexterity.ToString();
             HPLabel.Text = _HP.ToString();
             ManaLabel.Text = _Mana.ToString();
+            PhysResistLabel.Text = _PhysResist.ToString();
+            MagicResistLabel.Text = _MagicResist.ToString();
+            FireResistLabel.Text = _FireResist.ToString();
+
         }
 
 
@@ -69,6 +76,10 @@ namespace DungeonCrawlProject
             _Mana = 5;
             _Dexterity = 2;
             _Strength = 6;
+            _Class = "Warrior";
+            _PhysResist = 3;
+            _MagicResist = 1;
+            _FireResist = 1;
             InitUI();
         }
 
@@ -78,6 +89,10 @@ namespace DungeonCrawlProject
             _Mana = 15;
             _Dexterity = 3;
             _Strength = 4;
+            _Class = "Monk";
+            _PhysResist = 1;
+            _MagicResist = 3;
+            _FireResist= 1;
             InitUI();
         }
 
@@ -87,6 +102,10 @@ namespace DungeonCrawlProject
             _Mana = 3;
             _Dexterity = 6;
             _Strength = 3;
+            _Class = "Rogue";
+            _PhysResist = 3;
+            _MagicResist = 2;
+            _FireResist= 3;
             InitUI();
         }
 
@@ -133,7 +152,39 @@ namespace DungeonCrawlProject
 
         private void CreatePlayerButton_Click(object sender, EventArgs e)
         {
-            EndCreator();
+
+            if (!string.IsNullOrEmpty(NameInput.Text) && NameInput.Text.Length >= 3)
+            {
+                if (_Points == 0 && !String.IsNullOrEmpty(_Class))
+                {
+                    CreatedPlayer = new Player()
+                    {
+                        Name = NameInput.Text,
+                        Level = 1,
+                        MaxHealth = _HP,
+                        CurHealth = _HP,
+                        MaxMana = _Mana,
+                        CurMana = _Mana,
+                        Dexterity = _Dexterity,
+                        PhysicalResist = _PhysResist,
+                        MagicResist = _MagicResist,
+                        FireResist = _FireResist,
+                        Strength = _Strength,
+                        Experience = 0,
+                        TotalExperience = 0,
+                        MaxItemWeight = 20,
+                        Position = new Point(0, 0),
+                        Items = new List<Item>()
+                    };
+                    Close();
+                }
+                else { MessageBox.Show("Masz dalej niewykorzystane punkty!"); };
+
+            }
+            else MessageBox.Show("Nazwa musi mieć przynajmniej 3 znaki!");
+            
+
+            //EndCreator();
         }
 
         private DialogResult EndCreator()

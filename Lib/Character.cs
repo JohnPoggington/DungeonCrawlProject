@@ -9,6 +9,8 @@ using Lib.Enums;
 
 namespace Lib
 {
+    public delegate void DodgedAttackDelegate();
+    public delegate void DieDelegate();
     public abstract class Character : IEntity
     {
         public String Name { get; set; }
@@ -24,7 +26,10 @@ namespace Lib
         public int Dexterity { get; set; }
         public int Strength { get; set; }
         public List<Item> Items { get; set; }
+        public DamageTypes DamageType { get; set; } = DamageTypes.Physical;
 
+        public event DodgedAttackDelegate OnAttackDodge;
+        public event DieDelegate OnDeath;
         public int MaxItemWeight { get; set; }
 
         public virtual void AddItem(Item item)
@@ -74,9 +79,49 @@ namespace Lib
             Console.WriteLine($"New x {Position.X} y {Position.Y}");
         }
 
-        public virtual void TakeDamage()
+        public void Die()
         {
-            
+            OnDeath?.Invoke();
         }
+
+        public virtual void TakeDamage(DamageTypes dmgType, int damage)
+        {
+
+            Random random = new Random();
+            if (random.Next(100) < Dexterity/3)
+            {
+                OnAttackDodge?.Invoke();
+            }
+            else
+            {
+                 switch (dmgType) 
+                {
+                    case DamageTypes.Physical:
+                        {
+                            damage -= PhysicalResist; break;
+                        }
+                    case DamageTypes.Fire:
+                        {
+                            damage -= FireResist; break;
+                        }
+                    case DamageTypes.Magic:
+                        {
+                            damage -= MagicResist; break;
+                        }
+                }
+                if (damage < 0)
+                {
+                    damage = 0;
+                }
+                CurHealth -= damage;
+                if (CurHealth <= 0) 
+                {
+                    Die();
+                }
+            }
+
+
+        }
+
     }
 }

@@ -1,5 +1,7 @@
+using DungeonCrawlProject.Properties;
 using Lib;
 using Lib.Enums;
+using Lib.Monsters;
 using System.Drawing.Imaging;
 
 namespace DungeonCrawlProject
@@ -42,7 +44,7 @@ namespace DungeonCrawlProject
 
         private void AwardXP(int amount)
         {
-            
+
             dungeon.GetPlayer().AwardXP(amount);
             UpdatePlayerStats();
         }
@@ -57,18 +59,20 @@ namespace DungeonCrawlProject
         {
             Form2 f2 = new Form2();
             DialogResult result = f2.ShowDialog();
+            Player p = f2.CreatedPlayer;
 
-            if (result == DialogResult.OK)
-            {
-                Player p = f2.CreatedPlayer;
-                MessageBox.Show($"{p.Name} str{p.Strength}");
-            }
-            else if (result == DialogResult.TryAgain)
-            {
-                //DialogResult result2 = f2.ShowDialog();
-                MessageBox.Show("Try again");
-            }
-            
+
+            //if (result == DialogResult.OK)
+            //{
+            //    Player p = f2.CreatedPlayer;
+            //    MessageBox.Show($"{p.Name} str{p.Strength}");
+            //}
+            //else if (result == DialogResult.TryAgain)
+            //{
+            //    //DialogResult result2 = f2.ShowDialog();
+            //    MessageBox.Show("Try again");
+            //}
+
             int width = 40;
             int height = 40;
             dungeon = new Dungeon(width, height);
@@ -93,7 +97,18 @@ namespace DungeonCrawlProject
 
 
 
+
             dungeon.GenerateMap();
+            try
+            {
+                dungeon.PutPlayer(p);
+            }
+            catch (NullReferenceException ex)
+            {
+                dungeon.PutPlayer(null);
+            }
+
+
 
 
 
@@ -113,7 +128,7 @@ namespace DungeonCrawlProject
 
 
                     PictureBox tile = new PictureBox();
-                    setTile(ref tile, x, y);
+                    setTile(tile, x, y);
                     tile.Width = 16;
                     tile.Height = 16;
                     tile.SizeMode = PictureBoxSizeMode.Zoom;
@@ -159,15 +174,35 @@ namespace DungeonCrawlProject
 
         }
 
-        private PictureBox setTile(ref PictureBox tile, int x, int y)
+        private PictureBox setTile(PictureBox tile, int x, int y)
         {
-            tile.Image = dungeon.Map[x, y] == 0 ? DungeonCrawlProject.Properties.Resources.wall : DungeonCrawlProject.Properties.Resources.floor;
-            var ent = dungeon.Entites.Find(e => e.Position.Equals(new Point(x, y)));
-            if (ent is Player)
+            if (dungeon.VisMap[x, y] == true)
             {
-                tile.Image = Properties.Resources.player;
+                tile.Image = dungeon.Map[x, y] == 0 ? DungeonCrawlProject.Properties.Resources.wall : DungeonCrawlProject.Properties.Resources.floor;
+                var ent = dungeon.Entites.Find(e => e.Position.Equals(new Point(x, y)));
+                var ResourceManager = new System.Resources.ResourceManager("DungeonCrawlProject.Properties.Resources", typeof(Resources).Assembly);
+                if (ent is Player)
+                {
+                    tile.Image = Properties.Resources.Player;
+                }
+                else if (ent is Monster)
+                {
+
+                    //MessageBox.Show($"Monster {ent.Name}");
+                    object pic = ResourceManager.GetObject(ent.Name);
+                    tile.Image = ((Bitmap)(pic));
+                }
+                else if (ent is not null)
+                {
+                    //MessageBox.Show($"entity {ent.GetType().Name}");
+                    object pic = ResourceManager.GetObject(ent.GetType().Name);
+                    tile.Image = ((Bitmap)(pic));
+                }
+
             }
+            else tile.Image = Resources.FogOfWar;
             return tile;
+
         }
 
 
@@ -185,27 +220,67 @@ namespace DungeonCrawlProject
         {
             try
             {
-                Control c = TileTable.GetControlFromPosition(entity.Position.X, entity.Position.Y);
-                PictureBox oldtile = c as PictureBox;
-                int oldX = entity.Position.X;
-                int oldY = entity.Position.Y;
+                //FOR MOVEMENT W/O FOG OF WAR(PROBABLY WAY MORE EFFICIENT)
+
+                //Control c = TileTable.GetControlFromPosition(entity.Position.X, entity.Position.Y);
+                //PictureBox oldtile = c as PictureBox;
+                //int oldX = entity.Position.X;
+                //int oldY = entity.Position.Y;
 
                 dungeon.MoveEntity(entity, direction);
-                c = TileTable.GetControlFromPosition(entity.Position.X, entity.Position.Y);
+                //c = TileTable.GetControlFromPosition(entity.Position.X, entity.Position.Y);
 
-                PictureBox tile = c as PictureBox;
+                //PictureBox tile = c as PictureBox;
 
 
 
-                if (tile != null)
+                //if (tile != null)
+                //{
+                //    setTile(tile, entity.Position.X, entity.Position.Y);
+                //    //MessageBox.Show("Moved");
+                //}
+                //if (oldtile != null)
+                //{
+                //    setTile(oldtile, oldX, oldY);
+
+                //}
+
+                List<PictureBox> tiles = new List<PictureBox>(9);
+
+                //tiles.Add(TileTable.GetControlFromPosition(entity.Position.X + 1, entity.Position.Y + 1) as PictureBox);
+                //tiles.Add(TileTable.GetControlFromPosition(entity.Position.X - 1, entity.Position.Y + 1) as PictureBox);
+                //tiles.Add(TileTable.GetControlFromPosition(entity.Position.X, entity.Position.Y + 1) as PictureBox);
+
+                //tiles.Add(TileTable.GetControlFromPosition(entity.Position.X + 1, entity.Position.Y) as PictureBox);
+                //tiles.Add(TileTable.GetControlFromPosition(entity.Position.X, entity.Position.Y) as PictureBox);
+                //tiles.Add(TileTable.GetControlFromPosition(entity.Position.X - 1, entity.Position.Y) as PictureBox);
+
+                //tiles.Add(TileTable.GetControlFromPosition(entity.Position.X + 1, entity.Position.Y - 1) as PictureBox);
+                //tiles.Add(TileTable.GetControlFromPosition(entity.Position.X, entity.Position.Y - 1) as PictureBox);
+                //tiles.Add(TileTable.GetControlFromPosition(entity.Position.X - 1, entity.Position.Y - 1) as PictureBox);
+
+                Point entpos = entity.Position;
+                for (int i = entpos.X - 1; i <= entpos.X + 1; i++)
                 {
-                    setTile(ref tile, entity.Position.X, entity.Position.Y);
-                    //MessageBox.Show("Moved");
+                    for (int j = entpos.Y - 1; j <= entpos.Y + 1; j++)
+                    {
+                        if (i >= 1 && i < Dungeon.MapWidth && j >= 1 && j < Dungeon.MapHeight)
+                        {
+                            ///MessageBox.Show($"i {i} j {j}");
+                            Console.WriteLine($"i {i} j {j}");
+                            tiles.Add(TileTable.GetControlFromPosition(i,j) as PictureBox);
+                            // Tutaj mo¿esz coœ zrobiæ z pobran¹ wartoœci¹
+                        }
+                    }
                 }
-                if (oldtile != null)
-                {
-                    setTile(ref oldtile, oldX, oldY);
 
+                //keyvaluepair
+                //MessageBox.Show($"row {TileTable.GetPositionFromControl(tiles[4]).Row}  col {TileTable.GetPositionFromControl(tiles[4]).Column}");
+                foreach (PictureBox tile in tiles)
+                {
+                    TableLayoutPanelCellPosition pos = TileTable.GetPositionFromControl(tile);
+
+                    setTile(tile, pos.Column, pos.Row);
                 }
 
                 listBox1.Items.Clear();
@@ -256,6 +331,12 @@ namespace DungeonCrawlProject
         private void button2_Click(object sender, EventArgs e)
         {
             AwardXP(500);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            MapWindow map = new MapWindow(ref dungeon);
+            map.Show();
         }
     }
 }

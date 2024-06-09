@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lib.Enums
 {
-    enum DamageTypes
+    public enum DamageTypes
     {
         Physical,
         Fire,

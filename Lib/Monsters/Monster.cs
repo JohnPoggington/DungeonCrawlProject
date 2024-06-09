@@ -4,14 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lib.Enums
+namespace Lib.Monsters
 {
-    public enum ItemTypes
+    public class Monster : Character
     {
-        Weapon,
-        Armor,
-        Consumable,
-        Jewelery,
-        Other
+        
     }
 }

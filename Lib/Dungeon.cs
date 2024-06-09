@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Lib.Enums;
+using Lib.MapObjects;
+using Lib.Monsters;
 
 namespace Lib
 {
@@ -16,6 +19,8 @@ namespace Lib
         public int[,] Map;
         //public IEntity[,] Entities;
         public List<IEntity> Entites = new List<IEntity>();
+
+        public bool[,] VisMap;
 
         private static int seed;
 
@@ -32,7 +37,9 @@ namespace Lib
             MapHeight = 25;
             _FillingPercentage = 35;
             Map = new int[MapWidth, MapHeight];
-            
+            VisMap = new bool[MapWidth, MapHeight];
+            FillTwodimensionalArray<bool>(VisMap, false);
+
 
 
         }
@@ -46,6 +53,8 @@ namespace Lib
             MapHeight = height;
             _FillingPercentage = 60;
             Map = new int[MapWidth, MapHeight];
+            VisMap = new bool[MapWidth, MapHeight];
+            FillTwodimensionalArray<bool>(VisMap, false);
             
         }
 
@@ -58,7 +67,9 @@ namespace Lib
             MapWidth = 25;
             MapHeight = 25;
             Map = new int[MapWidth, MapHeight];
-            
+            VisMap = new bool[MapWidth, MapHeight];
+            FillTwodimensionalArray<bool>(VisMap, false);
+
         }
 
         public void MoveEntity(IEntity entity, WalkingDirection direction)
@@ -79,7 +90,7 @@ namespace Lib
                 switch (direction)
                 {
                     case WalkingDirection.North: { 
-                            if (y-1 > 0 && !Entites.Any(check => check.Position.Equals(new System.Drawing.Point(x,y+1))) && Map[x,y - 1] == 1)
+                            if (y-1 > 0 && !Entites.Any(check => check.Position.Equals(new System.Drawing.Point(x,y-1))) && Map[x,y - 1] == 1)
                             {
                                 ent.Move(WalkingDirection.North);
                             }
@@ -88,7 +99,7 @@ namespace Lib
                         };
                     case WalkingDirection.South:
                         {
-                            if (y + 1  < MapHeight && !Entites.Any(check => check.Position.Equals(new System.Drawing.Point(x, y - 1))) && Map[x, y + 1] == 1)
+                            if (y + 1  < MapHeight && !Entites.Any(check => check.Position.Equals(new System.Drawing.Point(x, y + 1))) && Map[x, y + 1] == 1)
                             {
                                 ent.Move(WalkingDirection.South);
                             }
@@ -115,6 +126,10 @@ namespace Lib
                         };
                         default: { throw  new Exceptions.IllegalMovementException();  }
                 }
+                if (ent is Player)
+                {
+                    MakePlayerAreaVisible();
+                }
             }
 
             
@@ -138,40 +153,111 @@ namespace Lib
 
         }
 
+        public void PutPlayer(Player p)
+        {
+            if (!Entites.Any(e => e is Player)) {
+                Random rand = new Random();
+                int xrand = rand.Next(MapWidth);
+                int yrand = rand.Next(MapHeight);
+                while (Map[xrand, yrand] != 1 && !Entites.Any(e => e.Position.Equals(new Point(xrand,yrand)))) {
+                    xrand = rand.Next(MapWidth);
+                    yrand = rand.Next(MapHeight);
+                }
+                if (p is not null)
+                {
+                    p.Position = new System.Drawing.Point(xrand, yrand);
+                    Entites.Add(p);
+                }
+                else
+                    Entites.Add(new Player()
+                    {
+                        Name = "Playa",
+                        Level = 1,
+                        MaxHealth = 20,
+                        CurHealth = 20,
+                        MaxMana = 5,
+                        CurMana = 5,
+                        Dexterity = 3,
+                        PhysicalResist = 1,
+                        MagicResist = 1,
+                        FireResist = 1,
+                        Strength = 5,
+                        Experience = 0,
+                        MaxItemWeight = 20,
+                        Position = new System.Drawing.Point(xrand, yrand),
+                        Items = new List<Item>()
+                    });
+
+                MakePlayerAreaVisible();
+                Console.WriteLine($"Player spawned on {xrand}, {yrand}");
+
+
+
+            }
+            else throw new Exceptions.PlayerExistsException();
+        }
+
         private void PutEntities()
         {
             Random rand = new Random();
             int xrand = rand.Next(MapWidth);
             int yrand = rand.Next(MapHeight);
 
-            if (Map[xrand, yrand] == 1)
+            List<IEntity> requiredEntities = [new Altar { Name = "Magiczny ołtarz" }];
+
+            requiredEntities.ForEach(e =>
             {
-                Entites.Add(new Player()
+                xrand = rand.Next(MapWidth);
+                yrand = rand.Next(MapHeight);
+                while (Map[xrand, yrand] != 1)
                 {
-                    Name = "Playa",
-                    Level = 1,
-                    MaxHealth = 20,
-                    CurHealth = 20,
-                    MaxMana = 5,
-                    CurMana = 5,
-                    Dexterity = 3,
-                    PhysicalResist = 1,
-                    MagicResist = 1,
-                    FireResist = 1,
+                    xrand = rand.Next(MapWidth);
+                    yrand = rand.Next(MapHeight);
+                }
+
+                e.Position = new System.Drawing.Point(xrand, yrand);
+                Entites.Add(e);
+ 
+            });
+
+            for (int i = 0; i < 10;  i++)
+            {
+                xrand = rand.Next(MapWidth);
+                yrand = rand.Next(MapHeight);
+                while (Map[xrand, yrand] != 1 && !Entites.Any(e => e.Position.Equals(new Point(xrand, yrand))))
+                {
+                    xrand = rand.Next(MapWidth);
+                    yrand = rand.Next(MapHeight);
+                }
+
+                int level = rand.Next(1, 3);
+
+                Entites.Add(new Monster { Name = "Goblin",
+                    Level = level,
+                    MaxHealth = 3 + level,
+                    MaxMana = 0,
+                    CurHealth = 3 + level,
+                    CurMana = 0,
+                    Dexterity = 1,
+                    PhysicalResist = 0,
+                    MagicResist = 0,
+                    FireResist = 0,
                     Strength = 5,
-                    Experience = 0,
-                    MaxItemWeight = 20,
+                    MaxItemWeight = 1,
                     Position = new System.Drawing.Point(xrand, yrand),
                     Items = new List<Item>()
                 });
-                Console.WriteLine($"Player spawned on {xrand}, {yrand}");
             }
-            else PutEntities();
         }
 
         public Player GetPlayer()
         {
             return Entites.OfType<Player>().FirstOrDefault();
+        }
+
+        public void Attack(Character char1, Character char2)
+        {
+
         }
 
         private void GenerateNoise()
@@ -250,6 +336,46 @@ namespace Lib
                 {
                     if (x == 0 || x == MapWidth - 1 || y == 0 || y == MapHeight - 1)
                         Map[x, y] = 0;
+                }
+            }
+        }
+
+        private void FillTwodimensionalArray<T>(T[,] array, T value)
+        {
+            System.Threading.Tasks.Parallel.For(0, MapWidth, x =>
+            {
+                for (int j = 0; j < MapHeight; j++)
+                    array[x, j] = value;
+
+            });
+        }
+
+        private void MakePlayerAreaVisible()
+        {
+            Player p = GetPlayer();
+
+            Point entpos = p.Position;
+
+            //VisMap[pos.X + 1, pos.Y + 1] = true;
+            //VisMap[pos.X, pos.Y + 1] = true;
+            //VisMap[pos.X - 1, pos.Y + 1] = true;
+
+            //VisMap[pos.X + 1, pos.Y] = true;
+            //VisMap[pos.X, pos.Y] = true;
+            //VisMap[pos.X - 1, pos.Y] = true;
+
+            //VisMap[pos.X + 1, pos.Y - 1] = true;
+            //VisMap[pos.X, pos.Y - 1] = true;
+            //VisMap[pos.X - 1, pos.Y - 1] = true;
+
+            for (int i = entpos.X - 1; i <= entpos.X + 1; i++)
+            {
+                for (int j = entpos.Y - 1; j <= entpos.Y + 1; j++)
+                {
+                    if (i >= 0 && i < Dungeon.MapWidth && j >= 0 && j < Dungeon.MapHeight)
+                    {
+                        VisMap[i, j] = true; 
+                    }
                 }
             }
         }

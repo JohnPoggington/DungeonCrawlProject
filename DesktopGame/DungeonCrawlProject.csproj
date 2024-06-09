@@ -10,14 +10,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Tiles\altar.png" />
     <None Remove="Resources\Tiles\floor.png" />
+    <None Remove="Resources\Tiles\fogofwar.png" />
+    <None Remove="Resources\Tiles\goblin.png" />
     <None Remove="Resources\Tiles\player.png" />
+    <None Remove="Resources\Tiles\SaveAltar.png" />
+    <None Remove="Resources\Tiles\spikes.png" />
     <None Remove="Resources\Tiles\wall.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Resources\Tiles\altar.png" />
     <EmbeddedResource Include="Resources\Tiles\floor.png" />
+    <EmbeddedResource Include="Resources\Tiles\fogofwar.png" />
+    <EmbeddedResource Include="Resources\Tiles\goblin.png" />
     <EmbeddedResource Include="Resources\Tiles\player.png" />
+    <EmbeddedResource Include="Resources\Tiles\SaveAltar.png" />
+    <EmbeddedResource Include="Resources\Tiles\spikes.png" />
     <EmbeddedResource Include="Resources\Tiles\wall.png" />
   </ItemGroup>
 

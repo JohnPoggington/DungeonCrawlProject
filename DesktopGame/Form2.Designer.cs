@@ -51,6 +51,13 @@
             label8 = new Label();
             PointsLabel = new Label();
             CreatePlayerButton = new Button();
+            FireResistLabel = new Label();
+            MagicResistLabel = new Label();
+            PhysResistLabel = new Label();
+            label9 = new Label();
+            label10 = new Label();
+            label11 = new Label();
+            label12 = new Label();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -159,7 +166,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(31, 298);
+            label6.Location = new Point(32, 384);
             label6.Name = "label6";
             label6.Size = new Size(60, 15);
             label6.TabIndex = 7;
@@ -168,7 +175,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(31, 328);
+            label7.Location = new Point(32, 414);
             label7.Name = "label7";
             label7.Size = new Size(25, 15);
             label7.TabIndex = 8;
@@ -196,7 +203,7 @@
             // DexterityLabel
             // 
             DexterityLabel.AutoSize = true;
-            DexterityLabel.Location = new Point(122, 298);
+            DexterityLabel.Location = new Point(123, 384);
             DexterityLabel.Name = "DexterityLabel";
             DexterityLabel.Size = new Size(13, 15);
             DexterityLabel.TabIndex = 11;
@@ -205,7 +212,7 @@
             // SubDexButton
             // 
             SubDexButton.Enabled = false;
-            SubDexButton.Location = new Point(95, 294);
+            SubDexButton.Location = new Point(96, 380);
             SubDexButton.Name = "SubDexButton";
             SubDexButton.Size = new Size(21, 23);
             SubDexButton.TabIndex = 12;
@@ -216,7 +223,7 @@
             // AddDexButton
             // 
             AddDexButton.Enabled = false;
-            AddDexButton.Location = new Point(141, 294);
+            AddDexButton.Location = new Point(142, 380);
             AddDexButton.Name = "AddDexButton";
             AddDexButton.Size = new Size(21, 23);
             AddDexButton.TabIndex = 13;
@@ -227,7 +234,7 @@
             // AddStrButton
             // 
             AddStrButton.Enabled = false;
-            AddStrButton.Location = new Point(141, 323);
+            AddStrButton.Location = new Point(142, 409);
             AddStrButton.Name = "AddStrButton";
             AddStrButton.Size = new Size(21, 23);
             AddStrButton.TabIndex = 16;
@@ -238,7 +245,7 @@
             // SubStrButton
             // 
             SubStrButton.Enabled = false;
-            SubStrButton.Location = new Point(95, 323);
+            SubStrButton.Location = new Point(96, 409);
             SubStrButton.Name = "SubStrButton";
             SubStrButton.Size = new Size(21, 23);
             SubStrButton.TabIndex = 15;
@@ -249,7 +256,7 @@
             // StrengthLabel
             // 
             StrengthLabel.AutoSize = true;
-            StrengthLabel.Location = new Point(122, 327);
+            StrengthLabel.Location = new Point(123, 413);
             StrengthLabel.Name = "StrengthLabel";
             StrengthLabel.Size = new Size(13, 15);
             StrengthLabel.TabIndex = 14;
@@ -258,7 +265,7 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(32, 369);
+            label8.Location = new Point(33, 455);
             label8.Name = "label8";
             label8.Size = new Size(111, 15);
             label8.TabIndex = 17;
@@ -267,7 +274,7 @@
             // PointsLabel
             // 
             PointsLabel.AutoSize = true;
-            PointsLabel.Location = new Point(142, 369);
+            PointsLabel.Location = new Point(143, 455);
             PointsLabel.Name = "PointsLabel";
             PointsLabel.Size = new Size(13, 15);
             PointsLabel.TabIndex = 18;
@@ -275,7 +282,7 @@
             // 
             // CreatePlayerButton
             // 
-            CreatePlayerButton.Location = new Point(95, 404);
+            CreatePlayerButton.Location = new Point(96, 490);
             CreatePlayerButton.Name = "CreatePlayerButton";
             CreatePlayerButton.Size = new Size(75, 23);
             CreatePlayerButton.TabIndex = 19;
@@ -283,11 +290,81 @@
             CreatePlayerButton.UseVisualStyleBackColor = true;
             CreatePlayerButton.Click += CreatePlayerButton_Click;
             // 
+            // FireResistLabel
+            // 
+            FireResistLabel.AutoSize = true;
+            FireResistLabel.Location = new Point(98, 341);
+            FireResistLabel.Name = "FireResistLabel";
+            FireResistLabel.Size = new Size(23, 15);
+            FireResistLabel.TabIndex = 26;
+            FireResistLabel.Text = "FIR";
+            // 
+            // MagicResistLabel
+            // 
+            MagicResistLabel.AutoSize = true;
+            MagicResistLabel.Location = new Point(98, 326);
+            MagicResistLabel.Name = "MagicResistLabel";
+            MagicResistLabel.Size = new Size(34, 15);
+            MagicResistLabel.TabIndex = 25;
+            MagicResistLabel.Text = "MAG";
+            // 
+            // PhysResistLabel
+            // 
+            PhysResistLabel.AutoSize = true;
+            PhysResistLabel.Location = new Point(98, 311);
+            PhysResistLabel.Name = "PhysResistLabel";
+            PhysResistLabel.Size = new Size(36, 15);
+            PhysResistLabel.TabIndex = 24;
+            PhysResistLabel.Text = "PHYS";
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(40, 341);
+            label9.Name = "label9";
+            label9.Size = new Size(39, 15);
+            label9.TabIndex = 23;
+            label9.Text = "Ogień";
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new Point(40, 326);
+            label10.Name = "label10";
+            label10.Size = new Size(58, 15);
+            label10.TabIndex = 22;
+            label10.Text = "Magiczne";
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Location = new Point(40, 311);
+            label11.Name = "label11";
+            label11.Size = new Size(51, 15);
+            label11.TabIndex = 21;
+            label11.Text = "Fizyczne";
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new Point(31, 296);
+            label12.Name = "label12";
+            label12.Size = new Size(139, 15);
+            label12.TabIndex = 20;
+            label12.Text = "Odporności na obrażenia";
+            // 
             // Form2
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(273, 450);
+            ClientSize = new Size(273, 525);
+            Controls.Add(FireResistLabel);
+            Controls.Add(MagicResistLabel);
+            Controls.Add(PhysResistLabel);
+            Controls.Add(label9);
+            Controls.Add(label10);
+            Controls.Add(label11);
+            Controls.Add(label12);
             Controls.Add(CreatePlayerButton);
             Controls.Add(PointsLabel);
             Controls.Add(label8);
@@ -341,5 +418,12 @@
         private Label label8;
         private Label PointsLabel;
         private Button CreatePlayerButton;
+        private Label FireResistLabel;
+        private Label MagicResistLabel;
+        private Label PhysResistLabel;
+        private Label label9;
+        private Label label10;
+        private Label label11;
+        private Label label12;
     }
 }

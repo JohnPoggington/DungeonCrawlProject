@@ -38,6 +38,8 @@
             MoveWest = new Button();
             MoveNorth = new Button();
             PlayerStats = new GroupBox();
+            TotalXPLabel = new Label();
+            label11 = new Label();
             StrengthLabel = new Label();
             DexterityLabel = new Label();
             label10 = new Label();
@@ -59,8 +61,7 @@
             label1 = new Label();
             ItemTable = new TableLayoutPanel();
             button2 = new Button();
-            label11 = new Label();
-            TotalXPLabel = new Label();
+            button3 = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             MovementBox.SuspendLayout();
             PlayerStats.SuspendLayout();
@@ -75,7 +76,7 @@
             listBox1.Location = new Point(10, 9);
             listBox1.Margin = new Padding(3, 2, 3, 2);
             listBox1.Name = "listBox1";
-            listBox1.Size = new Size(243, 559);
+            listBox1.Size = new Size(243, 574);
             listBox1.TabIndex = 0;
             // 
             // button1
@@ -101,7 +102,7 @@
             // 
             // TileTable
             // 
-            TileTable.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+            TileTable.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             TileTable.AutoScroll = true;
             TileTable.ColumnCount = 1;
             TileTable.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 885F));
@@ -112,7 +113,7 @@
             TileTable.RowCount = 1;
             TileTable.RowStyles.Add(new RowStyle(SizeType.Absolute, 570F));
             TileTable.RowStyles.Add(new RowStyle(SizeType.Absolute, 570F));
-            TileTable.Size = new Size(614, 570);
+            TileTable.Size = new Size(614, 593);
             TileTable.TabIndex = 3;
             // 
             // MovementBox
@@ -205,6 +206,24 @@
             PlayerStats.TabStop = false;
             PlayerStats.Text = "Postać";
             PlayerStats.Visible = false;
+            // 
+            // TotalXPLabel
+            // 
+            TotalXPLabel.AutoSize = true;
+            TotalXPLabel.Location = new Point(72, 114);
+            TotalXPLabel.Name = "TotalXPLabel";
+            TotalXPLabel.Size = new Size(39, 15);
+            TotalXPLabel.TabIndex = 20;
+            TotalXPLabel.Text = "TOTAL";
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Location = new Point(6, 114);
+            label11.Name = "label11";
+            label11.Size = new Size(60, 15);
+            label11.TabIndex = 19;
+            label11.Text = "XP łącznie";
             // 
             // StrengthLabel
             // 
@@ -418,29 +437,22 @@
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click;
             // 
-            // label11
+            // button3
             // 
-            label11.AutoSize = true;
-            label11.Location = new Point(6, 114);
-            label11.Name = "label11";
-            label11.Size = new Size(60, 15);
-            label11.TabIndex = 19;
-            label11.Text = "XP łącznie";
-            // 
-            // TotalXPLabel
-            // 
-            TotalXPLabel.AutoSize = true;
-            TotalXPLabel.Location = new Point(72, 114);
-            TotalXPLabel.Name = "TotalXPLabel";
-            TotalXPLabel.Size = new Size(39, 15);
-            TotalXPLabel.TabIndex = 20;
-            TotalXPLabel.Text = "TOTAL";
+            button3.Location = new Point(390, 544);
+            button3.Name = "button3";
+            button3.Size = new Size(75, 23);
+            button3.TabIndex = 8;
+            button3.Text = "Map";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1326, 589);
+            ClientSize = new Size(1326, 612);
+            Controls.Add(button3);
             Controls.Add(button2);
             Controls.Add(ItemTable);
             Controls.Add(PlayerStats);
@@ -494,5 +506,6 @@
         private Button button2;
         private Label label11;
         private Label TotalXPLabel;
+        private Button button3;
     }
 }

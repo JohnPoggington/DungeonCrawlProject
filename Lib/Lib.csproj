@@ -10,9 +10,4 @@
     <PackageReference Include="SimplexNoise" Version="2.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Monsters\" />
-    <Folder Include="Items\" />
-  </ItemGroup>
-
 </Project>

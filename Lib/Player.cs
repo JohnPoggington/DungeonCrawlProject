@@ -51,6 +51,8 @@ namespace Lib
 
             int exp = 0;
 
+            if (Level == 1) { return 83; }
+            else
             for (int i = 1; i < Level; i++) { exp += (int)Math.Floor(i + 300 + Math.Pow(2, i / 7)); }
 
             return exp/4;

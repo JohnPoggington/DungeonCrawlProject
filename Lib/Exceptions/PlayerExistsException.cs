@@ -4,14 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lib.Enums
+namespace Lib.Exceptions
 {
-    public enum ItemTypes
+    public class PlayerExistsException : Exception
     {
-        Weapon,
-        Armor,
-        Consumable,
-        Jewelery,
-        Other
     }
 }

@@ -10,8 +10,11 @@ namespace Lib
 {
     public interface IEntity
     {
+        public String Name { get; }
         public Point Position { get; set; }
-
+        public DamageTypes DamageType { get; set; }
         public void Move(WalkingDirection direction);
+
+        
     }
 }
