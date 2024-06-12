@@ -1,6 +1,7 @@
 using DungeonCrawlProject.Properties;
 using Lib;
 using Lib.Enums;
+using Lib.MapObjects;
 using Lib.Monsters;
 using System.Drawing.Imaging;
 
@@ -16,7 +17,7 @@ namespace DungeonCrawlProject
 
         private Dungeon dungeon;
 
-        private void UpdatePlayerStats()
+        private void UpdatePlayerDisplay()
         {
             Player p = dungeon.GetPlayer();
 
@@ -46,12 +47,44 @@ namespace DungeonCrawlProject
         {
 
             dungeon.GetPlayer().AwardXP(amount);
-            UpdatePlayerStats();
+            UpdatePlayerDisplay();
         }
 
         private void SetDelegates()
         {
             dungeon.GetPlayer().OnLevelUp += (lvl) => { MessageBox.Show($"Level Up! Twoja postaæ ma poziom {lvl}!"); };
+            foreach(IEntity ent in dungeon.Entites)
+            {
+                if (ent is Character)
+                {
+                    Character character = (Character)ent;
+                    character.OnCombat += (dmg) => { AddMessageToLog($"{character} otrzyma³ {dmg} punktów obra¿eñ");};
+                    character.OnAttackDodge += delegate { AddMessageToLog($"{character} unikn¹³ nadchodz¹cy atak!"); };
+                    character.OnDeath += delegate { AddMessageToLog($"{character} umiera!" ); };
+
+                    if (ent is Player)
+                    {
+                        character.OnDeath += delegate { MessageBox.Show("Twoja postaæ umar³a!"); this.Close(); };
+                    }
+                    else
+                    {
+                        Monster m = (Monster)ent;
+                        Player p = dungeon.GetPlayer();
+                        m.OnDeath += delegate{dungeon.Entites.Remove(ent); UpdateTiles(p); UpdateInteractButton(p);
+                            AddMessageToLog($"{p.Name} otrzymuje {m.XPReward(p)} punktów doœwiadczenia!"); };
+                        
+                    }
+                }
+                else if (ent is InteractableObject)
+                {
+                    
+                    if (ent is Altar)
+                    {
+                        ((InteractableObject)ent).OnInteract += delegate { AddMessageToLog("O³tarz wype³ni³ twoje cia³o determinacj¹ i energi¹"); };
+                        ((InteractableObject)(ent)).OnInteractFailed += delegate { AddMessageToLog("O³tarz nie emanuje ¿adn¹ energi¹"); };
+                    }
+                }
+            }
         }
 
         /// INIT WORLD
@@ -159,14 +192,14 @@ namespace DungeonCrawlProject
             foreach (ColumnStyle col in styles)
             {
                 col.SizeType = SizeType.Absolute;
-                col.Width = 16;
+                col.Width = 24;
             }
             TileTable.ResumeLayout();
             TileTable.Show();
             MessageBox.Show($"Tiles {TileTable.Controls.Count}");
             MovementBox.Enabled = true;
 
-            UpdatePlayerStats();
+            UpdatePlayerDisplay();
             SetDelegates();
             PlayerStats.Visible = true;
             ItemTable.Visible = true;
@@ -245,43 +278,7 @@ namespace DungeonCrawlProject
 
                 //}
 
-                List<PictureBox> tiles = new List<PictureBox>(9);
-
-                //tiles.Add(TileTable.GetControlFromPosition(entity.Position.X + 1, entity.Position.Y + 1) as PictureBox);
-                //tiles.Add(TileTable.GetControlFromPosition(entity.Position.X - 1, entity.Position.Y + 1) as PictureBox);
-                //tiles.Add(TileTable.GetControlFromPosition(entity.Position.X, entity.Position.Y + 1) as PictureBox);
-
-                //tiles.Add(TileTable.GetControlFromPosition(entity.Position.X + 1, entity.Position.Y) as PictureBox);
-                //tiles.Add(TileTable.GetControlFromPosition(entity.Position.X, entity.Position.Y) as PictureBox);
-                //tiles.Add(TileTable.GetControlFromPosition(entity.Position.X - 1, entity.Position.Y) as PictureBox);
-
-                //tiles.Add(TileTable.GetControlFromPosition(entity.Position.X + 1, entity.Position.Y - 1) as PictureBox);
-                //tiles.Add(TileTable.GetControlFromPosition(entity.Position.X, entity.Position.Y - 1) as PictureBox);
-                //tiles.Add(TileTable.GetControlFromPosition(entity.Position.X - 1, entity.Position.Y - 1) as PictureBox);
-
-                Point entpos = entity.Position;
-                for (int i = entpos.X - 1; i <= entpos.X + 1; i++)
-                {
-                    for (int j = entpos.Y - 1; j <= entpos.Y + 1; j++)
-                    {
-                        if (i >= 1 && i < Dungeon.MapWidth && j >= 1 && j < Dungeon.MapHeight)
-                        {
-                            ///MessageBox.Show($"i {i} j {j}");
-                            Console.WriteLine($"i {i} j {j}");
-                            tiles.Add(TileTable.GetControlFromPosition(i,j) as PictureBox);
-                            // Tutaj mo¿esz coœ zrobiæ z pobran¹ wartoœci¹
-                        }
-                    }
-                }
-
-                //keyvaluepair
-                //MessageBox.Show($"row {TileTable.GetPositionFromControl(tiles[4]).Row}  col {TileTable.GetPositionFromControl(tiles[4]).Column}");
-                foreach (PictureBox tile in tiles)
-                {
-                    TableLayoutPanelCellPosition pos = TileTable.GetPositionFromControl(tile);
-
-                    setTile(tile, pos.Column, pos.Row);
-                }
+                UpdateTiles(entity);
 
                 listBox1.Items.Clear();
 
@@ -304,6 +301,10 @@ namespace DungeonCrawlProject
                     listBox1.Items.Add(map);
                     //TileTable.Controls.AddRange(_mapTiles);
 
+
+                    UpdateInteractButton(entity);
+
+
                 }
 
                 //TileTable.Controls.Add(tile,entity.Position.X,entity.Position.Y);
@@ -311,6 +312,61 @@ namespace DungeonCrawlProject
             catch (Lib.Exceptions.IllegalMovementException e) { MessageBox.Show("Illegal move"); }
 
 
+        }
+
+        private void UpdateInteractButton(IEntity entity)
+        {
+            List<IEntity> interactableEnts = dungeon.GetInteractableEntitiesAroundEnt(entity);
+
+            //IEntity checkEnt = interactableEnts.ElementAt(0);
+
+            if (interactableEnts.Count > 0)
+            {
+                InteractButton.Enabled = true;
+                if (interactableEnts.ElementAt(0) is Monster)
+                {
+                    InteractButton.Text = "Atakuj";
+                }
+                else InteractButton.Text = "U¿yj";
+            }
+            else InteractButton.Enabled = false;
+        }
+
+        private void UpdateTiles(IEntity entity)
+        {
+            List<PictureBox> tiles = new List<PictureBox>(9);
+
+
+            Point entpos = entity.Position;
+            for (int i = entpos.X - 2; i <= entpos.X + 2; i++)
+            {
+                for (int j = entpos.Y - 2; j <= entpos.Y + 2; j++)
+                {
+                    if (i >= 1 && i < Dungeon.MapWidth && j >= 1 && j < Dungeon.MapHeight)
+                    {
+                        ///MessageBox.Show($"i {i} j {j}");
+                        Console.WriteLine($"i {i} j {j}");
+                        tiles.Add(TileTable.GetControlFromPosition(i, j) as PictureBox);
+
+                    }
+                }
+            }
+
+            //keyvaluepair
+            //MessageBox.Show($"row {TileTable.GetPositionFromControl(tiles[4]).Row}  col {TileTable.GetPositionFromControl(tiles[4]).Column}");
+            foreach (PictureBox tile in tiles)
+            {
+                TableLayoutPanelCellPosition pos = TileTable.GetPositionFromControl(tile);
+
+                setTile(tile, pos.Column, pos.Row);
+            }
+        }
+
+        private void AddMessageToLog(String msg)
+        {
+            ActivityLog.Items.Add(msg);
+            ActivityLog.SelectedIndex = ActivityLog.Items.Count - 1;
+            ActivityLog.SelectedIndex = -1;
         }
 
         private void MoveWest_Click(object sender, EventArgs e)
@@ -337,6 +393,25 @@ namespace DungeonCrawlProject
         {
             MapWindow map = new MapWindow(ref dungeon);
             map.Show();
+        }
+
+        private void InteractButton_Click(object sender, EventArgs e)
+        {
+            Player p = dungeon.GetPlayer();
+
+            IEntity targetEnt = dungeon.GetInteractableEntitiesAroundEnt(p).ElementAt(0);
+
+            if (targetEnt is Monster)
+            {
+                Dungeon.Combat(p, (Monster)targetEnt);
+                UpdatePlayerDisplay();
+            }
+            if (targetEnt is InteractableObject)
+            {
+                InteractableObject obj = (InteractableObject)targetEnt;
+                obj.Interact(p);
+                UpdatePlayerDisplay();
+            }
         }
     }
 }

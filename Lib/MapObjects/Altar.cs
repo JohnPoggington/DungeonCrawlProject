@@ -9,34 +9,36 @@ using System.Threading.Tasks;
 
 namespace Lib.MapObjects
 {
-    public delegate void AltarDelegate();
-    public delegate void UsedAltarDelegate();
-    public class Altar : IEntity
+    
+    
+    public class Altar : InteractableObject
     {
         public String Name { get; set; }
         
         public Point Position { get; set; }
         public DamageTypes DamageType { get; set; }
 
+        public bool IsInteractable { get; set; } = true;
+
         public void Move(WalkingDirection direction)
         {
             throw new IllegalMovementException();
         }
+        public event VoidDelegate OnInteract;
+        public event VoidDelegate OnInteractFailed;
 
-        public event AltarDelegate OnAltarUsed;
-        public event UsedAltarDelegate OnUsedAltarInteract;
 
         public bool AltarUsed { get; set; } = false;
 
-        public void Interact(Player p)
+        public override void Interact(Player p)
         {
             if (AltarUsed == true) { 
                 p.CurHealth = p.MaxHealth;
                 p.CurMana = p.MaxMana;
                 AltarUsed = true;
-                OnAltarUsed?.Invoke();
+                OnInteract?.Invoke();
             }
-            else OnUsedAltarInteract?.Invoke();
+            else OnInteractFailed?.Invoke();
         }
     }
 }

@@ -62,9 +62,13 @@
             ItemTable = new TableLayoutPanel();
             button2 = new Button();
             button3 = new Button();
+            InteractButton = new Button();
+            ActivityLog = new ListBox();
+            groupBox1 = new GroupBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             MovementBox.SuspendLayout();
             PlayerStats.SuspendLayout();
+            groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // listBox1
@@ -76,7 +80,7 @@
             listBox1.Location = new Point(10, 9);
             listBox1.Margin = new Padding(3, 2, 3, 2);
             listBox1.Name = "listBox1";
-            listBox1.Size = new Size(243, 574);
+            listBox1.Size = new Size(245, 619);
             listBox1.TabIndex = 0;
             // 
             // button1
@@ -102,7 +106,7 @@
             // 
             // TileTable
             // 
-            TileTable.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            TileTable.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             TileTable.AutoScroll = true;
             TileTable.ColumnCount = 1;
             TileTable.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 885F));
@@ -113,7 +117,7 @@
             TileTable.RowCount = 1;
             TileTable.RowStyles.Add(new RowStyle(SizeType.Absolute, 570F));
             TileTable.RowStyles.Add(new RowStyle(SizeType.Absolute, 570F));
-            TileTable.Size = new Size(614, 593);
+            TileTable.Size = new Size(676, 638);
             TileTable.TabIndex = 3;
             // 
             // MovementBox
@@ -123,7 +127,7 @@
             MovementBox.Controls.Add(MoveWest);
             MovementBox.Controls.Add(MoveNorth);
             MovementBox.Enabled = false;
-            MovementBox.Location = new Point(263, 418);
+            MovementBox.Location = new Point(259, 440);
             MovementBox.Name = "MovementBox";
             MovementBox.Size = new Size(121, 149);
             MovementBox.TabIndex = 4;
@@ -410,7 +414,7 @@
             ItemTable.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
             ItemTable.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
             ItemTable.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
-            ItemTable.Location = new Point(263, 286);
+            ItemTable.Location = new Point(6, 22);
             ItemTable.Name = "ItemTable";
             ItemTable.RowCount = 8;
             ItemTable.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
@@ -439,7 +443,7 @@
             // 
             // button3
             // 
-            button3.Location = new Point(390, 544);
+            button3.Location = new Point(390, 444);
             button3.Name = "button3";
             button3.Size = new Size(75, 23);
             button3.TabIndex = 8;
@@ -447,14 +451,46 @@
             button3.UseVisualStyleBackColor = true;
             button3.Click += button3_Click;
             // 
+            // InteractButton
+            // 
+            InteractButton.Enabled = false;
+            InteractButton.Location = new Point(390, 473);
+            InteractButton.Name = "InteractButton";
+            InteractButton.Size = new Size(75, 23);
+            InteractButton.TabIndex = 9;
+            InteractButton.Text = "Interact";
+            InteractButton.UseVisualStyleBackColor = true;
+            InteractButton.Click += InteractButton_Click;
+            // 
+            // ActivityLog
+            // 
+            ActivityLog.FormattingEnabled = true;
+            ActivityLog.ItemHeight = 15;
+            ActivityLog.Location = new Point(390, 502);
+            ActivityLog.Name = "ActivityLog";
+            ActivityLog.Size = new Size(311, 94);
+            ActivityLog.TabIndex = 10;
+            // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(ItemTable);
+            groupBox1.Location = new Point(257, 286);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(163, 154);
+            groupBox1.TabIndex = 11;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Ekwipunek";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1326, 612);
+            ClientSize = new Size(1389, 657);
+            Controls.Add(groupBox1);
+            Controls.Add(ActivityLog);
+            Controls.Add(InteractButton);
             Controls.Add(button3);
             Controls.Add(button2);
-            Controls.Add(ItemTable);
             Controls.Add(PlayerStats);
             Controls.Add(MovementBox);
             Controls.Add(TileTable);
@@ -468,6 +504,7 @@
             MovementBox.ResumeLayout(false);
             PlayerStats.ResumeLayout(false);
             PlayerStats.PerformLayout();
+            groupBox1.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -507,5 +544,8 @@
         private Label label11;
         private Label TotalXPLabel;
         private Button button3;
+        private Button InteractButton;
+        private ListBox ActivityLog;
+        private GroupBox groupBox1;
     }
 }

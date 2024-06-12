@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Drawing;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using Lib.Enums;
@@ -203,7 +204,24 @@ namespace Lib
             int xrand = rand.Next(MapWidth);
             int yrand = rand.Next(MapHeight);
 
-            List<IEntity> requiredEntities = [new Altar { Name = "Magiczny ołtarz" }];
+            List<IEntity> requiredEntities = [new Altar { Name = "Magiczny ołtarz" }, new Monster {
+                Name = "Lich",
+                Level = 10,
+                Experience = 350,
+                MaxHealth = 25,
+                MaxMana = 0,
+                CurHealth = 25,
+                CurMana = 0,
+                Dexterity = 3,
+                PhysicalResist = 0,
+                MagicResist = 10,
+                FireResist = 2,
+                Strength = 12,
+                MaxItemWeight = 1,
+                DamageType = DamageTypes.Magic,
+                Position = new System.Drawing.Point(xrand, yrand),
+                Items = new List<Item>()
+            }];
 
             requiredEntities.ForEach(e =>
             {
@@ -234,6 +252,7 @@ namespace Lib
 
                 Entites.Add(new Monster { Name = "Goblin",
                     Level = level,
+                    Experience = 25 + 10*level,
                     MaxHealth = 3 + level,
                     MaxMana = 0,
                     CurHealth = 3 + level,
@@ -356,21 +375,9 @@ namespace Lib
 
             Point entpos = p.Position;
 
-            //VisMap[pos.X + 1, pos.Y + 1] = true;
-            //VisMap[pos.X, pos.Y + 1] = true;
-            //VisMap[pos.X - 1, pos.Y + 1] = true;
-
-            //VisMap[pos.X + 1, pos.Y] = true;
-            //VisMap[pos.X, pos.Y] = true;
-            //VisMap[pos.X - 1, pos.Y] = true;
-
-            //VisMap[pos.X + 1, pos.Y - 1] = true;
-            //VisMap[pos.X, pos.Y - 1] = true;
-            //VisMap[pos.X - 1, pos.Y - 1] = true;
-
-            for (int i = entpos.X - 1; i <= entpos.X + 1; i++)
+            for (int i = entpos.X - 2; i <= entpos.X + 2; i++)
             {
-                for (int j = entpos.Y - 1; j <= entpos.Y + 1; j++)
+                for (int j = entpos.Y - 2; j <= entpos.Y + 2; j++)
                 {
                     if (i >= 0 && i < Dungeon.MapWidth && j >= 0 && j < Dungeon.MapHeight)
                     {
@@ -379,6 +386,41 @@ namespace Lib
                 }
             }
         }
+
+        public List<IEntity> GetInteractableEntitiesAroundEnt(IEntity ent)
+        {
+            List<IEntity> validEnts = Entites.Where(e => e.IsInteractable && (
+                e.Position.Equals(new Point(ent.Position.X, ent.Position.Y - 1)) ||
+                e.Position.Equals(new Point(ent.Position.X, ent.Position.Y + 1)) ||
+                e.Position.Equals(new Point(ent.Position.X + 1, ent.Position.Y)) ||
+                e.Position.Equals(new Point(ent.Position.X - 1, ent.Position.Y))
+            )).ToList();
+
+            return validEnts;
+        }
+
+        public static void Combat(Player ch1, Monster ch2)
+        {
+            if (ch1.Dexterity >  ch2.Dexterity)
+            {
+                ch2.TakeDamage(ch1.DamageType, ch1.Strength/2);
+                if (!ch2.IsDead)
+                    ch1.TakeDamage(ch2.DamageType, ch2.Strength/2);
+            }
+            else
+            {
+                ch1.TakeDamage(ch2.DamageType, ch2.Strength/2);
+                if (!ch1.IsDead)
+                    ch2.TakeDamage(ch1.DamageType, ch1.Strength/2);
+            }
+
+            if (ch2.IsDead)
+                ch1.AwardXP(ch2.XPReward(ch1));
+            
+        }
+
+
+
 
 
 

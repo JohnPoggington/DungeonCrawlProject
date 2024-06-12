@@ -11,6 +11,7 @@ namespace Lib
 {
     public delegate void DodgedAttackDelegate();
     public delegate void DieDelegate();
+    public delegate void CombatDelegate(int damage);
     public abstract class Character : IEntity
     {
         public String Name { get; set; }
@@ -26,10 +27,14 @@ namespace Lib
         public int Dexterity { get; set; }
         public int Strength { get; set; }
         public List<Item> Items { get; set; }
+        public bool IsInteractable { get; set; } = true;
         public DamageTypes DamageType { get; set; } = DamageTypes.Physical;
+
+        public bool IsDead { get { return CurHealth <= 0; } }
 
         public event DodgedAttackDelegate OnAttackDodge;
         public event DieDelegate OnDeath;
+        public event CombatDelegate OnCombat;
         public int MaxItemWeight { get; set; }
 
         public virtual void AddItem(Item item)
@@ -45,7 +50,7 @@ namespace Lib
             }
         }
 
-        public void Move(WalkingDirection direction)
+        public virtual void Move(WalkingDirection direction)
         {
             Console.WriteLine($"Moving {Name}");
             Console.WriteLine($"Old x {Position.X} y {Position.Y}");
@@ -79,7 +84,7 @@ namespace Lib
             Console.WriteLine($"New x {Position.X} y {Position.Y}");
         }
 
-        public void Die()
+        public virtual void Die()
         {
             OnDeath?.Invoke();
         }
@@ -114,13 +119,20 @@ namespace Lib
                     damage = 0;
                 }
                 CurHealth -= damage;
+                OnCombat?.Invoke(damage);
                 if (CurHealth <= 0) 
                 {
+                    CurHealth = 0;
                     Die();
                 }
             }
 
 
+        }
+
+        public override string ToString()
+        {
+            return $"{Name} poziomu {Level}";
         }
 
     }

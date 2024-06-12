@@ -15,6 +15,8 @@ namespace Lib
         public DamageTypes DamageType { get; set; }
         public void Move(WalkingDirection direction);
 
+        public bool IsInteractable { get; set; }
+
         
     }
 }

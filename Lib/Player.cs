@@ -8,7 +8,7 @@ using Lib.Enums;
 namespace Lib
 {
     public delegate void LevelDelegate(int CurrentLevel);
-    public class Player : Character, IEntity
+    public class Player : Character
     {
         public WalkingDirection WalkingDirection { get; set; }
 
@@ -56,6 +56,11 @@ namespace Lib
             for (int i = 1; i < Level; i++) { exp += (int)Math.Floor(i + 300 + Math.Pow(2, i / 7)); }
 
             return exp/4;
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }

@@ -21,6 +21,8 @@ namespace Lib.MapObjects
             throw new IllegalMovementException();
         }
 
+        public bool IsInteractable { get; set; } = false;
+
         public bool AreFound { get; private set; } = false;
         public DamageTypes DamageType { get; set; }
 
