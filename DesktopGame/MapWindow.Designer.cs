@@ -33,7 +33,7 @@
             // 
             // TileTable
             // 
-            TileTable.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            TileTable.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             TileTable.AutoScroll = true;
             TileTable.ColumnCount = 1;
             TileTable.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 885F));
@@ -44,14 +44,14 @@
             TileTable.RowCount = 1;
             TileTable.RowStyles.Add(new RowStyle(SizeType.Absolute, 570F));
             TileTable.RowStyles.Add(new RowStyle(SizeType.Absolute, 570F));
-            TileTable.Size = new Size(614, 587);
+            TileTable.Size = new Size(649, 586);
             TileTable.TabIndex = 4;
             // 
             // MapWindow
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(636, 655);
+            ClientSize = new Size(671, 606);
             Controls.Add(TileTable);
             Name = "MapWindow";
             Text = "MapWindow";

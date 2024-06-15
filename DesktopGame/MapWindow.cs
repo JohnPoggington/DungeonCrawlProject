@@ -76,7 +76,7 @@ namespace DungeonCrawlProject
             }
             TileTable.ResumeLayout();
             TileTable.Show();
-            MessageBox.Show($"Tiles {TileTable.Controls.Count}");
+            this.FormBorderStyle = FormBorderStyle.FixedToolWindow;
         }
 
         

@@ -9,12 +9,15 @@ using Lib.Exceptions;
 
 namespace Lib.MapObjects
 {
+    public delegate void VoidDelegate();
     public class Spikes : IEntity
     {
         //TODO: SPIKES!!!
 
         public string Name { get; set; }
         public Point Position { get; set; }
+
+        public event VoidDelegate OnEntityStep;
 
         public void Move(WalkingDirection direction)
         {
@@ -26,10 +29,13 @@ namespace Lib.MapObjects
         public bool AreFound { get; private set; } = false;
         public DamageTypes DamageType { get; set; }
 
+        public Spikes(Point position) { this.Position = position; }
+
         public void OnStep(Player p)
         {
             p.TakeDamage(DamageType, 5);
             AreFound = true;
+            OnEntityStep?.Invoke();
         }
     }
 }

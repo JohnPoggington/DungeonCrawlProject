@@ -28,9 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            listBox1 = new ListBox();
             button1 = new Button();
-            pictureBox1 = new PictureBox();
             TileTable = new TableLayoutPanel();
             MovementBox = new GroupBox();
             MoveEast = new Button();
@@ -65,27 +63,25 @@
             InteractButton = new Button();
             ActivityLog = new ListBox();
             groupBox1 = new GroupBox();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            WeightLabel = new Label();
+            CoordinatesLabel = new Label();
+            GiveFish = new Button();
+            WeaponIcon = new PictureBox();
+            label12 = new Label();
+            label13 = new Label();
+            ArmorIcon = new PictureBox();
+            JeweleryTable = new TableLayoutPanel();
+            label14 = new Label();
             MovementBox.SuspendLayout();
             PlayerStats.SuspendLayout();
             groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)WeaponIcon).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ArmorIcon).BeginInit();
             SuspendLayout();
-            // 
-            // listBox1
-            // 
-            listBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            listBox1.FormattingEnabled = true;
-            listBox1.HorizontalScrollbar = true;
-            listBox1.ItemHeight = 15;
-            listBox1.Location = new Point(10, 9);
-            listBox1.Margin = new Padding(3, 2, 3, 2);
-            listBox1.Name = "listBox1";
-            listBox1.Size = new Size(245, 619);
-            listBox1.TabIndex = 0;
             // 
             // button1
             // 
-            button1.Location = new Point(257, 9);
+            button1.Location = new Point(12, 9);
             button1.Margin = new Padding(3, 2, 3, 2);
             button1.Name = "button1";
             button1.Size = new Size(75, 21);
@@ -94,30 +90,20 @@
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
-            // pictureBox1
-            // 
-            pictureBox1.Location = new Point(541, 9);
-            pictureBox1.Margin = new Padding(3, 2, 3, 2);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(160, 137);
-            pictureBox1.TabIndex = 2;
-            pictureBox1.TabStop = false;
-            pictureBox1.Click += pictureBox1_Click;
-            // 
             // TileTable
             // 
-            TileTable.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            TileTable.Anchor = AnchorStyles.None;
             TileTable.AutoScroll = true;
             TileTable.ColumnCount = 1;
             TileTable.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 885F));
             TileTable.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 18F));
-            TileTable.Location = new Point(704, 9);
+            TileTable.Location = new Point(172, 9);
             TileTable.Margin = new Padding(0);
             TileTable.Name = "TileTable";
             TileTable.RowCount = 1;
             TileTable.RowStyles.Add(new RowStyle(SizeType.Absolute, 570F));
             TileTable.RowStyles.Add(new RowStyle(SizeType.Absolute, 570F));
-            TileTable.Size = new Size(676, 638);
+            TileTable.Size = new Size(643, 630);
             TileTable.TabIndex = 3;
             // 
             // MovementBox
@@ -127,7 +113,7 @@
             MovementBox.Controls.Add(MoveWest);
             MovementBox.Controls.Add(MoveNorth);
             MovementBox.Enabled = false;
-            MovementBox.Location = new Point(259, 440);
+            MovementBox.Location = new Point(172, 647);
             MovementBox.Name = "MovementBox";
             MovementBox.Size = new Size(121, 149);
             MovementBox.TabIndex = 4;
@@ -201,7 +187,7 @@
             PlayerStats.Controls.Add(label2);
             PlayerStats.Controls.Add(HealthBar);
             PlayerStats.Controls.Add(label1);
-            PlayerStats.Location = new Point(257, 36);
+            PlayerStats.Location = new Point(12, 34);
             PlayerStats.Margin = new Padding(3, 2, 3, 2);
             PlayerStats.Name = "PlayerStats";
             PlayerStats.Padding = new Padding(3, 2, 3, 2);
@@ -402,38 +388,27 @@
             // 
             // ItemTable
             // 
+            ItemTable.AutoScroll = true;
             ItemTable.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
-            ItemTable.ColumnCount = 8;
-            ItemTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            ItemTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            ItemTable.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
-            ItemTable.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
-            ItemTable.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
-            ItemTable.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
-            ItemTable.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
-            ItemTable.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
-            ItemTable.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
-            ItemTable.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
-            ItemTable.Location = new Point(6, 22);
+            ItemTable.ColumnCount = 4;
+            ItemTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            ItemTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            ItemTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            ItemTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            ItemTable.Location = new Point(1, 153);
             ItemTable.Name = "ItemTable";
-            ItemTable.RowCount = 8;
-            ItemTable.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            ItemTable.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            ItemTable.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            ItemTable.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            ItemTable.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            ItemTable.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            ItemTable.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            ItemTable.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            ItemTable.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            ItemTable.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            ItemTable.Size = new Size(151, 126);
+            ItemTable.RowCount = 4;
+            ItemTable.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
+            ItemTable.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
+            ItemTable.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
+            ItemTable.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
+            ItemTable.Size = new Size(151, 135);
             ItemTable.TabIndex = 6;
             ItemTable.Visible = false;
             // 
             // button2
             // 
-            button2.Location = new Point(517, 224);
+            button2.Location = new Point(84, 663);
             button2.Name = "button2";
             button2.Size = new Size(75, 23);
             button2.TabIndex = 7;
@@ -443,7 +418,7 @@
             // 
             // button3
             // 
-            button3.Location = new Point(390, 444);
+            button3.Location = new Point(3, 634);
             button3.Name = "button3";
             button3.Size = new Size(75, 23);
             button3.TabIndex = 8;
@@ -454,7 +429,7 @@
             // InteractButton
             // 
             InteractButton.Enabled = false;
-            InteractButton.Location = new Point(390, 473);
+            InteractButton.Location = new Point(3, 663);
             InteractButton.Name = "InteractButton";
             InteractButton.Size = new Size(75, 23);
             InteractButton.TabIndex = 9;
@@ -466,26 +441,122 @@
             // 
             ActivityLog.FormattingEnabled = true;
             ActivityLog.ItemHeight = 15;
-            ActivityLog.Location = new Point(390, 502);
+            ActivityLog.Location = new Point(299, 642);
             ActivityLog.Name = "ActivityLog";
-            ActivityLog.Size = new Size(311, 94);
+            ActivityLog.Size = new Size(516, 154);
             ActivityLog.TabIndex = 10;
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(label14);
+            groupBox1.Controls.Add(JeweleryTable);
+            groupBox1.Controls.Add(ArmorIcon);
+            groupBox1.Controls.Add(label13);
+            groupBox1.Controls.Add(label12);
+            groupBox1.Controls.Add(WeaponIcon);
+            groupBox1.Controls.Add(WeightLabel);
             groupBox1.Controls.Add(ItemTable);
-            groupBox1.Location = new Point(257, 286);
+            groupBox1.Location = new Point(12, 284);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(163, 154);
+            groupBox1.Size = new Size(157, 315);
             groupBox1.TabIndex = 11;
             groupBox1.TabStop = false;
             groupBox1.Text = "Ekwipunek";
+            // 
+            // WeightLabel
+            // 
+            WeightLabel.AutoSize = true;
+            WeightLabel.Location = new Point(4, 297);
+            WeightLabel.Name = "WeightLabel";
+            WeightLabel.Size = new Size(44, 15);
+            WeightLabel.TabIndex = 14;
+            WeightLabel.Text = "label12";
+            // 
+            // CoordinatesLabel
+            // 
+            CoordinatesLabel.AutoSize = true;
+            CoordinatesLabel.Location = new Point(131, 689);
+            CoordinatesLabel.Name = "CoordinatesLabel";
+            CoordinatesLabel.Size = new Size(27, 15);
+            CoordinatesLabel.TabIndex = 12;
+            CoordinatesLabel.Text = "X, Y";
+            // 
+            // GiveFish
+            // 
+            GiveFish.Location = new Point(84, 634);
+            GiveFish.Name = "GiveFish";
+            GiveFish.Size = new Size(75, 23);
+            GiveFish.TabIndex = 13;
+            GiveFish.Text = "gib fish";
+            GiveFish.UseVisualStyleBackColor = true;
+            GiveFish.Click += GiveFish_Click;
+            // 
+            // WeaponIcon
+            // 
+            WeaponIcon.Location = new Point(16, 22);
+            WeaponIcon.Name = "WeaponIcon";
+            WeaponIcon.Size = new Size(32, 32);
+            WeaponIcon.TabIndex = 15;
+            WeaponIcon.TabStop = false;
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new Point(14, 57);
+            label12.Name = "label12";
+            label12.Size = new Size(32, 15);
+            label12.TabIndex = 16;
+            label12.Text = "Broń";
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Location = new Point(89, 57);
+            label13.Name = "label13";
+            label13.Size = new Size(48, 15);
+            label13.TabIndex = 17;
+            label13.Text = "Pancerz";
+            // 
+            // ArmorIcon
+            // 
+            ArmorIcon.Location = new Point(89, 22);
+            ArmorIcon.Name = "ArmorIcon";
+            ArmorIcon.Size = new Size(32, 32);
+            ArmorIcon.TabIndex = 18;
+            ArmorIcon.TabStop = false;
+            // 
+            // JeweleryTable
+            // 
+            JeweleryTable.ColumnCount = 4;
+            JeweleryTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            JeweleryTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            JeweleryTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            JeweleryTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            JeweleryTable.Location = new Point(4, 75);
+            JeweleryTable.Name = "JeweleryTable";
+            JeweleryTable.RowCount = 1;
+            JeweleryTable.RowStyles.Add(new RowStyle(SizeType.Percent, 47.22222F));
+            JeweleryTable.RowStyles.Add(new RowStyle(SizeType.Percent, 52.77778F));
+            JeweleryTable.Size = new Size(145, 36);
+            JeweleryTable.TabIndex = 19;
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Location = new Point(52, 114);
+            label14.Name = "label14";
+            label14.Size = new Size(52, 15);
+            label14.TabIndex = 20;
+            label14.Text = "Biżuteria";
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1389, 657);
+            BackColor = SystemColors.Control;
+            ClientSize = new Size(853, 886);
+            Controls.Add(GiveFish);
+            Controls.Add(CoordinatesLabel);
             Controls.Add(groupBox1);
             Controls.Add(ActivityLog);
             Controls.Add(InteractButton);
@@ -494,25 +565,23 @@
             Controls.Add(PlayerStats);
             Controls.Add(MovementBox);
             Controls.Add(TileTable);
-            Controls.Add(pictureBox1);
             Controls.Add(button1);
-            Controls.Add(listBox1);
             Margin = new Padding(3, 2, 3, 2);
             Name = "Form1";
             Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             MovementBox.ResumeLayout(false);
             PlayerStats.ResumeLayout(false);
             PlayerStats.PerformLayout();
             groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)WeaponIcon).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ArmorIcon).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
-
-        private ListBox listBox1;
         private Button button1;
-        private PictureBox pictureBox1;
         private TableLayoutPanel TileTable;
         private GroupBox MovementBox;
         private Button MoveNorth;
@@ -547,5 +616,14 @@
         private Button InteractButton;
         private ListBox ActivityLog;
         private GroupBox groupBox1;
+        private Label CoordinatesLabel;
+        private Button GiveFish;
+        private Label WeightLabel;
+        private Label label14;
+        private TableLayoutPanel JeweleryTable;
+        private PictureBox ArmorIcon;
+        private Label label13;
+        private Label label12;
+        private PictureBox WeaponIcon;
     }
 }

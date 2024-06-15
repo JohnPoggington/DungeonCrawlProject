@@ -27,6 +27,8 @@ namespace Lib
 
         private Random _mapRandom;
 
+        private static List<String> MediumLevelMonsters = ["Orc", "Zombie", "Earthworm", "Exploder"];
+
         [Range(0,100)]
         private int _FillingPercentage;
 
@@ -93,8 +95,17 @@ namespace Lib
                     case WalkingDirection.North: { 
                             if (y-1 > 0 && !Entites.Any(check => check.Position.Equals(new System.Drawing.Point(x,y-1))) && Map[x,y - 1] == 1)
                             {
-                                ent.Move(WalkingDirection.North);
+                                 ent.Move(WalkingDirection.North);
                             }
+                            else if (Entites.Where(e => e is Spikes).Any(check => check.Position.Equals(new System.Drawing.Point(x, y - 1))))
+                            {
+                                if (ent is Player)
+                                {
+                                    Spikes s = (Spikes)Entites.Single(s => s is Spikes && s.Position.Equals(new System.Drawing.Point(x, y - 1)));
+                                    s.OnStep(((Player)ent));
+                                }
+                            }
+                            
                             else throw new Exceptions.IllegalMovementException();
                             break; 
                         };
@@ -102,7 +113,16 @@ namespace Lib
                         {
                             if (y + 1  < MapHeight && !Entites.Any(check => check.Position.Equals(new System.Drawing.Point(x, y + 1))) && Map[x, y + 1] == 1)
                             {
-                                ent.Move(WalkingDirection.South);
+                                
+                                    ent.Move(WalkingDirection.South);
+                            }
+                            else if (Entites.Where(e => e is Spikes).Any(check => check.Position.Equals(new System.Drawing.Point(x, y + 1))))
+                            {
+                                if (ent is Player)
+                                {
+                                    Spikes s = (Spikes)Entites.Single(s => s is Spikes && s.Position.Equals(new System.Drawing.Point(x, y + 1)));
+                                    s.OnStep(((Player)ent));
+                                }
                             }
                             else throw new Exceptions.IllegalMovementException();
                             break;
@@ -111,7 +131,15 @@ namespace Lib
                         {
                             if (x + 1 < MapWidth && !Entites.Any(check => check.Position.Equals(new System.Drawing.Point(x + 1, y))) && Map[x + 1, y] == 1)
                             {
-                                ent.Move(WalkingDirection.East);
+                               ent.Move(WalkingDirection.East);
+                            }
+                            else if (Entites.Where(e => e is Spikes).Any(check => check.Position.Equals(new System.Drawing.Point(x + 1, y))))
+                                {
+                                if (ent is Player)
+                                {
+                                    Spikes s = (Spikes)Entites.Single(s => s is Spikes && s.Position.Equals(new System.Drawing.Point(x + 1, y)));
+                                    s.OnStep(((Player)ent));
+                                }
                             }
                             else throw new Exceptions.IllegalMovementException();
                             break;
@@ -121,6 +149,14 @@ namespace Lib
                             if (x - 1 > 0 && !Entites.Any(check => check.Position.Equals(new System.Drawing.Point(x - 1, y))) && Map[x - 1, y] == 1)
                             {
                                 ent.Move(WalkingDirection.West);
+                            }
+                            else if (Entites.Where(e => e is Spikes).Any(check => check.Position.Equals(new System.Drawing.Point(x - 1, y))))
+                            {
+                                if (ent is Player)
+                                {
+                                    Spikes s = (Spikes)Entites.Single(s => s is Spikes && s.Position.Equals(new System.Drawing.Point(x - 1, y)));
+                                    s.OnStep(((Player)ent));
+                                }
                             }
                             else throw new Exceptions.IllegalMovementException();
                             break;
@@ -186,7 +222,7 @@ namespace Lib
                         Experience = 0,
                         MaxItemWeight = 20,
                         Position = new System.Drawing.Point(xrand, yrand),
-                        Items = new List<Item>()
+                        Items = [new Item("Map") { Name = "Mapa lochu", Type = ItemTypes.Other, Weight = 0 }]
                     });
 
                 MakePlayerAreaVisible();
@@ -204,8 +240,9 @@ namespace Lib
             int xrand = rand.Next(MapWidth);
             int yrand = rand.Next(MapHeight);
 
-            List<IEntity> requiredEntities = [new Altar { Name = "Magiczny ołtarz" }, new Monster {
-                Name = "Lich",
+            List<IEntity> requiredEntities = [new Altar("Magiczny ołtarz"),
+            new Monster("Lich")
+            {
                 Level = 10,
                 Experience = 350,
                 MaxHealth = 25,
@@ -221,7 +258,25 @@ namespace Lib
                 DamageType = DamageTypes.Magic,
                 Position = new System.Drawing.Point(xrand, yrand),
                 Items = new List<Item>()
-            }];
+            },
+            new Exploder("Exploder")
+            {
+                Level = 6,
+                Experience = 30 + 10 * 6,
+                MaxHealth = 8 + 6,
+                MaxMana = 0,
+                CurHealth = 8 + 6,
+                CurMana = 0,
+                Dexterity = 3,
+                PhysicalResist = 2,
+                MagicResist = 10,
+                FireResist = 0,
+                Strength = 10,
+                MaxItemWeight = 1,
+                Position = new System.Drawing.Point(xrand, yrand),
+                Items = new List<Item>()
+            }, new FishingPond("Staw z rybami", 5)];
+                
 
             requiredEntities.ForEach(e =>
             {
@@ -234,6 +289,21 @@ namespace Lib
                 }
 
                 e.Position = new System.Drawing.Point(xrand, yrand);
+
+                if (e is FishingPond)
+                {
+                    ((FishingPond)e).OnInteract += delegate
+                    {
+                        GetPlayer().AddItem(new Item("Fish")
+                        {
+                            Name = "Ryba",
+                            Type = ItemTypes.Consumable,
+                            Weight = 1,
+                            ItemModifiers = new Dictionary<ModifierTypes, int> { { ModifierTypes.Healing, 3 } }
+                        });
+                    };
+                }
+
                 Entites.Add(e);
  
             });
@@ -248,9 +318,10 @@ namespace Lib
                     yrand = rand.Next(MapHeight);
                 }
 
-                int level = rand.Next(1, 3);
+                int level = rand.Next(1, 5);
 
-                Entites.Add(new Monster { Name = "Goblin",
+                Entites.Add(new Monster("Goblin") 
+                {
                     Level = level,
                     Experience = 25 + 10*level,
                     MaxHealth = 3 + level,
@@ -264,9 +335,131 @@ namespace Lib
                     Strength = 5,
                     MaxItemWeight = 1,
                     Position = new System.Drawing.Point(xrand, yrand),
-                    Items = new List<Item>()
+                });
+
+                
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                xrand = rand.Next(MapWidth);
+                yrand = rand.Next(MapHeight);
+                while (Map[xrand, yrand] != 1 && !Entites.Any(e => e.Position.Equals(new Point(xrand, yrand))))
+                {
+                    xrand = rand.Next(MapWidth);
+                    yrand = rand.Next(MapHeight);
+                }
+
+                int level = rand.Next(1, 5);
+
+                Entites.Add(new Monster("Goblin")
+                {
+                    Level = level,
+                    Experience = 25 + 10 * level,
+                    MaxHealth = 3 + level,
+                    MaxMana = 0,
+                    CurHealth = 3 + level,
+                    CurMana = 0,
+                    Dexterity = 1,
+                    PhysicalResist = 0,
+                    MagicResist = 0,
+                    FireResist = 0,
+                    Strength = 5,
+                    MaxItemWeight = 1,
+                    Position = new System.Drawing.Point(xrand, yrand),
                 });
             }
+
+            
+
+            for (int i = 0; i < 5; i++)
+            {
+                xrand = rand.Next(MapWidth);
+                yrand = rand.Next(MapHeight);
+                while (Map[xrand, yrand] != 1 && !Entites.Any(e => e.Position.Equals(new Point(xrand, yrand))))
+                {
+                    xrand = rand.Next(MapWidth);
+                    yrand = rand.Next(MapHeight);
+                }
+
+                int level = rand.Next(6, 10);
+                int nameId = rand.Next(MediumLevelMonsters.Count);
+
+                String monsterName = MediumLevelMonsters[nameId];
+
+                if (monsterName != "Exploder")
+                {
+                    Entites.Add(new Monster(monsterName)
+                    {
+                        Level = level,
+                        Experience = 50 + 10 * level,
+                        MaxHealth = 12 + level,
+                        MaxMana = 0,
+                        CurHealth = 12 + level,
+                        CurMana = 0,
+                        Dexterity = 1 + rand.Next(10),
+                        PhysicalResist = 3 + level,
+                        MagicResist = 1 + rand.Next(4),
+                        FireResist = 1 + rand.Next(4),
+                        Strength = 8 + level + rand.Next(1,4),
+                        MaxItemWeight = 1,
+                        Position = new System.Drawing.Point(xrand, yrand),
+                    });
+                }
+                else
+                {
+                    Entites.Add(new Exploder(monsterName)
+                    {
+                        Level = level,
+                        Experience = 30 + 10 * level,
+                        MaxHealth = 8 + level,
+                        MaxMana = 0,
+                        CurHealth = 8 + level,
+                        CurMana = 0,
+                        Dexterity = 3,
+                        PhysicalResist = 2,
+                        MagicResist = 10,
+                        FireResist = 0,
+                        Strength = 10,
+                        MaxItemWeight = 1,
+                        Position = new System.Drawing.Point(xrand, yrand),
+                    });
+                }
+            }
+
+            foreach (var exploder in Entites.Where(e => e is Exploder))
+            {
+                ((Exploder)exploder).OnExploderDeath += delegate
+                {
+                    foreach (var ent in GetInteractableEntitiesAroundEnt(exploder))
+                    {
+                        if (ent is Character)
+                        {
+                            ((Character)ent).TakeDamage(DamageTypes.Fire, ((Exploder)exploder).Strength / 3);
+                        }
+                    }
+
+                };
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                xrand = rand.Next(MapWidth);
+                yrand = rand.Next(MapHeight);
+                while (Map[xrand, yrand] != 1 && !Entites.Any(e => e.Position.Equals(new Point(xrand, yrand))))
+                {
+                    xrand = rand.Next(MapWidth);
+                    yrand = rand.Next(MapHeight);
+                }
+
+                int level = rand.Next(1, 5);
+
+                Entites.Add(new Spikes(new Point(xrand, yrand))
+                {
+                    Name = "Kolce",
+                });
+            }
+            
         }
 
         public Player GetPlayer()

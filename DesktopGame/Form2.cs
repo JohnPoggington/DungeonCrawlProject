@@ -184,41 +184,9 @@ namespace DungeonCrawlProject
             else MessageBox.Show("Nazwa musi mieć przynajmniej 3 znaki!");
             
 
-            //EndCreator();
+           
         }
 
-        private DialogResult EndCreator()
-        {
-            if (!string.IsNullOrEmpty(NameInput.Text) && NameInput.Text.Length >= 3)
-            {
-                if (_Points == 0)
-                {
-                    CreatedPlayer = new Player()
-                    {
-                        Name = NameInput.Text,
-                        Level = 1,
-                        MaxHealth = _HP,
-                        CurHealth = _HP,
-                        MaxMana = _Mana,
-                        CurMana = _Mana,
-                        Dexterity = _Dexterity,
-                        PhysicalResist = 1,
-                        MagicResist = 1,
-                        FireResist = 1,
-                        Strength = _Strength,
-                        Experience = 0,
-                        TotalExperience = 0,
-                        MaxItemWeight = 20,
-                        Items = new List<Item>()
-                    };
-                    return DialogResult.OK;
-                }
-                else { MessageBox.Show("Masz dalej niewykorzystane punkty!"); };
-
-            }
-            else MessageBox.Show("Nazwa musi mieć przynajmniej 3 znaki!");
-            Close();
-            return DialogResult.TryAgain;
-        }
+        
     }
 }

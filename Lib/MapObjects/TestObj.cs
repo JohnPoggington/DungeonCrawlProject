@@ -4,13 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lib.Items
+namespace Lib.MapObjects
 {
-    public class Map : Item
-    {        
-        public override void Use()
+    public class TestObj : InteractableObject
+    {
+        public override void Interact(Player p)
         {
             throw new NotImplementedException();
         }
+
+        public TestObj(string Name) : base(Name) { }
     }
 }

@@ -4,21 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Lib.Enums;
+using Lib.Items;
 
 namespace Lib
 {
-    public delegate void LevelDelegate(int CurrentLevel);
+    public delegate void LevelDelegate(int CurrentLevel, int OldLevel);
     public class Player : Character
     {
         public WalkingDirection WalkingDirection { get; set; }
 
-        public int Experience { get; set; }
-
+                
         public int TotalExperience { get; set; }
 
         public event LevelDelegate OnLevelUp;
 
-        public void Move(WalkingDirection direction)
+        public override void Move(WalkingDirection direction)
         {
             base.Move(direction);
             this.WalkingDirection = direction;
@@ -28,16 +28,33 @@ namespace Lib
 
         public void AwardXP(int amount)
         {
+            Random rand = new Random();
             Experience += amount;
             TotalExperience += amount;
             if (Experience > XPToNextLevel()) 
             {
+                int oldLvl = Level;
                 while (Experience > XPToNextLevel()) 
                 {
                     Experience -= XPToNextLevel();
                     Level = Level + 1;
+
+                    int resist = rand.Next(3);
+
+                    switch (resist)
+                    {
+                        case 0:PhysicalResist++;break;
+                        case 1:MagicResist++;break;
+                        case 2:FireResist++;break;
+                    }
+
                 }
-                OnLevelUp?.Invoke(Level);
+                MaxHealth += (Level - oldLvl) * 3;
+                CurHealth = MaxHealth;
+                MaxMana += (Level - oldLvl) * 3;
+                CurMana = MaxMana;
+                MaxItemWeight += 5;
+                OnLevelUp?.Invoke(Level, oldLvl);
                 
             }
         }

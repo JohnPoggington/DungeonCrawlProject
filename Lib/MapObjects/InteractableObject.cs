@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace Lib.MapObjects
 {
-    public delegate void VoidDelegate();
     public abstract class InteractableObject : IEntity
     {
         public string Name {get; set;}
@@ -19,6 +18,11 @@ namespace Lib.MapObjects
 
         public event VoidDelegate OnInteract;
         public event VoidDelegate OnInteractFailed;
+        public InteractableObject(String name)
+        {
+            this.Name = name;
+            this.IsInteractable = true;
+        }
 
         public void Move(WalkingDirection direction)
         {

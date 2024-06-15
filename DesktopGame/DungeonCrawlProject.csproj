@@ -10,27 +10,69 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Items\Blue Potion 3.png" />
+    <None Remove="Resources\Items\Blue Potion.png" />
+    <None Remove="Resources\Items\Cape.png" />
+    <None Remove="Resources\Items\Dagger.png" />
+    <None Remove="Resources\Items\fish.png" />
+    <None Remove="Resources\Items\FrameSquare.png" />
+    <None Remove="Resources\Items\IronArmor.png" />
+    <None Remove="Resources\Items\Map.png" />
+    <None Remove="Resources\Items\PotionRed.png" />
+    <None Remove="Resources\Items\Red Potion.png" />
+    <None Remove="Resources\Items\RedRing.png" />
+    <None Remove="Resources\Items\RuneStone.png" />
+    <None Remove="Resources\Items\Sword.png" />
+    <None Remove="Resources\Items\Wine.png" />
+    <None Remove="Resources\Items\WizardHat.png" />
     <None Remove="Resources\Tiles\altar.png" />
+    <None Remove="Resources\Tiles\earthworm.png" />
+    <None Remove="Resources\Tiles\Exploder.png" />
     <None Remove="Resources\Tiles\floor.png" />
     <None Remove="Resources\Tiles\fogofwar.png" />
     <None Remove="Resources\Tiles\goblin.png" />
     <None Remove="Resources\Tiles\Lich.png" />
+    <None Remove="Resources\Tiles\missingno.png" />
+    <None Remove="Resources\Tiles\orc.png" />
     <None Remove="Resources\Tiles\player.png" />
     <None Remove="Resources\Tiles\SaveAltar.png" />
+    <None Remove="Resources\Tiles\skeleton.png" />
     <None Remove="Resources\Tiles\spikes.png" />
     <None Remove="Resources\Tiles\wall.png" />
+    <None Remove="Resources\Tiles\Zombie.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Resources\Items\Blue Potion 3.png" />
+    <EmbeddedResource Include="Resources\Items\Blue Potion.png" />
+    <EmbeddedResource Include="Resources\Items\Cape.png" />
+    <EmbeddedResource Include="Resources\Items\Dagger.png" />
+    <EmbeddedResource Include="Resources\Items\fish.png" />
+    <EmbeddedResource Include="Resources\Items\FrameSquare.png" />
+    <EmbeddedResource Include="Resources\Items\IronArmor.png" />
+    <EmbeddedResource Include="Resources\Items\Map.png" />
+    <EmbeddedResource Include="Resources\Items\PotionRed.png" />
+    <EmbeddedResource Include="Resources\Items\Red Potion.png" />
+    <EmbeddedResource Include="Resources\Items\RedRing.png" />
+    <EmbeddedResource Include="Resources\Items\RuneStone.png" />
+    <EmbeddedResource Include="Resources\Items\Sword.png" />
+    <EmbeddedResource Include="Resources\Items\Wine.png" />
+    <EmbeddedResource Include="Resources\Items\WizardHat.png" />
     <EmbeddedResource Include="Resources\Tiles\altar.png" />
+    <EmbeddedResource Include="Resources\Tiles\earthworm.png" />
+    <EmbeddedResource Include="Resources\Tiles\Exploder.png" />
     <EmbeddedResource Include="Resources\Tiles\floor.png" />
     <EmbeddedResource Include="Resources\Tiles\fogofwar.png" />
     <EmbeddedResource Include="Resources\Tiles\goblin.png" />
     <EmbeddedResource Include="Resources\Tiles\Lich.png" />
+    <EmbeddedResource Include="Resources\Tiles\missingno.png" />
+    <EmbeddedResource Include="Resources\Tiles\orc.png" />
     <EmbeddedResource Include="Resources\Tiles\player.png" />
     <EmbeddedResource Include="Resources\Tiles\SaveAltar.png" />
+    <EmbeddedResource Include="Resources\Tiles\skeleton.png" />
     <EmbeddedResource Include="Resources\Tiles\spikes.png" />
     <EmbeddedResource Include="Resources\Tiles\wall.png" />
+    <EmbeddedResource Include="Resources\Tiles\Zombie.png" />
   </ItemGroup>
 
   <ItemGroup>
