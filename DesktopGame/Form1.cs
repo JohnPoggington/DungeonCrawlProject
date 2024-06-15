@@ -3,8 +3,16 @@ using Lib;
 using Lib.Enums;
 using Lib.MapObjects;
 using Lib.Monsters;
+using Lib.Spells;
+using Newtonsoft.Json;
+using System.Diagnostics.Eventing.Reader;
+using System.Drawing;
 using System.Drawing.Imaging;
 using System.Resources;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Xml.Serialization;
 
 namespace DungeonCrawlProject
 {
@@ -52,6 +60,16 @@ namespace DungeonCrawlProject
             CoordinatesLabel.Text = $"{p.Position.X}, {p.Position.Y}";
 
             WeightLabel.Text = $"Waga ekwipunku: {p.CurrentWeight}/{p.MaxItemWeight}";
+
+            SpellList.Items.Clear();
+
+            foreach (Spell spell in p.Spells)
+            {
+                SpellList.Items.Add(spell);
+
+            }
+
+
         }
 
         private void AwardXP(int amount)
@@ -63,29 +81,21 @@ namespace DungeonCrawlProject
 
         private void SetDelegates()
         {
-            dungeon.GetPlayer().OnLevelUp += (lvl, oldlvl) =>
-            {
-                MessageBox.Show($"Level Up! Twoja postaæ ma poziom {lvl}!");
-                Player p = dungeon.GetPlayer();
-                LevelUpPoints levelup = new LevelUpPoints(ref p, oldlvl);
-                levelup.ShowDialog();
-            };
-            dungeon.GetPlayer().OnEquipFailed += delegate { MessageBox.Show("Masz za ma³o miejsca na ten przedmiot!"); };
+
             foreach (IEntity ent in dungeon.Entites)
             {
                 if (ent is Character)
                 {
-                    Character character = (Character)ent;
-                    character.OnCombat += (dmg) => { AddMessageToLog($"{character} otrzyma³ {dmg} punktów obra¿eñ"); UpdatePlayerDisplay(); };
-                    character.OnAttackDodge += delegate { AddMessageToLog($"{character} unikn¹³ nadchodz¹cy atak!"); };
-                    character.OnDeath += delegate { AddMessageToLog($"{character} umiera!"); };
 
-                    if (ent is Player)
+
+
+
+                    if (ent is not Player)
                     {
-                        character.OnDeath += delegate { MessageBox.Show("Twoja postaæ umar³a!"); this.Close(); };
-                    }
-                    else
-                    {
+                        Character character = (Character)ent;
+                        character.OnCombat += (dmg) => { AddMessageToLog($"{character} otrzyma³ {dmg} punktów obra¿eñ"); UpdatePlayerDisplay(); UpdateTiles(dungeon.GetPlayer()); };
+                        character.OnAttackDodge += delegate { AddMessageToLog($"{character} unikn¹³ nadchodz¹cy atak!"); };
+                        character.OnDeath += delegate { AddMessageToLog($"{character} umiera!"); };
                         Monster m = (Monster)ent;
                         Player p = dungeon.GetPlayer();
                         m.OnDeath += delegate
@@ -93,6 +103,12 @@ namespace DungeonCrawlProject
                             if (m.Items.Count > 0) { LootMonster lootMonster = new LootMonster(ref p, m.Items, m.Name); lootMonster.ShowDialog(); UpdateItems(); }
                             dungeon.Entites.Remove(ent); UpdateTiles(p); UpdateInteractButton(p);
                             AddMessageToLog($"{p.Name} otrzymuje {m.XPReward(p)} punktów doœwiadczenia!");
+                            Console.WriteLine(dungeon.GetMonsterCount);
+                            if (dungeon.GetMonsterCount == 0)
+                            {
+                                MessageBox.Show("Pokona³eœ wszystkie potwory i schodzisz ni¿ej do lochu");
+                                InitializeWorld(p);
+                            }
                         };
 
                     }
@@ -112,6 +128,16 @@ namespace DungeonCrawlProject
                         ((FishingPond)ent).OnInteractFailed += delegate { AddMessageToLog("Nie uda³o ci siê z³owiæ ryby!"); };
                         ((FishingPond)ent).OnNoFishes += delegate { AddMessageToLog("W stawie nie ma ju¿ ryb!"); };
                     }
+
+                    if (ent is Chest)
+                    {
+                        Player p = dungeon.GetPlayer();
+                        ((Chest)ent).OnInteract += delegate
+                        {
+                            AddMessageToLog("Otwierasz skrzyniê");
+                            LootMonster lootMonster = new LootMonster(ref p, ((Chest)ent).Items, ent.Name); lootMonster.ShowDialog(); UpdateItems();
+                        };
+                    }
                 }
                 if (ent is Spikes)
                 {
@@ -119,40 +145,94 @@ namespace DungeonCrawlProject
                 }
             }
 
-            foreach (Item i in dungeon.GetPlayer().Items)
-            {
-                if (i.SpriteName == "Map")
-                {
-                    i.OnUse += delegate { MapWindow map = new MapWindow(ref dungeon); map.Show(); };
+        }
 
-                }
-            }
+        private void SetPlayerDelegates()
+        {
+            dungeon.GetPlayer().OnLevelUp += (lvl, oldlvl) =>
+            {
+                //MessageBox.Show($"Level Up! Twoja postaæ ma poziom {lvl}!");
+                Player p = dungeon.GetPlayer();
+                LevelUpPoints levelup = new LevelUpPoints(ref p, oldlvl);
+                levelup.ShowDialog();
+            };
+            dungeon.GetPlayer().OnEquipFailed += delegate { MessageBox.Show("Masz za ma³o miejsca na ten przedmiot!"); };
+
+            dungeon.GetPlayer().OnDeath += delegate { MessageBox.Show("Twoja postaæ umar³a!"); this.Close(); };
+
+
+            dungeon.GetPlayer().OnCombat += (dmg) => { AddMessageToLog($"{dungeon.GetPlayer()} otrzyma³ {dmg} punktów obra¿eñ"); UpdatePlayerDisplay(); UpdateTiles(dungeon.GetPlayer()); };
+            dungeon.GetPlayer().OnAttackDodge += delegate { AddMessageToLog($"{dungeon.GetPlayer()} unikn¹³ nadchodz¹cy atak!"); };
+            dungeon.GetPlayer().OnDeath += delegate { AddMessageToLog($"{dungeon.GetPlayer()} umiera!"); };
+            dungeon.GetPlayer().OnSpellLearned += spell => { AddMessageToLog($"Uda³o ci siê nauczyæ czar {spell}"); };
+            dungeon.GetPlayer().OnSpellLearnFailed += spell => { AddMessageToLog("Ju¿ znasz czar z tego kamienia!"); };
+
         }
 
         /// INIT WORLD
         private void button1_Click(object sender, EventArgs e)
         {
+
+            NewGame();
+
+        }
+
+        private void NewGame()
+        {
             Form2 f2 = new Form2();
             DialogResult result = f2.ShowDialog();
             Player p = f2.CreatedPlayer;
 
+            InitializeWorld(p);
+            SetPlayerDelegates();
 
-            //if (result == DialogResult.OK)
-            //{
-            //    Player p = f2.CreatedPlayer;
-            //    MessageBox.Show($"{p.Name} str{p.Strength}");
-            //}
-            //else if (result == DialogResult.TryAgain)
-            //{
-            //    //DialogResult result2 = f2.ShowDialog();
-            //    MessageBox.Show("Try again");
-            //}
+        }
 
-            int width = 40;
-            int height = 40;
-            dungeon = new Dungeon(width, height);
+        private void InitializeWorld(Player p)
+        {
+            Random rand = new Random();
+            int size = rand.Next(30, 45);
+
+            dungeon = new Dungeon(size, size);
             MessageBox.Show(Dungeon.MapWidth + " x " + Dungeon.MapHeight);
 
+
+
+            
+
+
+            dungeon.GenerateMap(true);
+            try
+            {
+                dungeon.PutPlayer(p);
+            }
+            catch (NullReferenceException ex)
+            {
+                dungeon.PutPlayer(null);
+            }
+
+            DrawWorld();
+
+            MessageBox.Show($"Tiles {TileTable.Controls.Count}");
+            MovementBox.Enabled = true;
+
+            UpdatePlayerDisplay();
+            SetDelegates();
+            PlayerStats.Visible = true;
+            ItemTable.Visible = true;
+            InventoryBox.Visible = true;
+            MovementBox.Visible = true;
+            ActivityLog.Visible = true;
+            InteractButton.Visible = true;
+            SpellBox.Visible = true;
+            zapiszGrêToolStripMenuItem.Enabled = true;
+            devToolsToolStripMenuItem.Enabled = true;
+            UpdateInteractButton(dungeon.GetPlayer());
+            UpdateItems();
+        }
+
+        private void DrawWorld()
+        {
             TileTable.Hide();
 
             TileTable.SuspendLayout();
@@ -165,34 +245,9 @@ namespace DungeonCrawlProject
             TileTable.RowStyles.Clear();
             TileTable.ColumnStyles.Clear();
 
-            TileTable.RowCount = width;
-            TileTable.ColumnCount = width;
+            TileTable.RowCount = Dungeon.MapWidth;
+            TileTable.ColumnCount = Dungeon.MapWidth;
             TableLayoutColumnStyleCollection styles = TileTable.ColumnStyles;
-
-
-
-
-
-            dungeon.GenerateMap();
-            try
-            {
-                dungeon.PutPlayer(p);
-            }
-            catch (NullReferenceException ex)
-            {
-                dungeon.PutPlayer(null);
-            }
-
-
-
-
-
-
-
-
-            //listBox1.Items.Clear();
-
-            //PictureBox[] _mapTiles = new PictureBox[Dungeon.MapWidth];
 
             for (int x = 1; x < Dungeon.MapHeight; x++)
             {
@@ -213,21 +268,9 @@ namespace DungeonCrawlProject
                     tile.Margin = new Padding(0);
 
                     TileTable.Controls.Add(tile, x, y);
-                    //TileTable.Controls.Add(tile); 
 
-                    //flowLayoutPanel1.Controls.Add(tile);
-                    //if (y == Dungeon.MapHeight - 1)
-                    //{
-                    //    PictureBox lastTile = tile;
-                    //    flowLayoutPanel1.Controls.Add(lastTile);
-                    //    flowLayoutPanel1.SetFlowBreak(tile, true);
-                    //}
-                    //else flowLayoutPanel1.Controls.Add(tile);
-                    //_mapTiles[y] = tile;
                 }
 
-                //listBox1.Items.Add(map);
-                //TileTable.Controls.AddRange(_mapTiles);
 
             }
 
@@ -240,17 +283,6 @@ namespace DungeonCrawlProject
             }
             TileTable.ResumeLayout();
             TileTable.Show();
-            MessageBox.Show($"Tiles {TileTable.Controls.Count}");
-            MovementBox.Enabled = true;
-
-            UpdatePlayerDisplay();
-            SetDelegates();
-            PlayerStats.Visible = true;
-            ItemTable.Visible = true;
-            UpdateInteractButton(dungeon.GetPlayer());
-            UpdateItems();
-
-
         }
 
         private PictureBox setTile(PictureBox tile, int x, int y)
@@ -270,6 +302,10 @@ namespace DungeonCrawlProject
                     //MessageBox.Show($"Monster {ent.Name}");
                     object pic = ResourceManager.GetObject(ent.Name);
                     tile.Image = ((Bitmap)(pic));
+                    if (ent is Mimic && !((Mimic)ent).isSeen)
+                    {
+                        tile.Image = Resources.Chest;
+                    }
                 }
                 else if (ent is not null)
                 {
@@ -297,134 +333,6 @@ namespace DungeonCrawlProject
 
         }
 
-        private void UpdateItems()
-        {
-            var ResourceManager = new System.Resources.ResourceManager("DungeonCrawlProject.Properties.Resources", typeof(Resources).Assembly);
-
-            ItemTable.Hide();
-
-            ItemTable.SuspendLayout();
-
-            for (int i = ItemTable.Controls.Count - 1; i >= 0; --i)
-                ItemTable.Controls[i].Dispose();
-
-            ItemTable.Controls.Clear();
-
-            List<Item> playerItems = dungeon.GetPlayer().Items;
-            List<Item> playerJewelery = dungeon.GetPlayer().Jewelery;
-
-            
-            
-
-            foreach (Item item in playerItems)
-            {
-
-                PictureBox itemTile = new PictureBox();
-
-                itemTile.Width = 32;
-                itemTile.Height = 32;
-                itemTile.SizeMode = PictureBoxSizeMode.Zoom;
-                itemTile.WaitOnLoad = true;
-
-                object pic = ResourceManager.GetObject(item.SpriteName);
-                if (pic is not null)
-                    itemTile.Image = ((Bitmap)(pic));
-                else itemTile.Image = Resources.missingno;
-
-                
-
-                if (item.SpriteName == "Map")
-                {
-                    itemTile.Click += delegate { MapWindow mapWindow = new MapWindow(ref dungeon); mapWindow.Show(); };
-                }
-                else itemTile.Click += delegate { dungeon.GetPlayer().RemoveItem(item, true); UpdateItems(); UpdatePlayerDisplay(); };
-
-                ToolTip toolTip = new ToolTip();
-                toolTip.SetToolTip(itemTile, item.Name);
-
-                ItemTable.Controls.Add(itemTile);
-                               
-            }
-
-            foreach (Item item in playerJewelery)
-            {
-
-                PictureBox itemTile = new PictureBox();
-
-                itemTile.Width = 32;
-                itemTile.Height = 32;
-                itemTile.SizeMode = PictureBoxSizeMode.Zoom;
-                itemTile.WaitOnLoad = true;
-
-                object pic = ResourceManager.GetObject(item.SpriteName);
-                if (pic is not null)
-                    itemTile.Image = ((Bitmap)(pic));
-                else itemTile.Image = Resources.missingno;
-
-
-
-                itemTile.Click += delegate { dungeon.GetPlayer().RemoveJewelery(item); UpdateItems(); UpdatePlayerDisplay(); };
-
-                ToolTip toolTip = new ToolTip();
-                toolTip.SetToolTip(itemTile, item.Name);
-
-                JeweleryTable.Controls.Add(itemTile);
-            }
-
-
-            if (dungeon.GetPlayer().Weapon is not null)
-            {
-                PictureBox weaponTile = new PictureBox();
-
-                weaponTile.Width = 32;
-                weaponTile.Height = 32;
-                weaponTile.SizeMode = PictureBoxSizeMode.Zoom;
-                weaponTile.WaitOnLoad = true;
-
-                object wpic = ResourceManager.GetObject(dungeon.GetPlayer().Weapon.SpriteName);
-                if (wpic is not null)
-                    weaponTile.Image = ((Bitmap)(wpic));
-                else weaponTile.Image = Resources.FrameSquare;
-
-
-
-                weaponTile.Click += delegate { dungeon.GetPlayer().UnequipWeapon(dungeon.GetPlayer().Weapon); UpdateItems(); UpdatePlayerDisplay(); };
-
-                ToolTip wtoolTip = new ToolTip();
-                wtoolTip.SetToolTip(weaponTile, dungeon.GetPlayer().Weapon.Name);
-
-            }
-
-
-            if (dungeon.GetPlayer().Armor is not null)
-            {
-
-                PictureBox armorTile = new PictureBox();
-
-                armorTile.Width = 32;
-                armorTile.Height = 32;
-                armorTile.SizeMode = PictureBoxSizeMode.Zoom;
-                armorTile.WaitOnLoad = true;
-
-                object apic = ResourceManager.GetObject(dungeon.GetPlayer().Weapon.SpriteName);
-                if (apic is not null)
-                    armorTile.Image = ((Bitmap)(apic));
-                else armorTile.Image = Resources.FrameSquare;
-
-
-
-                armorTile.Click += delegate { dungeon.GetPlayer().UnequipArmor(dungeon.GetPlayer().Armor); UpdateItems(); UpdatePlayerDisplay(); };
-
-                ToolTip atoolTip = new ToolTip();
-                atoolTip.SetToolTip(armorTile, dungeon.GetPlayer().Armor.Name);
-            }
-
-
-
-            ItemTable.ResumeLayout();
-            ItemTable.Show();
-            UpdatePlayerDisplay();
-        }
 
         private void MoveNorth_Click(object sender, EventArgs e)
         {
@@ -519,8 +427,6 @@ namespace DungeonCrawlProject
                 }
             }
 
-            //keyvaluepair
-            //MessageBox.Show($"row {TileTable.GetPositionFromControl(tiles[4]).Row}  col {TileTable.GetPositionFromControl(tiles[4]).Column}");
             foreach (PictureBox tile in tiles)
             {
                 TableLayoutPanelCellPosition pos = TileTable.GetPositionFromControl(tile);
@@ -529,11 +435,159 @@ namespace DungeonCrawlProject
             }
         }
 
+
+        private void UpdateItems()
+        {
+            var ResourceManager = new System.Resources.ResourceManager("DungeonCrawlProject.Properties.Resources", typeof(Resources).Assembly);
+
+            ItemTable.Hide();
+
+            ItemTable.SuspendLayout();
+
+            for (int i = ItemTable.Controls.Count - 1; i >= 0; --i)
+                ItemTable.Controls[i].Dispose();
+
+            ItemTable.Controls.Clear();
+
+            for (int i = JeweleryTable.Controls.Count - 1; i >= 0; --i)
+                JeweleryTable.Controls[i].Dispose();
+
+            JeweleryTable.Controls.Clear();
+
+            List<Item> playerItems = dungeon.GetPlayer().Items;
+            List<Item> playerJewelery = dungeon.GetPlayer().Jewelery;
+
+
+
+
+
+
+            foreach (Item item in playerItems)
+            {
+
+                PictureBox itemTile = new PictureBox();
+
+                itemTile.Width = 32;
+                itemTile.Height = 32;
+                itemTile.SizeMode = PictureBoxSizeMode.Zoom;
+                itemTile.WaitOnLoad = true;
+
+                object pic = ResourceManager.GetObject(item.SpriteName);
+                if (pic is not null)
+                    itemTile.Image = ((Bitmap)(pic));
+                else itemTile.Image = Resources.missingno;
+
+                itemTile.Click += new EventHandler((sender, e) => ItemTile_Click(sender, e, item));
+
+                if (item.SpriteName == "Map")
+                {
+                    itemTile.Click += delegate { MapWindow mapWindow = new MapWindow(ref dungeon); mapWindow.Show(); };
+                }
+
+
+
+                ToolTip toolTip = new ToolTip();
+                toolTip.SetToolTip(itemTile, item.Name);
+
+                ItemTable.Controls.Add(itemTile);
+
+            }
+
+            foreach (Item item in playerJewelery)
+            {
+
+                PictureBox itemTile = new PictureBox();
+
+                itemTile.Width = 32;
+                itemTile.Height = 32;
+                itemTile.SizeMode = PictureBoxSizeMode.Zoom;
+                itemTile.WaitOnLoad = true;
+
+                object pic = ResourceManager.GetObject(item.SpriteName);
+                if (pic is not null)
+                    itemTile.Image = ((Bitmap)(pic));
+                else itemTile.Image = Resources.missingno;
+
+
+
+                itemTile.Click += delegate { dungeon.GetPlayer().RemoveJewelery(item); UpdateItems(); UpdatePlayerDisplay(); };
+
+                ToolTip toolTip = new ToolTip();
+                toolTip.SetToolTip(itemTile, item.Name);
+
+                JeweleryTable.Controls.Add(itemTile);
+            }
+
+
+            if (dungeon.GetPlayer().Weapon is not null)
+            {
+
+                object wpic = ResourceManager.GetObject(dungeon.GetPlayer().Weapon.SpriteName);
+                if (wpic is not null)
+                    WeaponIcon.Image = ((Bitmap)(wpic));
+                else WeaponIcon.Image = Resources.FrameSquare;
+
+
+                ToolTip wtoolTip = new ToolTip();
+                wtoolTip.SetToolTip(ArmorIcon, dungeon.GetPlayer().Weapon.Name);
+
+
+            }
+            else WeaponIcon.Image = Resources.FrameSquare;
+
+
+            if (dungeon.GetPlayer().Armor is not null)
+            {
+
+
+
+                object apic = ResourceManager.GetObject(dungeon.GetPlayer().Armor.SpriteName);
+                if (apic is not null)
+                    ArmorIcon.Image = ((Bitmap)(apic));
+                else ArmorIcon.Image = Resources.FrameSquare;
+
+
+                ToolTip atoolTip = new ToolTip();
+                atoolTip.SetToolTip(ArmorIcon, dungeon.GetPlayer().Armor.Name);
+
+
+            }
+            else ArmorIcon.Image = Resources.FrameSquare;
+
+
+
+            ItemTable.ResumeLayout();
+            ItemTable.Show();
+            UpdatePlayerDisplay();
+        }
+
         private void AddMessageToLog(String msg)
         {
             ActivityLog.Items.Add(msg);
             ActivityLog.SelectedIndex = ActivityLog.Items.Count - 1;
             ActivityLog.SelectedIndex = -1;
+        }
+
+        private void ItemTile_Click(object sender, EventArgs e, Item item)
+        {
+            MouseEventArgs me = (MouseEventArgs)e;
+
+            if (me.Button == MouseButtons.Left)
+            {
+                if (item is Lib.Items.Weapon || item.Type == ItemTypes.Armor || item.Type == ItemTypes.Jewelery)
+                {
+                    dungeon.GetPlayer().EquipItem(item); UpdateItems(); UpdatePlayerDisplay();
+                }
+                else if (item.Type == ItemTypes.Consumable)
+                {
+                    dungeon.GetPlayer().RemoveItem(item, true); UpdateItems(); UpdatePlayerDisplay();
+                }
+
+            }
+            else if (me.Button == MouseButtons.Right)
+            {
+                dungeon.GetPlayer().RemoveItem(item, false); UpdateItems(); UpdatePlayerDisplay();
+            }
         }
 
         private void MoveWest_Click(object sender, EventArgs e)
@@ -583,10 +637,139 @@ namespace DungeonCrawlProject
 
         private void GiveFish_Click(object sender, EventArgs e)
         {
-            dungeon.GetPlayer().AddItem(new Item("Fish") { Name = "Ryba", Type = ItemTypes.Consumable, Weight = 1, 
-                ItemModifiers = new Dictionary<ModifierTypes, int> { { ModifierTypes.Healing, 3 } } });
+            dungeon.GetPlayer().AddItem(new Item("Fish")
+            {
+                Name = "Ryba",
+                Type = ItemTypes.Consumable,
+                Weight = 1,
+                ItemModifiers = new Dictionary<ModifierTypes, int> { { ModifierTypes.Healing, 3 } }
+            });
             UpdateItems();
             UpdatePlayerDisplay();
+        }
+
+        private void WeaponIcon_Click(object sender, EventArgs e)
+        {
+            if (dungeon.GetPlayer().Weapon is not null)
+            {
+
+                dungeon.GetPlayer().UnequipWeapon(dungeon.GetPlayer().Weapon); UpdateItems(); UpdatePlayerDisplay();
+            }
+        }
+
+        private void ArmorIcon_Click(object sender, EventArgs e)
+        {
+            if (dungeon.GetPlayer().Armor is not null)
+            {
+
+                dungeon.GetPlayer().UnequipArmor(dungeon.GetPlayer().Armor); UpdateItems(); UpdatePlayerDisplay();
+            }
+        }
+
+        private void NewGameButton_Click(object sender, EventArgs e)
+        {
+            NewGame();
+        }
+
+        private void SpellList_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+
+            String selectedSpell = SpellList.SelectedItem.ToString();
+            if (selectedSpell is not null)
+            {
+                Console.WriteLine(selectedSpell);
+                bool castSuccesful = dungeon.GetPlayer().CastSpell(dungeon.GetPlayer().GetSpell(selectedSpell));
+                if (castSuccesful)
+                {
+                    AddMessageToLog($"Rzuci³eœ zaklêcie {selectedSpell}");
+                    dungeon.CastSpell(dungeon.GetPlayer().GetSpell(selectedSpell));
+                    UpdatePlayerDisplay();
+                }
+                if (!castSuccesful)
+                {
+                    AddMessageToLog("Nie masz many aby rzuciæ dane zaklêcie!");
+                }
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+
+            dungeon.KillAllMonsters();
+        }
+
+        private void devToolsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GiveFish.Visible = true;
+            button2.Visible = true;
+            button3.Visible = true;
+            button4.Visible = true;
+        }
+
+        private void zapiszGrêToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            fbd.Description = "Wybierz miejsce zapisu";
+
+            if (fbd.ShowDialog() == DialogResult.OK)
+            {
+                string sSelectedPath = fbd.SelectedPath;
+                using (StreamWriter saveFile = new StreamWriter(Path.Combine(sSelectedPath, "Dungeon.json")))
+                {
+                    
+
+                    String json = JsonConvert.SerializeObject(dungeon, Formatting.Indented, new JsonSerializerSettings
+                    {
+                        TypeNameHandling = TypeNameHandling.Auto,
+                        TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple,
+                        //ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                      
+                    });
+                    saveFile.WriteLine(json);
+                    
+                }
+
+                MessageBox.Show("Zapisano");
+            }
+        }
+
+        private void wczytajGrêToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog choofdlog = new OpenFileDialog();
+            choofdlog.Filter = "All Files (*.*)|*.*";
+            choofdlog.FilterIndex = 1;
+            choofdlog.Multiselect = false;
+
+            if (choofdlog.ShowDialog() == DialogResult.OK)
+            {
+                string sFileName = choofdlog.FileName;
+                
+                using (StreamReader sr = new StreamReader(sFileName))
+                {
+                    String save = sr.ReadToEnd();
+
+                    dungeon = JsonConvert.DeserializeObject<Dungeon>(save, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Objects});
+
+                    DrawWorld();
+                    UpdatePlayerDisplay();
+                    SetDelegates();
+                    SetPlayerDelegates();
+                    PlayerStats.Visible = true;
+                    ItemTable.Visible = true;
+                    InventoryBox.Visible = true;
+                    MovementBox.Visible = true;
+                    ActivityLog.Visible = true;
+                    InteractButton.Visible = true;
+                    SpellBox.Visible = true;
+                    zapiszGrêToolStripMenuItem.Enabled = true;
+                    devToolsToolStripMenuItem.Enabled = true;
+                    MovementBox.Enabled = true;
+                    UpdateInteractButton(dungeon.GetPlayer());
+                    UpdateItems();
+                    UpdateTiles(dungeon.GetPlayer());
+                }
+            }
+            
         }
     }
 }

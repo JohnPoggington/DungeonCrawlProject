@@ -5,18 +5,24 @@ using System.Text;
 using System.Threading.Tasks;
 using Lib.Enums;
 using Lib.Items;
+using Lib.Spells;
 
 namespace Lib
 {
     public delegate void LevelDelegate(int CurrentLevel, int OldLevel);
+    public delegate void SpellDelegate(Spell spell);
     public class Player : Character
     {
         public WalkingDirection WalkingDirection { get; set; }
 
-                
+        public List<Spells.Spell> Spells { get; set; }
+        
         public int TotalExperience { get; set; }
 
         public event LevelDelegate OnLevelUp;
+
+        public event SpellDelegate OnSpellLearned;
+        public event SpellDelegate OnSpellLearnFailed;
 
         public override void Move(WalkingDirection direction)
         {
@@ -61,11 +67,7 @@ namespace Lib
 
         public int XPToNextLevel()
         {
-            //int L = Level + 1;
-            //double up = Math.Pow(2, L/7) - Math.Pow(2, 1/7);
-            //double down = Math.Pow(2, 1/7) - 1;
-            //return (int)((1 / 8) * (Math.Pow(L + 1, 2) - L + 600 * (up / down)));
-
+            
             int exp = 0;
 
             if (Level == 1) { return 83; }
@@ -73,6 +75,55 @@ namespace Lib
             for (int i = 1; i < Level; i++) { exp += (int)Math.Floor(i + 300 + Math.Pow(2, i / 7)); }
 
             return exp/4;
+        }
+
+        public bool LearnSpell(Spell spell)
+        {
+            if (!Spells.Contains(spell))
+            {
+                Spells.Add(spell);
+                return true;
+            }
+            return false;
+        }
+
+        public bool CastSpell(Spell spell)
+        {
+            if (Spells.Contains(spell))
+            {
+                if (CurMana >= spell.ManaCost)
+                {
+                    spell.CastSpell();
+                    CurMana -= spell.ManaCost;
+                    return true;
+                }
+            }
+            else throw new Exceptions.IllegalSpellCastException();
+            return false;
+        }
+
+        public Spell GetSpell(String spell)
+        {
+            Spell ret = Spells.Find(s => s.Equals(spell));
+            return ret;
+        }
+
+        public override void RemoveItem(Item item, bool useItem)
+        {
+            base.RemoveItem(item, useItem);
+            if (item is RuneStone)
+            {
+                bool success = LearnSpell(((RuneStone)item).Spell);
+
+                if (success)
+                {
+                    OnSpellLearned?.Invoke(((RuneStone)item).Spell);
+                }
+                if (!success)
+                {
+                    OnSpellLearnFailed?.Invoke(((RuneStone)item).Spell);
+                }
+            }
         }
 
         public override string ToString()

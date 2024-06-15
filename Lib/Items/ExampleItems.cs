@@ -141,6 +141,60 @@ namespace Lib.Items
             };
         }
 
+        public static Weapon Sword
+        {
+            get => new Weapon("Sword", DamageTypes.Physical)
+            {
+                Name = "Żelazny miecz",
+                Type = Enums.ItemTypes.Weapon,
+                Weight = 4,
+                ItemModifiers = new Dictionary<Enums.ModifierTypes, int> {
+                    { ModifierTypes.Strength, 3 }
+            }
+            };
+        }
+
+        public static Weapon WoodStaff
+        {
+            get => new Weapon("WoodenStaff", DamageTypes.Magic)
+            {
+                Name = "Drewniany kostur",
+                Type = Enums.ItemTypes.Weapon,
+                Weight = 3,
+                ItemModifiers = new Dictionary<Enums.ModifierTypes, int> {
+                    { ModifierTypes.MaxMana, 5 },
+                    { ModifierTypes.Strength, 1 }
+            }
+            };
+        }
+
+        public static Weapon RubyStaff
+        {
+            get => new Weapon("Staff", DamageTypes.Magic)
+            {
+                Name = "Kostur z rubinem",
+                Type = Enums.ItemTypes.Weapon,
+                Weight = 3,
+                ItemModifiers = new Dictionary<Enums.ModifierTypes, int> {
+                    { ModifierTypes.MaxMana, 8 },
+                    { ModifierTypes.Strength, 2 },
+                    { ModifierTypes.MagicResist, 1 }
+            }
+            };
+        }
+
+        public static RuneStone RuneStone { get => new RuneStone(); }
+
+        public static Item Map
+        {
+            get => new Item("Map")
+            {
+                Name = "Mapa lochu",
+                Type = ItemTypes.Other,
+                Weight = 0,
+            };
+        }
+
 
     }
 }

@@ -4,22 +4,28 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Lib.MapObjects
 {
+    [DataContract]
     public class Chest : InteractableObject
     {
-
+        
         private Dictionary<Item, int> _LootTable = new Dictionary<Item, int>() 
         {
             { ExampleItems.IronArmor, 10 },
             { ExampleItems.FireRing, 20 },
             { ExampleItems.WizardRobe, 10 },
-            { ExampleItems.RogueCloak, 10 }
+            { ExampleItems.RogueCloak, 10 },
+            { ExampleItems.RubyStaff, 10 },
+            { ExampleItems.RuneStone, 10 },
+            { ExampleItems.Map, 10 },
         };
-
+        [DataMember]
         public List<Item> Items;
 
         public Chest(string name) : base(name)
@@ -42,8 +48,8 @@ namespace Lib.MapObjects
                 List<Item> chosenItems = _LootTable.Where(i => i.Value < chance).Select(k => k.Key).ToList();
 
                 int choice = rand.Next(chosenItems.Count());
-
-                Items.Add(chosenItems[choice]);
+                if (chosenItems.Count > 0)
+                    Items.Add(chosenItems[choice]);
             }
 
             if (Items.Count == 0)

@@ -116,7 +116,7 @@ namespace DungeonCrawlProject
 
             LootTable.ResumeLayout();
             LootTable.Show();
-            WeightLabel.Text = _Player.CurrentWeight.ToString();
+            WeightLabel.Text = $"Waga ekwipunku: {_Player.CurrentWeight.ToString()}";
         }
 
         private void CloseButton_Click(object sender, EventArgs e)

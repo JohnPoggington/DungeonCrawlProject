@@ -358,6 +358,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(273, 525);
+            ControlBox = false;
             Controls.Add(FireResistLabel);
             Controls.Add(MagicResistLabel);
             Controls.Add(PhysResistLabel);

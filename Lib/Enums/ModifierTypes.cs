@@ -17,6 +17,7 @@ namespace Lib.Enums
         PhysicalResist,
         MagicResist,
         FireResist,
+        Damage,
         None
     }
 }

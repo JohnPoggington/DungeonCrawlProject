@@ -8,6 +8,7 @@ using Lib.Enums;
 
 namespace Lib
 {
+   
     public interface IEntity
     {
         public String Name { get; }

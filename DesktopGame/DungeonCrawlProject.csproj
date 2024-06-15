@@ -21,17 +21,22 @@
     <None Remove="Resources\Items\PotionRed.png" />
     <None Remove="Resources\Items\Red Potion.png" />
     <None Remove="Resources\Items\RedRing.png" />
+    <None Remove="Resources\Items\Ruby Staff.png" />
     <None Remove="Resources\Items\RuneStone.png" />
     <None Remove="Resources\Items\Sword.png" />
     <None Remove="Resources\Items\Wine.png" />
     <None Remove="Resources\Items\WizardHat.png" />
+    <None Remove="Resources\Items\Wooden Staff.png" />
     <None Remove="Resources\Tiles\altar.png" />
+    <None Remove="Resources\Tiles\Chest.png" />
     <None Remove="Resources\Tiles\earthworm.png" />
     <None Remove="Resources\Tiles\Exploder.png" />
+    <None Remove="Resources\Tiles\FishingPond.png" />
     <None Remove="Resources\Tiles\floor.png" />
     <None Remove="Resources\Tiles\fogofwar.png" />
     <None Remove="Resources\Tiles\goblin.png" />
     <None Remove="Resources\Tiles\Lich.png" />
+    <None Remove="Resources\Tiles\mimic.png" />
     <None Remove="Resources\Tiles\missingno.png" />
     <None Remove="Resources\Tiles\orc.png" />
     <None Remove="Resources\Tiles\player.png" />
@@ -54,17 +59,22 @@
     <EmbeddedResource Include="Resources\Items\PotionRed.png" />
     <EmbeddedResource Include="Resources\Items\Red Potion.png" />
     <EmbeddedResource Include="Resources\Items\RedRing.png" />
+    <EmbeddedResource Include="Resources\Items\Ruby Staff.png" />
     <EmbeddedResource Include="Resources\Items\RuneStone.png" />
     <EmbeddedResource Include="Resources\Items\Sword.png" />
     <EmbeddedResource Include="Resources\Items\Wine.png" />
     <EmbeddedResource Include="Resources\Items\WizardHat.png" />
+    <EmbeddedResource Include="Resources\Items\Wooden Staff.png" />
     <EmbeddedResource Include="Resources\Tiles\altar.png" />
+    <EmbeddedResource Include="Resources\Tiles\Chest.png" />
     <EmbeddedResource Include="Resources\Tiles\earthworm.png" />
     <EmbeddedResource Include="Resources\Tiles\Exploder.png" />
+    <EmbeddedResource Include="Resources\Tiles\FishingPond.png" />
     <EmbeddedResource Include="Resources\Tiles\floor.png" />
     <EmbeddedResource Include="Resources\Tiles\fogofwar.png" />
     <EmbeddedResource Include="Resources\Tiles\goblin.png" />
     <EmbeddedResource Include="Resources\Tiles\Lich.png" />
+    <EmbeddedResource Include="Resources\Tiles\mimic.png" />
     <EmbeddedResource Include="Resources\Tiles\missingno.png" />
     <EmbeddedResource Include="Resources\Tiles\orc.png" />
     <EmbeddedResource Include="Resources\Tiles\player.png" />
@@ -73,6 +83,10 @@
     <EmbeddedResource Include="Resources\Tiles\spikes.png" />
     <EmbeddedResource Include="Resources\Tiles\wall.png" />
     <EmbeddedResource Include="Resources\Tiles\Zombie.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
   <ItemGroup>

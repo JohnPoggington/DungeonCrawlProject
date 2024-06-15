@@ -62,26 +62,36 @@
             button3 = new Button();
             InteractButton = new Button();
             ActivityLog = new ListBox();
-            groupBox1 = new GroupBox();
+            InventoryBox = new GroupBox();
+            label14 = new Label();
+            JeweleryTable = new TableLayoutPanel();
+            ArmorIcon = new PictureBox();
+            label13 = new Label();
+            label12 = new Label();
+            WeaponIcon = new PictureBox();
             WeightLabel = new Label();
             CoordinatesLabel = new Label();
             GiveFish = new Button();
-            WeaponIcon = new PictureBox();
-            label12 = new Label();
-            label13 = new Label();
-            ArmorIcon = new PictureBox();
-            JeweleryTable = new TableLayoutPanel();
-            label14 = new Label();
+            SpellList = new ListBox();
+            SpellBox = new GroupBox();
+            menuStrip1 = new MenuStrip();
+            NewGameButton = new ToolStripMenuItem();
+            wczytajGręToolStripMenuItem = new ToolStripMenuItem();
+            zapiszGręToolStripMenuItem = new ToolStripMenuItem();
+            devToolsToolStripMenuItem = new ToolStripMenuItem();
+            button4 = new Button();
             MovementBox.SuspendLayout();
             PlayerStats.SuspendLayout();
-            groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)WeaponIcon).BeginInit();
+            InventoryBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)ArmorIcon).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)WeaponIcon).BeginInit();
+            SpellBox.SuspendLayout();
+            menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // button1
             // 
-            button1.Location = new Point(12, 9);
+            button1.Location = new Point(26, 29);
             button1.Margin = new Padding(3, 2, 3, 2);
             button1.Name = "button1";
             button1.Size = new Size(75, 21);
@@ -97,7 +107,7 @@
             TileTable.ColumnCount = 1;
             TileTable.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 885F));
             TileTable.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 18F));
-            TileTable.Location = new Point(172, 9);
+            TileTable.Location = new Point(172, 29);
             TileTable.Margin = new Padding(0);
             TileTable.Name = "TileTable";
             TileTable.RowCount = 1;
@@ -105,6 +115,7 @@
             TileTable.RowStyles.Add(new RowStyle(SizeType.Absolute, 570F));
             TileTable.Size = new Size(643, 630);
             TileTable.TabIndex = 3;
+            TileTable.Visible = false;
             // 
             // MovementBox
             // 
@@ -113,12 +124,13 @@
             MovementBox.Controls.Add(MoveWest);
             MovementBox.Controls.Add(MoveNorth);
             MovementBox.Enabled = false;
-            MovementBox.Location = new Point(172, 647);
+            MovementBox.Location = new Point(172, 667);
             MovementBox.Name = "MovementBox";
             MovementBox.Size = new Size(121, 149);
             MovementBox.TabIndex = 4;
             MovementBox.TabStop = false;
             MovementBox.Text = "Ruch";
+            MovementBox.Visible = false;
             // 
             // MoveEast
             // 
@@ -187,7 +199,7 @@
             PlayerStats.Controls.Add(label2);
             PlayerStats.Controls.Add(HealthBar);
             PlayerStats.Controls.Add(label1);
-            PlayerStats.Location = new Point(12, 34);
+            PlayerStats.Location = new Point(12, 54);
             PlayerStats.Margin = new Padding(3, 2, 3, 2);
             PlayerStats.Name = "PlayerStats";
             PlayerStats.Padding = new Padding(3, 2, 3, 2);
@@ -353,6 +365,7 @@
             // ManaBar
             // 
             ManaBar.Location = new Point(45, 41);
+            ManaBar.MarqueeAnimationSpeed = 1;
             ManaBar.Name = "ManaBar";
             ManaBar.Size = new Size(100, 15);
             ManaBar.Style = ProgressBarStyle.Continuous;
@@ -372,6 +385,7 @@
             HealthBar.ForeColor = Color.Red;
             HealthBar.Location = new Point(45, 15);
             HealthBar.Margin = new Padding(3, 2, 3, 2);
+            HealthBar.MarqueeAnimationSpeed = 1;
             HealthBar.Name = "HealthBar";
             HealthBar.Size = new Size(101, 15);
             HealthBar.Style = ProgressBarStyle.Continuous;
@@ -408,60 +422,130 @@
             // 
             // button2
             // 
-            button2.Location = new Point(84, 663);
+            button2.Location = new Point(84, 778);
             button2.Name = "button2";
             button2.Size = new Size(75, 23);
             button2.TabIndex = 7;
             button2.Text = "+500xp EZ";
             button2.UseVisualStyleBackColor = true;
+            button2.Visible = false;
             button2.Click += button2_Click;
             // 
             // button3
             // 
-            button3.Location = new Point(3, 634);
+            button3.Location = new Point(3, 778);
             button3.Name = "button3";
             button3.Size = new Size(75, 23);
             button3.TabIndex = 8;
             button3.Text = "Map";
             button3.UseVisualStyleBackColor = true;
+            button3.Visible = false;
             button3.Click += button3_Click;
             // 
             // InteractButton
             // 
             InteractButton.Enabled = false;
-            InteractButton.Location = new Point(3, 663);
+            InteractButton.Location = new Point(3, 749);
             InteractButton.Name = "InteractButton";
             InteractButton.Size = new Size(75, 23);
             InteractButton.TabIndex = 9;
             InteractButton.Text = "Interact";
             InteractButton.UseVisualStyleBackColor = true;
+            InteractButton.Visible = false;
             InteractButton.Click += InteractButton_Click;
             // 
             // ActivityLog
             // 
             ActivityLog.FormattingEnabled = true;
             ActivityLog.ItemHeight = 15;
-            ActivityLog.Location = new Point(299, 642);
+            ActivityLog.Location = new Point(299, 662);
             ActivityLog.Name = "ActivityLog";
             ActivityLog.Size = new Size(516, 154);
             ActivityLog.TabIndex = 10;
+            ActivityLog.Visible = false;
             // 
-            // groupBox1
+            // InventoryBox
             // 
-            groupBox1.Controls.Add(label14);
-            groupBox1.Controls.Add(JeweleryTable);
-            groupBox1.Controls.Add(ArmorIcon);
-            groupBox1.Controls.Add(label13);
-            groupBox1.Controls.Add(label12);
-            groupBox1.Controls.Add(WeaponIcon);
-            groupBox1.Controls.Add(WeightLabel);
-            groupBox1.Controls.Add(ItemTable);
-            groupBox1.Location = new Point(12, 284);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(157, 315);
-            groupBox1.TabIndex = 11;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "Ekwipunek";
+            InventoryBox.Controls.Add(label14);
+            InventoryBox.Controls.Add(JeweleryTable);
+            InventoryBox.Controls.Add(ArmorIcon);
+            InventoryBox.Controls.Add(label13);
+            InventoryBox.Controls.Add(label12);
+            InventoryBox.Controls.Add(WeaponIcon);
+            InventoryBox.Controls.Add(WeightLabel);
+            InventoryBox.Controls.Add(ItemTable);
+            InventoryBox.Location = new Point(12, 304);
+            InventoryBox.Name = "InventoryBox";
+            InventoryBox.Size = new Size(157, 315);
+            InventoryBox.TabIndex = 11;
+            InventoryBox.TabStop = false;
+            InventoryBox.Text = "Ekwipunek";
+            InventoryBox.Visible = false;
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Location = new Point(48, 135);
+            label14.Name = "label14";
+            label14.Size = new Size(52, 15);
+            label14.TabIndex = 20;
+            label14.Text = "Biżuteria";
+            // 
+            // JeweleryTable
+            // 
+            JeweleryTable.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
+            JeweleryTable.ColumnCount = 4;
+            JeweleryTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            JeweleryTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            JeweleryTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            JeweleryTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            JeweleryTable.Location = new Point(6, 96);
+            JeweleryTable.Name = "JeweleryTable";
+            JeweleryTable.RowCount = 1;
+            JeweleryTable.RowStyles.Add(new RowStyle(SizeType.Percent, 47.22222F));
+            JeweleryTable.RowStyles.Add(new RowStyle(SizeType.Percent, 52.77778F));
+            JeweleryTable.Size = new Size(145, 36);
+            JeweleryTable.TabIndex = 19;
+            // 
+            // ArmorIcon
+            // 
+            ArmorIcon.Image = Properties.Resources.FrameSquare;
+            ArmorIcon.Location = new Point(89, 22);
+            ArmorIcon.Name = "ArmorIcon";
+            ArmorIcon.Size = new Size(32, 32);
+            ArmorIcon.SizeMode = PictureBoxSizeMode.Zoom;
+            ArmorIcon.TabIndex = 18;
+            ArmorIcon.TabStop = false;
+            ArmorIcon.Click += ArmorIcon_Click;
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Location = new Point(89, 57);
+            label13.Name = "label13";
+            label13.Size = new Size(48, 15);
+            label13.TabIndex = 17;
+            label13.Text = "Pancerz";
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new Point(14, 57);
+            label12.Name = "label12";
+            label12.Size = new Size(32, 15);
+            label12.TabIndex = 16;
+            label12.Text = "Broń";
+            // 
+            // WeaponIcon
+            // 
+            WeaponIcon.Image = Properties.Resources.FrameSquare;
+            WeaponIcon.Location = new Point(16, 22);
+            WeaponIcon.Name = "WeaponIcon";
+            WeaponIcon.Size = new Size(32, 32);
+            WeaponIcon.SizeMode = PictureBoxSizeMode.Zoom;
+            WeaponIcon.TabIndex = 15;
+            WeaponIcon.TabStop = false;
+            WeaponIcon.Click += WeaponIcon_Click;
             // 
             // WeightLabel
             // 
@@ -475,79 +559,94 @@
             // CoordinatesLabel
             // 
             CoordinatesLabel.AutoSize = true;
-            CoordinatesLabel.Location = new Point(131, 689);
+            CoordinatesLabel.Location = new Point(131, 804);
             CoordinatesLabel.Name = "CoordinatesLabel";
             CoordinatesLabel.Size = new Size(27, 15);
             CoordinatesLabel.TabIndex = 12;
             CoordinatesLabel.Text = "X, Y";
+            CoordinatesLabel.Visible = false;
             // 
             // GiveFish
             // 
-            GiveFish.Location = new Point(84, 634);
+            GiveFish.Location = new Point(84, 749);
             GiveFish.Name = "GiveFish";
             GiveFish.Size = new Size(75, 23);
             GiveFish.TabIndex = 13;
             GiveFish.Text = "gib fish";
             GiveFish.UseVisualStyleBackColor = true;
+            GiveFish.Visible = false;
             GiveFish.Click += GiveFish_Click;
             // 
-            // WeaponIcon
+            // SpellList
             // 
-            WeaponIcon.Location = new Point(16, 22);
-            WeaponIcon.Name = "WeaponIcon";
-            WeaponIcon.Size = new Size(32, 32);
-            WeaponIcon.TabIndex = 15;
-            WeaponIcon.TabStop = false;
+            SpellList.FormattingEnabled = true;
+            SpellList.ItemHeight = 15;
+            SpellList.Location = new Point(6, 17);
+            SpellList.Name = "SpellList";
+            SpellList.Size = new Size(146, 94);
+            SpellList.TabIndex = 14;
+            SpellList.MouseDoubleClick += SpellList_MouseDoubleClick;
             // 
-            // label12
+            // SpellBox
             // 
-            label12.AutoSize = true;
-            label12.Location = new Point(14, 57);
-            label12.Name = "label12";
-            label12.Size = new Size(32, 15);
-            label12.TabIndex = 16;
-            label12.Text = "Broń";
+            SpellBox.Controls.Add(SpellList);
+            SpellBox.Location = new Point(9, 619);
+            SpellBox.Name = "SpellBox";
+            SpellBox.Size = new Size(157, 124);
+            SpellBox.TabIndex = 15;
+            SpellBox.TabStop = false;
+            SpellBox.Text = "Dostępne czary";
+            SpellBox.Visible = false;
             // 
-            // label13
+            // menuStrip1
             // 
-            label13.AutoSize = true;
-            label13.Location = new Point(89, 57);
-            label13.Name = "label13";
-            label13.Size = new Size(48, 15);
-            label13.TabIndex = 17;
-            label13.Text = "Pancerz";
+            menuStrip1.Items.AddRange(new ToolStripItem[] { NewGameButton, wczytajGręToolStripMenuItem, zapiszGręToolStripMenuItem, devToolsToolStripMenuItem });
+            menuStrip1.Location = new Point(0, 0);
+            menuStrip1.Name = "menuStrip1";
+            menuStrip1.Size = new Size(853, 24);
+            menuStrip1.TabIndex = 16;
+            menuStrip1.Text = "menuStrip1";
             // 
-            // ArmorIcon
+            // NewGameButton
             // 
-            ArmorIcon.Location = new Point(89, 22);
-            ArmorIcon.Name = "ArmorIcon";
-            ArmorIcon.Size = new Size(32, 32);
-            ArmorIcon.TabIndex = 18;
-            ArmorIcon.TabStop = false;
+            NewGameButton.Name = "NewGameButton";
+            NewGameButton.Size = new Size(70, 20);
+            NewGameButton.Text = "Nowa gra";
+            NewGameButton.Click += NewGameButton_Click;
             // 
-            // JeweleryTable
+            // wczytajGręToolStripMenuItem
             // 
-            JeweleryTable.ColumnCount = 4;
-            JeweleryTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            JeweleryTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            JeweleryTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            JeweleryTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            JeweleryTable.Location = new Point(4, 75);
-            JeweleryTable.Name = "JeweleryTable";
-            JeweleryTable.RowCount = 1;
-            JeweleryTable.RowStyles.Add(new RowStyle(SizeType.Percent, 47.22222F));
-            JeweleryTable.RowStyles.Add(new RowStyle(SizeType.Percent, 52.77778F));
-            JeweleryTable.Size = new Size(145, 36);
-            JeweleryTable.TabIndex = 19;
+            wczytajGręToolStripMenuItem.Name = "wczytajGręToolStripMenuItem";
+            wczytajGręToolStripMenuItem.Size = new Size(80, 20);
+            wczytajGręToolStripMenuItem.Text = "Wczytaj grę";
+            wczytajGręToolStripMenuItem.Click += wczytajGręToolStripMenuItem_Click;
             // 
-            // label14
+            // zapiszGręToolStripMenuItem
             // 
-            label14.AutoSize = true;
-            label14.Location = new Point(52, 114);
-            label14.Name = "label14";
-            label14.Size = new Size(52, 15);
-            label14.TabIndex = 20;
-            label14.Text = "Biżuteria";
+            zapiszGręToolStripMenuItem.Enabled = false;
+            zapiszGręToolStripMenuItem.Name = "zapiszGręToolStripMenuItem";
+            zapiszGręToolStripMenuItem.Size = new Size(72, 20);
+            zapiszGręToolStripMenuItem.Text = "Zapisz grę";
+            zapiszGręToolStripMenuItem.Click += zapiszGręToolStripMenuItem_Click;
+            // 
+            // devToolsToolStripMenuItem
+            // 
+            devToolsToolStripMenuItem.Enabled = false;
+            devToolsToolStripMenuItem.Name = "devToolsToolStripMenuItem";
+            devToolsToolStripMenuItem.Size = new Size(69, 20);
+            devToolsToolStripMenuItem.Text = "Dev Tools";
+            devToolsToolStripMenuItem.Click += devToolsToolStripMenuItem_Click;
+            // 
+            // button4
+            // 
+            button4.Location = new Point(3, 807);
+            button4.Name = "button4";
+            button4.Size = new Size(75, 23);
+            button4.TabIndex = 17;
+            button4.Text = "button4";
+            button4.UseVisualStyleBackColor = true;
+            button4.Visible = false;
+            button4.Click += button4_Click;
             // 
             // Form1
             // 
@@ -555,9 +654,11 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
             ClientSize = new Size(853, 886);
+            Controls.Add(button4);
+            Controls.Add(SpellBox);
             Controls.Add(GiveFish);
             Controls.Add(CoordinatesLabel);
-            Controls.Add(groupBox1);
+            Controls.Add(InventoryBox);
             Controls.Add(ActivityLog);
             Controls.Add(InteractButton);
             Controls.Add(button3);
@@ -566,16 +667,21 @@
             Controls.Add(MovementBox);
             Controls.Add(TileTable);
             Controls.Add(button1);
+            Controls.Add(menuStrip1);
+            MainMenuStrip = menuStrip1;
             Margin = new Padding(3, 2, 3, 2);
             Name = "Form1";
             Text = "Form1";
             MovementBox.ResumeLayout(false);
             PlayerStats.ResumeLayout(false);
             PlayerStats.PerformLayout();
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)WeaponIcon).EndInit();
+            InventoryBox.ResumeLayout(false);
+            InventoryBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)ArmorIcon).EndInit();
+            ((System.ComponentModel.ISupportInitialize)WeaponIcon).EndInit();
+            SpellBox.ResumeLayout(false);
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -615,7 +721,7 @@
         private Button button3;
         private Button InteractButton;
         private ListBox ActivityLog;
-        private GroupBox groupBox1;
+        private GroupBox InventoryBox;
         private Label CoordinatesLabel;
         private Button GiveFish;
         private Label WeightLabel;
@@ -625,5 +731,13 @@
         private Label label13;
         private Label label12;
         private PictureBox WeaponIcon;
+        private ListBox SpellList;
+        private GroupBox SpellBox;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem NewGameButton;
+        private ToolStripMenuItem wczytajGręToolStripMenuItem;
+        private ToolStripMenuItem zapiszGręToolStripMenuItem;
+        private Button button4;
+        private ToolStripMenuItem devToolsToolStripMenuItem;
     }
 }

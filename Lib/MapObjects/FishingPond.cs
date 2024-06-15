@@ -2,17 +2,19 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Lib.MapObjects
 {
+    [DataContract]
     public class FishingPond : InteractableObject
     {
         public FishingPond(String name, int fishes) : base(name) { _fishes = fishes; }
 
         private Random random = new Random();
-
+        [DataMember]
         private int _fishes;
 
         public event VoidDelegate OnInteract;

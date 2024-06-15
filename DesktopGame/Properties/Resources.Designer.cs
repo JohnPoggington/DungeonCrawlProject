@@ -103,6 +103,16 @@ namespace DungeonCrawlProject.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Chest {
+            get {
+                object obj = ResourceManager.GetObject("Chest", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Dagger {
             get {
                 object obj = ResourceManager.GetObject("Dagger", resourceCulture);
@@ -136,6 +146,16 @@ namespace DungeonCrawlProject.Properties {
         internal static System.Drawing.Bitmap Fish {
             get {
                 object obj = ResourceManager.GetObject("Fish", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FishingPond {
+            get {
+                object obj = ResourceManager.GetObject("FishingPond", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -206,6 +226,16 @@ namespace DungeonCrawlProject.Properties {
         internal static System.Drawing.Bitmap Map {
             get {
                 object obj = ResourceManager.GetObject("Map", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Mimic {
+            get {
+                object obj = ResourceManager.GetObject("Mimic", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -313,6 +343,26 @@ namespace DungeonCrawlProject.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Staff {
+            get {
+                object obj = ResourceManager.GetObject("Staff", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Sword {
+            get {
+                object obj = ResourceManager.GetObject("Sword", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap wall {
             get {
                 object obj = ResourceManager.GetObject("wall", resourceCulture);
@@ -336,6 +386,16 @@ namespace DungeonCrawlProject.Properties {
         internal static System.Drawing.Bitmap WizardHat {
             get {
                 object obj = ResourceManager.GetObject("WizardHat", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap WoodenStaff {
+            get {
+                object obj = ResourceManager.GetObject("WoodenStaff", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

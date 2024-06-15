@@ -1,4 +1,6 @@
 ﻿using Lib;
+using Lib.Items;
+using Lib.Spells;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -30,6 +32,8 @@ namespace DungeonCrawlProject
         private int _PhysResist;
         private int _MagicResist;
         private int _FireResist;
+        private List<Item> _Items;
+        private List<Spell> _Spells = new List<Spell>();
 
         public Player CreatedPlayer { get; private set; }
 
@@ -75,11 +79,12 @@ namespace DungeonCrawlProject
             _HP = 20;
             _Mana = 5;
             _Dexterity = 2;
-            _Strength = 6;
+            _Strength = 3;
             _Class = "Warrior";
             _PhysResist = 3;
             _MagicResist = 1;
             _FireResist = 1;
+            _Items = [ExampleItems.Sword];
             InitUI();
         }
 
@@ -93,6 +98,8 @@ namespace DungeonCrawlProject
             _PhysResist = 1;
             _MagicResist = 3;
             _FireResist= 1;
+            _Items = [ExampleItems.WoodStaff, ExampleItems.Fish];
+            _Spells = [ExampleSpells.Heal];
             InitUI();
         }
 
@@ -106,6 +113,7 @@ namespace DungeonCrawlProject
             _PhysResist = 3;
             _MagicResist = 2;
             _FireResist= 3;
+            _Items = [ExampleItems.RogueCloak];
             InitUI();
         }
 
@@ -174,7 +182,8 @@ namespace DungeonCrawlProject
                         TotalExperience = 0,
                         MaxItemWeight = 20,
                         Position = new Point(0, 0),
-                        Items = new List<Item>()
+                        Items = _Items,
+                        Spells = _Spells,
                     };
                     Close();
                 }

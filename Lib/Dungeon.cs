@@ -5,30 +5,40 @@ using System.Drawing;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
+using Newtonsoft.Json;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using Lib.Enums;
+using Lib.Items;
 using Lib.MapObjects;
 using Lib.Monsters;
+using Lib.Spells;
+using System.Runtime.Serialization;
 
 namespace Lib
 {
+    [DataContract]
     public class Dungeon
     {
+        [DataMember]
         public static int MapWidth { get; set; }
+        [DataMember]
         public static int MapHeight { get; set; }
 
+       
         public int[,] Map;
         //public IEntity[,] Entities;
+        [DataMember]
         public List<IEntity> Entites = new List<IEntity>();
-
+        [DataMember]
         public bool[,] VisMap;
-
-        private static int seed;
-
+        [DataMember]
+        private int seed;
+        
         private Random _mapRandom;
 
-        private static List<String> MediumLevelMonsters = ["Orc", "Zombie", "Earthworm", "Exploder"];
-
+        private static List<String> MediumLevelMonsters = ["Orc", "Zombie", "Earthworm", "Exploder", "Mimic"];
+        [DataMember]
         [Range(0,100)]
         private int _FillingPercentage;
 
@@ -73,6 +83,27 @@ namespace Lib
             VisMap = new bool[MapWidth, MapHeight];
             FillTwodimensionalArray<bool>(VisMap, false);
 
+        }
+
+        [OnDeserialized]
+        internal void OnDeserialized(StreamingContext context)
+        {
+            Console.WriteLine($"{MapWidth} {MapHeight}");
+            Map = new int[MapWidth, MapHeight];
+            GenerateMap(false);
+        }
+
+        [JsonIgnore]
+        public int GetMonsterCount { get => Entites.OfType<Monster>().Count(); }
+
+        public void KillAllMonsters()
+        {
+            List<Monster> list = Entites.OfType<Monster>().ToList();
+            foreach(Monster p in list)
+            {
+                p.TakeDamage(DamageTypes.Physical, 1000);
+               
+            }
         }
 
         public void MoveEntity(IEntity entity, WalkingDirection direction)
@@ -172,7 +203,7 @@ namespace Lib
             
         }
 
-        public void GenerateMap()
+        public void GenerateMap(bool isNew)
         {
             Console.WriteLine(MapWidth + " x " + MapHeight);
             GenerateNoise();
@@ -185,7 +216,8 @@ namespace Lib
 
             RemoveSecludedCells();
             RecoverEdgeCells();
-            PutEntities();
+            if (isNew)
+                PutEntities();
             
 
         }
@@ -222,7 +254,8 @@ namespace Lib
                         Experience = 0,
                         MaxItemWeight = 20,
                         Position = new System.Drawing.Point(xrand, yrand),
-                        Items = [new Item("Map") { Name = "Mapa lochu", Type = ItemTypes.Other, Weight = 0 }]
+                        Items = [new Item("Map") { Name = "Mapa lochu", Type = ItemTypes.Other, Weight = 0 }, Items.ExampleItems.Sword],
+                        Spells = [Spells.ExampleSpells.Heal, Spells.ExampleSpells.MagicMissile]
                     });
 
                 MakePlayerAreaVisible();
@@ -356,7 +389,7 @@ namespace Lib
                 {
                     Level = level,
                     Experience = 25 + 10 * level,
-                    MaxHealth = 3 + level,
+                    MaxHealth = 10 + level,
                     MaxMana = 0,
                     CurHealth = 3 + level,
                     CurMana = 0,
@@ -372,7 +405,7 @@ namespace Lib
 
             
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 10; i++)
             {
                 xrand = rand.Next(MapWidth);
                 yrand = rand.Next(MapHeight);
@@ -387,7 +420,7 @@ namespace Lib
 
                 String monsterName = MediumLevelMonsters[nameId];
 
-                if (monsterName != "Exploder")
+                if (monsterName != "Exploder" && monsterName != "Mimic")
                 {
                     Entites.Add(new Monster(monsterName)
                     {
@@ -398,7 +431,7 @@ namespace Lib
                         CurHealth = 12 + level,
                         CurMana = 0,
                         Dexterity = 1 + rand.Next(10),
-                        PhysicalResist = 3 + level,
+                        PhysicalResist = 3 + level/2,
                         MagicResist = 1 + rand.Next(4),
                         FireResist = 1 + rand.Next(4),
                         Strength = 8 + level + rand.Next(1,4),
@@ -406,7 +439,7 @@ namespace Lib
                         Position = new System.Drawing.Point(xrand, yrand),
                     });
                 }
-                else
+                else if (monsterName == "Exploder")
                 {
                     Entites.Add(new Exploder(monsterName)
                     {
@@ -423,6 +456,35 @@ namespace Lib
                         Strength = 10,
                         MaxItemWeight = 1,
                         Position = new System.Drawing.Point(xrand, yrand),
+                    });
+                }
+                else if (monsterName == "Mimic")
+                {
+                    Entites.Add(new Mimic(monsterName, new Dictionary<Item, int>() {
+                                                        { ExampleItems.SmallHealthPotion, 7 },
+                                                        { ExampleItems.LargeHealthPotion, 5 },
+                                                        { ExampleItems.SmallManaPotion, 7 },
+                                                        { ExampleItems.LargeManaPotion, 5 },
+                                                        { ExampleItems.Wine, 7 },
+                                                        { ExampleItems.Sword, 3 },
+                                                        { ExampleItems.WoodStaff, 3 },
+                                                        { ExampleItems.RubyStaff, 1 },
+
+                                                    })
+                    {
+                        Level = level,
+                        Experience = 30 + 10 * level,
+                        MaxHealth = 12 + level,
+                        MaxMana = 0,
+                        CurHealth = 12 + level,
+                        CurMana = 0,
+                        Dexterity = 0,
+                        PhysicalResist = 4,
+                        MagicResist = 10,
+                        FireResist = 2,
+                        Strength = 7,
+                        MaxItemWeight = 50,
+                        Position = new System.Drawing.Point(xrand,yrand),
                     });
                 }
             }
@@ -459,7 +521,24 @@ namespace Lib
                     Name = "Kolce",
                 });
             }
-            
+
+            for (int i = 0; i < 3; i++)
+            {
+                xrand = rand.Next(MapWidth);
+                yrand = rand.Next(MapHeight);
+                while (Map[xrand, yrand] != 1 && !Entites.Any(e => e.Position.Equals(new Point(xrand, yrand))))
+                {
+                    xrand = rand.Next(MapWidth);
+                    yrand = rand.Next(MapHeight);
+                }
+
+
+                Entites.Add(new Chest("Skrzynia")
+                {
+                    Position = new Point(xrand, yrand),
+                });
+            }
+
         }
 
         public Player GetPlayer()
@@ -470,6 +549,42 @@ namespace Lib
         public void Attack(Character char1, Character char2)
         {
 
+        }
+
+        public void CastSpell(Spell spell)
+        {
+            
+            if (spell.SpellType == SpellTypes.SelfTarget)
+            {
+                foreach (var modifier in spell.SpellModifiers)
+                {
+                    GetPlayer().ApplyModifier(modifier.Key, modifier.Value);
+                }
+            }
+            if (spell.SpellType == SpellTypes.SingleTarget)
+            {
+                IEntity targetEnt = GetInteractableEntitiesAroundEnt(GetPlayer()).ElementAt(0);
+
+                if (targetEnt is not null && targetEnt is Monster)
+                {
+                    foreach(var modifier in spell.SpellModifiers)
+                    {
+                        ((Monster)targetEnt).ApplyModifier(modifier.Key, modifier.Value);
+                    }
+                }
+            }
+            if (spell.SpellType == SpellTypes.AreaOfEffect)
+            {
+                List<Monster> targets = GetInteractableEntitiesAroundEnt(GetPlayer()).OfType<Monster>().ToList();
+
+                foreach (var target in targets)
+                {
+                    foreach (var modifier in spell.SpellModifiers)
+                    {
+                        target.ApplyModifier(modifier.Key, modifier.Value);
+                    }
+                }
+            }
         }
 
         private void GenerateNoise()

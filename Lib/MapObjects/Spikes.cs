@@ -10,6 +10,7 @@ using Lib.Exceptions;
 namespace Lib.MapObjects
 {
     public delegate void VoidDelegate();
+    [Serializable]
     public class Spikes : IEntity
     {
         //TODO: SPIKES!!!
