@@ -44,6 +44,7 @@
     <None Remove="Resources\Tiles\skeleton.png" />
     <None Remove="Resources\Tiles\spikes.png" />
     <None Remove="Resources\Tiles\wall.png" />
+    <None Remove="Resources\Tiles\wall2.png" />
     <None Remove="Resources\Tiles\Zombie.png" />
   </ItemGroup>
 
@@ -82,6 +83,7 @@
     <EmbeddedResource Include="Resources\Tiles\skeleton.png" />
     <EmbeddedResource Include="Resources\Tiles\spikes.png" />
     <EmbeddedResource Include="Resources\Tiles\wall.png" />
+    <EmbeddedResource Include="Resources\Tiles\wall2.png" />
     <EmbeddedResource Include="Resources\Tiles\Zombie.png" />
   </ItemGroup>
 
