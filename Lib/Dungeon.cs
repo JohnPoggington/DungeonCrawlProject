@@ -27,7 +27,7 @@ namespace Lib
 
        
         public int[,] Map;
-        //public IEntity[,] Entities;
+        
         [DataMember]
         public List<IEntity> Entites = new List<IEntity>();
         [DataMember]
@@ -88,7 +88,7 @@ namespace Lib
         [OnDeserialized]
         internal void OnDeserialized(StreamingContext context)
         {
-            Console.WriteLine($"{MapWidth} {MapHeight}");
+            //Console.WriteLine($"{MapWidth} {MapHeight}");
             Map = new int[MapWidth, MapHeight];
             GenerateMap(false);
         }
@@ -117,9 +117,6 @@ namespace Lib
                 int x = ent.Position.X;
                 int y = ent.Position.Y;
 
-                //Console.WriteLine(Map[x - 1, y + 1] + "" + Map[x, y + 1] + Map[x + 1, y + 1]);
-                //Console.WriteLine(Map[x - 1, y] + "P" + Map[x + 1, y]);
-                //Console.WriteLine(Map[x - 1, y - 1] + "" + Map[x, y - 1] + Map[x + 1, y - 1]);
 
                 switch (direction)
                 {
@@ -205,7 +202,7 @@ namespace Lib
 
         public void GenerateMap(bool isNew)
         {
-            Console.WriteLine(MapWidth + " x " + MapHeight);
+            //Console.WriteLine(MapWidth + " x " + MapHeight);
             GenerateNoise();
 
 
@@ -259,7 +256,7 @@ namespace Lib
                     });
 
                 MakePlayerAreaVisible();
-                Console.WriteLine($"Player spawned on {xrand}, {yrand}");
+                //Console.WriteLine($"Player spawned on {xrand}, {yrand}");
 
 
 
@@ -592,15 +589,14 @@ namespace Lib
 
             SimplexNoise.Noise.Seed = seed;
             float[,] vals = SimplexNoise.Noise.Calc2D(MapWidth, MapHeight, 0.1f);
-            Console.WriteLine($"vals width {vals.GetLength(0)} vals height {vals.GetLength(1)}");
+            //Console.WriteLine($"vals width {vals.GetLength(0)} vals height {vals.GetLength(1)}");
 
             for (int x = 1; x < MapWidth; x++)
             {
                 for (int y = 1; y < MapHeight; y++)
                 {
-                    //Console.WriteLine("x " + x + " y " + y);
-                    // Map[x, y] = (_mapRandom.Next(0, 100) < _FillingPercentage) ? 1 : 0;
-                    Console.WriteLine($"x {x} y {y}");
+                    
+                    //Console.WriteLine($"x {x} y {y}");
                     //0 is wall, 1 is floor
                     Map[x,y] = vals[x, y] < 255 * (_FillingPercentage * 0.01) ? 1 : 0;
                     

@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            button1 = new Button();
             TileTable = new TableLayoutPanel();
             MovementBox = new GroupBox();
             MoveEast = new Button();
@@ -79,6 +78,7 @@
             wczytajGręToolStripMenuItem = new ToolStripMenuItem();
             zapiszGręToolStripMenuItem = new ToolStripMenuItem();
             devToolsToolStripMenuItem = new ToolStripMenuItem();
+            zakończGręToolStripMenuItem = new ToolStripMenuItem();
             button4 = new Button();
             MovementBox.SuspendLayout();
             PlayerStats.SuspendLayout();
@@ -88,17 +88,6 @@
             SpellBox.SuspendLayout();
             menuStrip1.SuspendLayout();
             SuspendLayout();
-            // 
-            // button1
-            // 
-            button1.Location = new Point(26, 29);
-            button1.Margin = new Padding(3, 2, 3, 2);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 21);
-            button1.TabIndex = 1;
-            button1.Text = "Generuj";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
             // 
             // TileTable
             // 
@@ -199,7 +188,7 @@
             PlayerStats.Controls.Add(label2);
             PlayerStats.Controls.Add(HealthBar);
             PlayerStats.Controls.Add(label1);
-            PlayerStats.Location = new Point(12, 54);
+            PlayerStats.Location = new Point(12, 29);
             PlayerStats.Margin = new Padding(3, 2, 3, 2);
             PlayerStats.Name = "PlayerStats";
             PlayerStats.Padding = new Padding(3, 2, 3, 2);
@@ -422,7 +411,7 @@
             // 
             // button2
             // 
-            button2.Location = new Point(84, 778);
+            button2.Location = new Point(84, 753);
             button2.Name = "button2";
             button2.Size = new Size(75, 23);
             button2.TabIndex = 7;
@@ -433,7 +422,7 @@
             // 
             // button3
             // 
-            button3.Location = new Point(3, 778);
+            button3.Location = new Point(3, 753);
             button3.Name = "button3";
             button3.Size = new Size(75, 23);
             button3.TabIndex = 8;
@@ -445,7 +434,7 @@
             // InteractButton
             // 
             InteractButton.Enabled = false;
-            InteractButton.Location = new Point(3, 749);
+            InteractButton.Location = new Point(3, 724);
             InteractButton.Name = "InteractButton";
             InteractButton.Size = new Size(75, 23);
             InteractButton.TabIndex = 9;
@@ -474,7 +463,7 @@
             InventoryBox.Controls.Add(WeaponIcon);
             InventoryBox.Controls.Add(WeightLabel);
             InventoryBox.Controls.Add(ItemTable);
-            InventoryBox.Location = new Point(12, 304);
+            InventoryBox.Location = new Point(12, 279);
             InventoryBox.Name = "InventoryBox";
             InventoryBox.Size = new Size(157, 315);
             InventoryBox.TabIndex = 11;
@@ -559,7 +548,7 @@
             // CoordinatesLabel
             // 
             CoordinatesLabel.AutoSize = true;
-            CoordinatesLabel.Location = new Point(131, 804);
+            CoordinatesLabel.Location = new Point(131, 779);
             CoordinatesLabel.Name = "CoordinatesLabel";
             CoordinatesLabel.Size = new Size(27, 15);
             CoordinatesLabel.TabIndex = 12;
@@ -568,7 +557,7 @@
             // 
             // GiveFish
             // 
-            GiveFish.Location = new Point(84, 749);
+            GiveFish.Location = new Point(84, 724);
             GiveFish.Name = "GiveFish";
             GiveFish.Size = new Size(75, 23);
             GiveFish.TabIndex = 13;
@@ -590,7 +579,7 @@
             // SpellBox
             // 
             SpellBox.Controls.Add(SpellList);
-            SpellBox.Location = new Point(9, 619);
+            SpellBox.Location = new Point(9, 594);
             SpellBox.Name = "SpellBox";
             SpellBox.Size = new Size(157, 124);
             SpellBox.TabIndex = 15;
@@ -600,7 +589,7 @@
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { NewGameButton, wczytajGręToolStripMenuItem, zapiszGręToolStripMenuItem, devToolsToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { NewGameButton, wczytajGręToolStripMenuItem, zapiszGręToolStripMenuItem, devToolsToolStripMenuItem, zakończGręToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(853, 24);
@@ -637,13 +626,20 @@
             devToolsToolStripMenuItem.Text = "Dev Tools";
             devToolsToolStripMenuItem.Click += devToolsToolStripMenuItem_Click;
             // 
+            // zakończGręToolStripMenuItem
+            // 
+            zakończGręToolStripMenuItem.Name = "zakończGręToolStripMenuItem";
+            zakończGręToolStripMenuItem.Size = new Size(83, 20);
+            zakończGręToolStripMenuItem.Text = "Zakończ grę";
+            zakończGręToolStripMenuItem.Click += zakończGręToolStripMenuItem_Click;
+            // 
             // button4
             // 
-            button4.Location = new Point(3, 807);
+            button4.Location = new Point(3, 782);
             button4.Name = "button4";
-            button4.Size = new Size(75, 23);
+            button4.Size = new Size(98, 23);
             button4.TabIndex = 17;
-            button4.Text = "button4";
+            button4.Text = "Kill monsters";
             button4.UseVisualStyleBackColor = true;
             button4.Visible = false;
             button4.Click += button4_Click;
@@ -666,7 +662,6 @@
             Controls.Add(PlayerStats);
             Controls.Add(MovementBox);
             Controls.Add(TileTable);
-            Controls.Add(button1);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             Margin = new Padding(3, 2, 3, 2);
@@ -687,7 +682,6 @@
         }
 
         #endregion
-        private Button button1;
         private TableLayoutPanel TileTable;
         private GroupBox MovementBox;
         private Button MoveNorth;
@@ -739,5 +733,6 @@
         private ToolStripMenuItem zapiszGręToolStripMenuItem;
         private Button button4;
         private ToolStripMenuItem devToolsToolStripMenuItem;
+        private ToolStripMenuItem zakończGręToolStripMenuItem;
     }
 }

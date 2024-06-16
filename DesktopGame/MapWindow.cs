@@ -15,8 +15,7 @@ namespace DungeonCrawlProject
 {
     public partial class MapWindow : Form
     {
-        //TODO: SHOW ONLY TERRAIN
-        
+               
         private Dungeon dungeon;
         public MapWindow(ref Dungeon dg)
         {
@@ -86,25 +85,7 @@ namespace DungeonCrawlProject
             
             
                 tile.Image = dungeon.Map[x, y] == 0 ? DungeonCrawlProject.Properties.Resources.wall : DungeonCrawlProject.Properties.Resources.floor;
-                var ent = dungeon.Entites.Find(e => e.Position.Equals(new Point(x, y)));
-                var ResourceManager = new System.Resources.ResourceManager("DungeonCrawlProject.Properties.Resources", typeof(Resources).Assembly);
-                if (ent is Player)
-                {
-                    tile.Image = Properties.Resources.Player;
-                }
-                else if (ent is Monster)
-                {
-
-                    //MessageBox.Show($"Monster {ent.Name}");
-                    object pic = ResourceManager.GetObject(ent.Name);
-                    tile.Image = ((Bitmap)(pic));
-                }
-                else if (ent is not null)
-                {
-                    //MessageBox.Show($"entity {ent.GetType().Name}");
-                    object pic = ResourceManager.GetObject(ent.GetType().Name);
-                    tile.Image = ((Bitmap)(pic));
-                }
+                
 
             
             return tile;

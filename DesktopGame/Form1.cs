@@ -103,7 +103,7 @@ namespace DungeonCrawlProject
                             if (m.Items.Count > 0) { LootMonster lootMonster = new LootMonster(ref p, m.Items, m.Name); lootMonster.ShowDialog(); UpdateItems(); }
                             dungeon.Entites.Remove(ent); UpdateTiles(p); UpdateInteractButton(p);
                             AddMessageToLog($"{p.Name} otrzymuje {m.XPReward(p)} punktów doœwiadczenia!");
-                            Console.WriteLine(dungeon.GetMonsterCount);
+                            //Console.WriteLine(dungeon.GetMonsterCount);
                             if (dungeon.GetMonsterCount == 0)
                             {
                                 MessageBox.Show("Pokona³eœ wszystkie potwory i schodzisz ni¿ej do lochu");
@@ -151,7 +151,7 @@ namespace DungeonCrawlProject
         {
             dungeon.GetPlayer().OnLevelUp += (lvl, oldlvl) =>
             {
-                //MessageBox.Show($"Level Up! Twoja postaæ ma poziom {lvl}!");
+                
                 Player p = dungeon.GetPlayer();
                 LevelUpPoints levelup = new LevelUpPoints(ref p, oldlvl);
                 levelup.ShowDialog();
@@ -194,11 +194,11 @@ namespace DungeonCrawlProject
             int size = rand.Next(30, 45);
 
             dungeon = new Dungeon(size, size);
-            MessageBox.Show(Dungeon.MapWidth + " x " + Dungeon.MapHeight);
+            //MessageBox.Show(Dungeon.MapWidth + " x " + Dungeon.MapHeight);
 
 
 
-            
+
 
 
             dungeon.GenerateMap(true);
@@ -213,7 +213,7 @@ namespace DungeonCrawlProject
 
             DrawWorld();
 
-            MessageBox.Show($"Tiles {TileTable.Controls.Count}");
+            //MessageBox.Show($"Tiles {TileTable.Controls.Count}");
             MovementBox.Enabled = true;
 
             UpdatePlayerDisplay();
@@ -227,6 +227,8 @@ namespace DungeonCrawlProject
             SpellBox.Visible = true;
             zapiszGrêToolStripMenuItem.Enabled = true;
             devToolsToolStripMenuItem.Enabled = true;
+
+            CoordinatesLabel.Visible = true;
             UpdateInteractButton(dungeon.GetPlayer());
             UpdateItems();
         }
@@ -299,7 +301,7 @@ namespace DungeonCrawlProject
                 else if (ent is Monster)
                 {
 
-                    //MessageBox.Show($"Monster {ent.Name}");
+                    
                     object pic = ResourceManager.GetObject(ent.Name);
                     tile.Image = ((Bitmap)(pic));
                     if (ent is Mimic && !((Mimic)ent).isSeen)
@@ -309,7 +311,7 @@ namespace DungeonCrawlProject
                 }
                 else if (ent is not null)
                 {
-                    //MessageBox.Show($"entity {ent.GetType().Name}");
+                    
                     if (ent is Spikes && ((Spikes)ent).AreFound)
                     {
                         object pic = ResourceManager.GetObject(ent.GetType().Name);
@@ -349,7 +351,7 @@ namespace DungeonCrawlProject
 
                 UpdateTiles(entity);
 
-                //listBox1.Items.Clear();
+               
 
                 for (int x = 1; x < Dungeon.MapWidth; x++)
                 {
@@ -367,18 +369,12 @@ namespace DungeonCrawlProject
 
                     }
 
-                    //listBox1.Items.Add(map);
-                    //TileTable.Controls.AddRange(_mapTiles);
-
-
-
-
-
+                   
                 }
 
                 UpdateInteractButton(entity);
 
-                //TileTable.Controls.Add(tile,entity.Position.X,entity.Position.Y);
+               
 
                 UpdatePlayerDisplay();
 
@@ -393,8 +389,8 @@ namespace DungeonCrawlProject
         {
             List<IEntity> interactableEnts = dungeon.GetInteractableEntitiesAroundEnt(entity);
 
-            //IEntity checkEnt = interactableEnts.ElementAt(0);
-            Console.WriteLine(interactableEnts.Count.ToString());
+           
+            //Console.WriteLine(interactableEnts.Count.ToString());
             if (interactableEnts.Count > 0)
             {
                 InteractButton.Enabled = true;
@@ -420,7 +416,7 @@ namespace DungeonCrawlProject
                     if (i >= 1 && i < Dungeon.MapWidth && j >= 1 && j < Dungeon.MapHeight)
                     {
                         ///MessageBox.Show($"i {i} j {j}");
-                        Console.WriteLine($"i {i} j {j}");
+                        //Console.WriteLine($"i {i} j {j}");
                         tiles.Add(TileTable.GetControlFromPosition(i, j) as PictureBox);
 
                     }
@@ -674,22 +670,26 @@ namespace DungeonCrawlProject
         private void SpellList_MouseDoubleClick(object sender, MouseEventArgs e)
         {
 
-            String selectedSpell = SpellList.SelectedItem.ToString();
-            if (selectedSpell is not null)
+            try
             {
-                Console.WriteLine(selectedSpell);
-                bool castSuccesful = dungeon.GetPlayer().CastSpell(dungeon.GetPlayer().GetSpell(selectedSpell));
-                if (castSuccesful)
+                String selectedSpell = SpellList.SelectedItem.ToString();
+                if (selectedSpell is not null)
                 {
-                    AddMessageToLog($"Rzuci³eœ zaklêcie {selectedSpell}");
-                    dungeon.CastSpell(dungeon.GetPlayer().GetSpell(selectedSpell));
-                    UpdatePlayerDisplay();
-                }
-                if (!castSuccesful)
-                {
-                    AddMessageToLog("Nie masz many aby rzuciæ dane zaklêcie!");
+                    //Console.WriteLine(selectedSpell);
+                    bool castSuccesful = dungeon.GetPlayer().CastSpell(dungeon.GetPlayer().GetSpell(selectedSpell));
+                    if (castSuccesful)
+                    {
+                        AddMessageToLog($"Rzuci³eœ zaklêcie {selectedSpell}");
+                        dungeon.CastSpell(dungeon.GetPlayer().GetSpell(selectedSpell));
+                        UpdatePlayerDisplay();
+                    }
+                    if (!castSuccesful)
+                    {
+                        AddMessageToLog("Nie masz many aby rzuciæ dane zaklêcie!");
+                    }
                 }
             }
+            catch (NullReferenceException) {  }
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -716,17 +716,17 @@ namespace DungeonCrawlProject
                 string sSelectedPath = fbd.SelectedPath;
                 using (StreamWriter saveFile = new StreamWriter(Path.Combine(sSelectedPath, "Dungeon.json")))
                 {
-                    
+
 
                     String json = JsonConvert.SerializeObject(dungeon, Formatting.Indented, new JsonSerializerSettings
                     {
                         TypeNameHandling = TypeNameHandling.Auto,
                         TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple,
                         //ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                      
+
                     });
                     saveFile.WriteLine(json);
-                    
+
                 }
 
                 MessageBox.Show("Zapisano");
@@ -743,12 +743,12 @@ namespace DungeonCrawlProject
             if (choofdlog.ShowDialog() == DialogResult.OK)
             {
                 string sFileName = choofdlog.FileName;
-                
+
                 using (StreamReader sr = new StreamReader(sFileName))
                 {
                     String save = sr.ReadToEnd();
 
-                    dungeon = JsonConvert.DeserializeObject<Dungeon>(save, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Objects});
+                    dungeon = JsonConvert.DeserializeObject<Dungeon>(save, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Objects });
 
                     DrawWorld();
                     UpdatePlayerDisplay();
@@ -764,12 +764,19 @@ namespace DungeonCrawlProject
                     zapiszGrêToolStripMenuItem.Enabled = true;
                     devToolsToolStripMenuItem.Enabled = true;
                     MovementBox.Enabled = true;
+                    CoordinatesLabel.Visible = true;
                     UpdateInteractButton(dungeon.GetPlayer());
                     UpdateItems();
                     UpdateTiles(dungeon.GetPlayer());
+
                 }
             }
-            
+
+        }
+
+        private void zakoñczGrêToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

@@ -102,38 +102,14 @@ namespace Lib
 
         public virtual void RemoveItem(Item item, bool useItem)
         {
-            //Console.WriteLine(item.Type);
-            //if (item.Type != ItemTypes.Consumable && item.Type != ItemTypes.Other)
-            //{
-            //    Console.WriteLine("not consumable");
-            //    foreach (var modifier in item.ItemModifiers)
-            //    {
-            //        switch (modifier.Key) { 
-
-            //            case ModifierTypes.Strength: Strength -= modifier.Value; break;
-            //            case ModifierTypes.Dexterity: Dexterity -= modifier.Value; break;
-            //            case ModifierTypes.MaxHealth: MaxHealth -= modifier.Value; break;
-            //            case ModifierTypes.MaxMana: MaxMana -= modifier.Value; break;
-            //            case ModifierTypes.PhysicalResist: PhysicalResist -= modifier.Value; break;
-            //            case ModifierTypes.MagicResist: MagicResist -= modifier.Value; break;
-            //            case ModifierTypes.FireResist: FireResist -= modifier.Value; break;
-            //        }
-            //    }
-                
-            //}
+            
             if (item.Type == ItemTypes.Consumable && useItem && item is not RuneStone)
             {
-                Console.WriteLine(item.Type);
+                //Console.WriteLine(item.Type);
                 foreach (var modifier in item.ItemModifiers)
                 {
-                    Console.WriteLine(modifier.Key);
-                    //switch (modifier.Key)
-                    //{
-                    //    case ModifierTypes.Healing: Heal(modifier.Value); Console.WriteLine("heal!!!"); break;
-                    //    case ModifierTypes.ManaRestore: RenewMana(modifier.Value); break;
-                    //    case ModifierTypes.Strength: Strength += modifier.Value; break;
-                    //    case ModifierTypes.Dexterity: Dexterity += modifier.Value; break;
-                    //}
+                    //Console.WriteLine(modifier.Key);
+                    
                     ApplyModifier(modifier.Key, modifier.Value);
                 }
                 
@@ -222,17 +198,7 @@ namespace Lib
             {
                 if (!isRemoving)
                 {
-                    //switch (modifier.Key)
-                    //{
-                    //    case ModifierTypes.Strength: Strength += modifier.Value; break;
-                    //    case ModifierTypes.Dexterity: Dexterity += modifier.Value; break;
-                    //    case ModifierTypes.MaxHealth: MaxHealth += modifier.Value; break;
-                    //    case ModifierTypes.MaxMana: MaxMana += modifier.Value; break;
-                    //    case ModifierTypes.PhysicalResist: PhysicalResist += modifier.Value; break;
-                    //    case ModifierTypes.MagicResist: MagicResist += modifier.Value; break;
-                    //    case ModifierTypes.FireResist: FireResist += modifier.Value; break;
-
-                    //}
+                    
                     ApplyModifier(modifier.Key, modifier.Value);
                 }
                 if (isRemoving)
@@ -288,8 +254,8 @@ namespace Lib
 
         public virtual void Move(WalkingDirection direction)
         {
-            Console.WriteLine($"Moving {Name}");
-            Console.WriteLine($"Old x {Position.X} y {Position.Y}");
+            //Console.WriteLine($"Moving {Name}");
+            //Console.WriteLine($"Old x {Position.X} y {Position.Y}");
             switch (direction)
             {
                 case WalkingDirection.North: {
@@ -317,7 +283,7 @@ namespace Lib
                     }
             }
 
-            Console.WriteLine($"New x {Position.X} y {Position.Y}");
+            //Console.WriteLine($"New x {Position.X} y {Position.Y}");
         }
 
         public virtual void Die()

@@ -13,8 +13,7 @@ namespace Lib.MapObjects
     [Serializable]
     public class Spikes : IEntity
     {
-        //TODO: SPIKES!!!
-
+        
         public string Name { get; set; }
         public Point Position { get; set; }
 

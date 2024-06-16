@@ -28,7 +28,7 @@ namespace Lib
         {
             base.Move(direction);
             this.WalkingDirection = direction;
-            Console.WriteLine(WalkingDirection);
+            //Console.WriteLine(WalkingDirection);
 
         }
 
