@@ -717,8 +717,14 @@
         VrE7wSp2H0D+F9HCGBE+S7GmAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="wall" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Tiles\wall2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="wall" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAADLSURBVFhH7ZUxCoNAEEVzEpvUqazTWW6bJn08R67haTcgPAjDV2a3mVmweLA6+/1PWfD2/mz1
+        n/L6unjMZUfNFLaHfB4BFTqjVQDou0/zTryA2uShVwAugXEFOEQIcK32njGeAEVgBUBlFeTjBZ7LWnvg
+        E6qZhzwCLLxQbFF7PcQLqAOisIeNYntfZRXjCQBFPKC1GHiB8QQAATXzcAnkEeg9RL0C9OUTABVStArY
+        njwC6lfpAQE180A+XoAFn+QI9h2hMgqbCxYo9Qfsq/nawXOYCQAAAABJRU5ErkJggg==
+</value>
   </data>
   <data name="Wine" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
