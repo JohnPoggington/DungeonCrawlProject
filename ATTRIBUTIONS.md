@@ -1,0 +1,26 @@
+- [SimplexNoise](https://www.nuget.org/packages/SimplexNoise) © Benjamin Ward 2019
+ - [JSON.NET](https://www.newtonsoft.com/json) © Newtonsoft
+ - [32rogues](https://sethbb.itch.io/32rogues) by Seth
+ - [Fantasy Dreamland Tileset](https://elvgames.itch.io/free-fantasy-dreamland-dungeon) by ELV Games
+ - [Fantasy Icon Pack](https://ravenmore.itch.io/fantasy-icon-pack) by Ravemore
+ - [Pixel Art Icon Pack](https://cainos.itch.io/pixel-art-icon-pack-rpg) by Cainos
+ - [PIXEL FISHES](https://snowdingo.itch.io/pixel-fishes) by SnowDingo
+ - [Water+](https://ninjikin.itch.io/water) by Crystal Science Ghost
+ - Cape icon is from [OldSchool RuneScape](https://oldschool.runescape.com/), © 1999 - 2024 Jagex Games Ltd.
+ - Some of map generation code used is from a guide [*Procedural generation of 2D maps in Unity*](https://pavcreations.com/procedural-generation-of-2d-maps-in-unity/) by Pav Creations
+
+ Used audio:
+ - Nasty Knife Stab.wav by Aris621 -- https://freesound.org/s/435238/ -- License: Attribution 4.0
+ - soft-foot-steps-gravel-leaves-dirt-pavement.wav by newagesoup -- https://freesound.org/s/342475/ -- License: Attribution 4.0
+ - Sword_hit_w_loud_ringouts_and_whoosh_2022 by Artninja -- https://freesound.org/s/711241/ -- License: Attribution 4.0
+ - Zombie Pain 6.wav by tonsil5 -- https://freesound.org/s/555425/ -- License: Creative Commons 0
+ - beefier versions of 'another-magic-wand-spell-tinkle' [Freesound#221683].flac by Timbre -- https://freesound.org/s/577056/ -- License: Attribution NonCommercial 4.0
+ - another magic wand spell tinkle.flac by Timbre -- https://freesound.org/s/221683/ -- License: Attribution NonCommercial 4.0
+ - Chest Opening.wav by spookymodem -- https://freesound.org/s/202092/ -- License: Creative Commons 0
+ - Cork stopper - opening bottle by Vrymaa -- https://freesound.org/s/734620/ -- License: Creative Commons 0
+ - Magical fizzlerz 1.ogg by jobro -- https://freesound.org/s/204303/ -- License: Attribution 3.0
+ - Spell explosion by Bertsz -- https://freesound.org/s/500904/ -- License: Creative Commons 0
+ - WinBrass.wav by Fupicat -- https://freesound.org/s/521639/ -- License: Creative Commons 0
+ - Angel Fly Fish Reel Fast Pull_1.wav by paulprit -- https://freesound.org/s/507070/ -- License: Creative Commons 0
+ - 05966 water surfacing splashes.wav by Robinhood76 -- https://freesound.org/s/320185/ -- License: Attribution NonCommercial 4.0
+ - Explosion 11e by LiamG_SFX -- https://freesound.org/s/322493/ -- License: Attribution NonCommercial 4.0

@@ -80,6 +80,7 @@
             devToolsToolStripMenuItem = new ToolStripMenuItem();
             zakończGręToolStripMenuItem = new ToolStripMenuItem();
             button4 = new Button();
+            UIContainer = new FlowLayoutPanel();
             MovementBox.SuspendLayout();
             PlayerStats.SuspendLayout();
             InventoryBox.SuspendLayout();
@@ -91,12 +92,11 @@
             // 
             // TileTable
             // 
-            TileTable.Anchor = AnchorStyles.None;
             TileTable.AutoScroll = true;
             TileTable.ColumnCount = 1;
             TileTable.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 885F));
             TileTable.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 18F));
-            TileTable.Location = new Point(172, 29);
+            TileTable.Location = new Point(184, 29);
             TileTable.Margin = new Padding(0);
             TileTable.Name = "TileTable";
             TileTable.RowCount = 1;
@@ -592,7 +592,7 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { NewGameButton, wczytajGręToolStripMenuItem, zapiszGręToolStripMenuItem, devToolsToolStripMenuItem, zakończGręToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(853, 24);
+            menuStrip1.Size = new Size(1270, 24);
             menuStrip1.TabIndex = 16;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -644,12 +644,21 @@
             button4.Visible = false;
             button4.Click += button4_Click;
             // 
+            // UIContainer
+            // 
+            UIContainer.FlowDirection = FlowDirection.TopDown;
+            UIContainer.Location = new Point(830, 203);
+            UIContainer.Name = "UIContainer";
+            UIContainer.Size = new Size(428, 304);
+            UIContainer.TabIndex = 18;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
-            ClientSize = new Size(853, 886);
+            ClientSize = new Size(1270, 842);
+            Controls.Add(UIContainer);
             Controls.Add(button4);
             Controls.Add(SpellBox);
             Controls.Add(GiveFish);
@@ -736,5 +745,6 @@
         private Button button4;
         private ToolStripMenuItem devToolsToolStripMenuItem;
         private ToolStripMenuItem zakończGręToolStripMenuItem;
+        private FlowLayoutPanel UIContainer;
     }
 }

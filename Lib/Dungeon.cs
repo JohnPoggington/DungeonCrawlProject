@@ -91,6 +91,7 @@ namespace Lib
             //Console.WriteLine($"{MapWidth} {MapHeight}");
             Map = new int[MapWidth, MapHeight];
             GenerateMap(false);
+            SetDelegates();
         }
 
         [JsonIgnore]
@@ -320,19 +321,7 @@ namespace Lib
 
                 e.Position = new System.Drawing.Point(xrand, yrand);
 
-                if (e is FishingPond)
-                {
-                    ((FishingPond)e).OnInteract += delegate
-                    {
-                        GetPlayer().AddItem(new Item("Fish")
-                        {
-                            Name = "Ryba",
-                            Type = ItemTypes.Consumable,
-                            Weight = 1,
-                            ItemModifiers = new Dictionary<ModifierTypes, int> { { ModifierTypes.Healing, 3 } }
-                        });
-                    };
-                }
+                
 
                 Entites.Add(e);
  
@@ -486,20 +475,7 @@ namespace Lib
                 }
             }
 
-            foreach (var exploder in Entites.Where(e => e is Exploder))
-            {
-                ((Exploder)exploder).OnExploderDeath += delegate
-                {
-                    foreach (var ent in GetInteractableEntitiesAroundEnt(exploder))
-                    {
-                        if (ent is Character)
-                        {
-                            ((Character)ent).TakeDamage(DamageTypes.Fire, ((Exploder)exploder).Strength / 3);
-                        }
-                    }
-
-                };
-            }
+            
 
             for (int i = 0; i < 10; i++)
             {
@@ -536,6 +512,44 @@ namespace Lib
                 });
             }
 
+            SetDelegates();
+
+        }
+
+        private void SetDelegates()
+        {
+
+            foreach(var e in Entites)
+            {
+                if (e is FishingPond)
+                {
+                    ((FishingPond)e).OnInteract += delegate
+                    {
+                        GetPlayer().AddItem(new Item("Fish")
+                        {
+                            Name = "Ryba",
+                            Type = ItemTypes.Consumable,
+                            Weight = 1,
+                            ItemModifiers = new Dictionary<ModifierTypes, int> { { ModifierTypes.Healing, 3 } }
+                        });
+                    };
+                }
+            }
+
+            foreach (var exploder in Entites.Where(e => e is Exploder))
+            {
+                ((Exploder)exploder).OnExploderDeath += delegate
+                {
+                    foreach (var ent in GetInteractableEntitiesAroundEnt(exploder))
+                    {
+                        if (ent is Character)
+                        {
+                            ((Character)ent).TakeDamage(DamageTypes.Fire, ((Exploder)exploder).Strength / 3);
+                        }
+                    }
+
+                };
+            }
         }
 
         public Player GetPlayer()

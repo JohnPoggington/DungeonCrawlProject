@@ -195,12 +195,39 @@ namespace DungeonCrawlProject.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream exploder_death {
+            get {
+                return ResourceManager.GetStream("exploder_death", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Fish {
             get {
                 object obj = ResourceManager.GetObject("Fish", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream fishing {
+            get {
+                return ResourceManager.GetStream("fishing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream fishing_success {
+            get {
+                return ResourceManager.GetStream("fishing_success", resourceCulture);
             }
         }
         
@@ -261,6 +288,15 @@ namespace DungeonCrawlProject.Properties {
             get {
                 object obj = ResourceManager.GetObject("IronArmor", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream level_up {
+            get {
+                return ResourceManager.GetStream("level_up", resourceCulture);
             }
         }
         
@@ -417,6 +453,15 @@ namespace DungeonCrawlProject.Properties {
             get {
                 object obj = ResourceManager.GetObject("SmallManaPotion", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream spell_cast {
+            get {
+                return ResourceManager.GetStream("spell_cast", resourceCulture);
             }
         }
         

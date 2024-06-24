@@ -99,9 +99,13 @@ namespace DungeonCrawlProject
 
                 itemTile.Click += delegate
                 {
-                    _Loot.Remove(item);
-                    _Player.AddItem(item);
-                    UpdateItems();
+                    if (_Player.AddItem(item) == true)
+                    {
+                        _Loot.Remove(item);
+
+                        UpdateItems();
+                    }
+                    
                 };
 
                 ToolTip toolTip = new ToolTip();
