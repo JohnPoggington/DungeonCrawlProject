@@ -75,20 +75,7 @@ namespace Lib
             if (totalWeight + item.Weight < MaxItemWeight)
             {
                 Items.Add(item);
-                //foreach(var modifier in item.ItemModifiers)
-                //{
-                //    switch (modifier.Key)
-                //    {
-                //        case ModifierTypes.Strength: Strength += modifier.Value; break;
-                //        case ModifierTypes.Dexterity: Dexterity += modifier.Value; break;
-                //        case ModifierTypes.MaxHealth: MaxHealth += modifier.Value; break;
-                //        case ModifierTypes.MaxMana: MaxMana += modifier.Value; break;
-                //        case ModifierTypes.PhysicalResist: PhysicalResist += modifier.Value; break;
-                //        case ModifierTypes.MagicResist: MagicResist += modifier.Value; break;
-                //        case ModifierTypes.FireResist: FireResist += modifier.Value; break;
-
-                //    }
-                //}
+                
                 return true;
                 
                 

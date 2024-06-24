@@ -121,11 +121,14 @@
   <data name="Altar" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Tiles\altar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="altar_use" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Sounds\altar_use.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="BigHealthPotion" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DwAACw8BkvkDpQAADkpJREFUeF7lmgl0lNd1x7+4NhiQENo1mn2TZjQzGo00o9m1oX3fFxBCSCAJoRWx
+        DgAACw4BQL7hQQAADkpJREFUeF7lmgl0lNd1x7+4NhiQENo1mn2TZjQzGo00o9m1oX3fFxBCSCAJoRWx
         iE1gEKsBiUUWZgfLhEJycIkhbZw0xtjBULBxMBCnlLSGlGZrTvE5aR2f8u/9BkQofcmZIekpzeic3/lG
         /5n5dO//3XffezPiAPg1TNGfYIr+BFP0J5iiP8EU/Qmm6E8wRX+CKfoTTNGfYIr+BFP0J5iiP8EUvcWa
         Ve3BmTeDUyZlcdKEdE5pzuIS08s4nauQU1uyOUtmFWdKK+USCY0tj4u15nJxjoL/gc5ZyOldRZzWnseJ
@@ -233,7 +236,7 @@
   <data name="Cape" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABYAAAAdCAYAAACuc5z4AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DQAACw0B7QfALAAAAPZJREFUSEutzzEOwjAMBdBm5B6oqipGJCSWDl06sLBw/5sEudFXPk5Q7SaWvhwc
+        DAAACwwBP0AiyAAAAPZJREFUSEutzzEOwjAMBdBm5B6oqipGJCSWDl06sLBw/5sEudFXPk5Q7SaWvhwc
         eDFDe4VYprlCfN0vRRrxED9PIDld4PdDI7WZq0KcxpEQQPwv3BXibZ53mNOMAqrhkq7bIk3bCsw4n0/A
         GQWCYCa9Ca7huHPCvyjDfO6GYo7ugBOqAcz03AjbUZwNcEY5+gHu7m1rEQgoPpu3rf34Xz+NcnCHe+ku
         mDGORg3wMYowbNp2HdcC0cGWOB9uK+hyXfaOaBQYugGWCgUskZnGARtQlHwxBah+CKh0B8yVcJ1t2lpQ
@@ -248,6 +251,21 @@
         dfG7xQRntljlKdbF3ntPTHCGYZvHLGX1AVO/uw+MYeH2L1jb/rKilzP/7wDVrgP2y/VDr5S9K9bfdx3g
         lfb6mwd8QkwEQfBNpHQDD3aaLZGCwJYAAAAASUVORK5CYII=
 </value>
+  </data>
+  <data name="chest_open" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Sounds\chest_open.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="combat_01" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Sounds\combat-01.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="combat_02" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Sounds\combat-02.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="combat_03" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Sounds\combat-03.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="combat_04" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Sounds\combat-04.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="Dagger" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Items\Dagger.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -275,7 +293,7 @@
         lxxLeFA4nLZsyQ8kS5xWvKbYyhXNn3uqFzYv2jNxpcvsYoJJpomiYVBkmRwF+mS1RXGJyX6kir/T90fF
         ZYhrGVMcY6xgoft+1B/87tbNDPSXkpojUPfkeW/d0LAFX5ue93noeV9HUPsIF3bZv3IAw++ib5a18D60
         rcPZZVkztuF8Azoe8rqj+1KtzEAmA68n8k0paL+GprlSbz/7HN9BQrqauoLdPejJSvZ8lXc3Vvb25xm/
-        PyLfeTNyqWHvZQMAAAAJcEhZcwAACw8AAAsPAZL5A6UAAAAHdElNRQfoBg4TBiwjvmeQAAAEt0lEQVRY
+        PyLfeTNyqWHvZQMAAAAJcEhZcwAACw4AAAsOAUC+4UEAAAAHdElNRQfoBg4TBiwjvmeQAAAEt0lEQVRY
         R+1W60/bZRRmhYGwDZgFRoftsNCOUi6lN6D3G6Url9IW2kLLRRmXZlNgF+M2JiR0DIduTuf2wcRv02Qf
         NTH7J4yJ38xcTEzUqRgvGQlGx/Gc99dfBUIMtGyffJInL+HX93nOe855L1n/4z9Qe7C8ogLHGmR97qEi
         CY4vItXIpw5riVT+ne2l+A+t4ZHfm3tjq5bhiR/Ng2M/y4y2Vfz+KvezpwM7mn/rnboAg8t3IPbm+xBd
@@ -311,7 +329,7 @@
   <data name="FrameSquare" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DwAACw8BkvkDpQAAAoJJREFUeF7tmktPE2EUhvkXxsRoKE2htAKltlIQpvY6vUrVVGMJEIIGVEJMbdJS
+        DgAACw4BQL7hQQAAAoJJREFUeF7tmktPE2EUhvkXxsRoKE2htAKltlIQpvY6vUrVVGMJEIIGVEJMbdJS
         WtoKJVW2Jibu1a2XuPFXsDTR3/J6pvC5OitSkmm+s3gyk3cx855nzuy+EQBaw4Y6wYY6wYY6wYY6wYY6
         wYY6wYY6wYaKWuWg2Ki9OW03jv+09runwwR1/t3cO/xLM2xzsynYUEEP+f5s4wVSiRwK+SIKuXOsezty
         3u8+3acSeayWNnFQP/rFzaZgQ0Wn2fuyvvIUC3MGzFgO+XQBuRRhWizbjLNu96hjmoafv23g0cMVtBrd
@@ -346,7 +364,7 @@
   <data name="Map" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DwAACw8BkvkDpQAAFHZJREFUeF7lWnlY1eeVZtJ02jztZKbTJm3TdNpOppOlmTRp0mhUgiiCsoiyKC4I
+        DgAACw4BQL7hQQAAFHZJREFUeF7lWnlY1eeVZtJ02jztZKbTJm3TdNpOppOlmTRp0mhUgiiCsoiyKC4I
         IgjI5mXfZJFFBRXclUX2fQcV8LKDgAqCLAICLrhEo8bGtNlMfOf9fpQ+Pj5ffibzR5bxj/f5XY5yv3Pe
         75z3nHMvOgAeaUiNjxKkxkcJUuOjBKnxUYLU+ChBalRDeZjZ/w3hC6X2CtqJN0qCF2wsCDDcWxVt5Vaz
         2UqnOmaxTnWsxVeGzGc1SI1qkAXxpfAAAUrgEeaLGHRj9no9lISYoHaTNQ5FmqJ2s6V7/VYbnbr4pV8Z
@@ -439,7 +457,7 @@
   <data name="Mimic" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wAAADsABataJCQAAAMhJREFUWEftj0EKwjAQRXMANyLoIVz1CK7deBRXbryB4D28liepRObLEKbfZmzA
+        vwAADr8BOAVTJAAAAMhJREFUWEftj0EKwjAQRXMANyLoIVz1CK7deBRXbryB4D28liepRObLEKbfZmzA
         wDx4lDaTP78pCAIv98tthPJpGRD6vJ6ouoB1rsWcrODUhtbMygrOMBzH7GqzezuFLlCCu7jfpACjLIBM
         WcEpCyAEzH3Xz/4L6DDP+yIFfrHPAi2UFRzroqX1h9+UFRwMPw7rSfN5WcCag8iUFRwMW0EQM1prDmJG
         VnDmBNbqKnDe7j9aoewsq++7ClihXvss0EJZEQTBP5HSC2GZV+eo64bjAAAAAElFTkSuQmCC
@@ -448,12 +466,15 @@
   <data name="missingno" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAAAOJJREFUaEPt2MEJwkAQheElKIggGjUoEg9CKrEjK7ACK7ABG7AAC7KGCbMgmGEu
+        vQAADr0BR/uQrQAAAOJJREFUaEPt2MEJwkAQheElKIggGjUoEg9CKrEjK7ACK7ABG7AAC7KGCbMgmGEu
         A5MsA+/wQQ5z2J+Q3bDp23YUGQJKQ0BpowRcF0tKKdGmqui1P6kzXtwD3k2bF//DMdqcF/eAR90MAvgt
         aHNe3APu690ggGlzXhAgIcAIARICjBAgIcAIARICjBAgIcAIARICjBAgIcAIARICjNwDwt/Mhb8bZaFv
         p6eGgNIQID23x/zxMn7WZjy5B/xvoYy3VW3Oy+gB4c4B+SsR8iC7req8+MtsTp/DWZ3xMkrAlBBQVkc9
         fInZ5QGzubMAAAAASUVORK5CYII=
 </value>
+  </data>
+  <data name="monster_death" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Sounds\monster_death.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="Orc" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -469,6 +490,9 @@
   </data>
   <data name="Player" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Tiles\player.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="potion_use" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Sounds\potion_use.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="RedRing" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -511,6 +535,12 @@
         iDi8F1FH9+P8sR9w8fSPKKdoGXdbqklACYWL791A4tlfxRICwdaWVBBsMsCPQszpA7hy6gBifjsoycT+
         CUwFW1OhgmCTn8hgCPbeO/yCzwB79vwLnbT59JDmFiwAAAAASUVORK5CYII=
 </value>
+  </data>
+  <data name="runestone_failed" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Sounds\runestone-failed.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="runestone_success" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Sounds\runestone-success.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="SaveAltar" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Tiles\SaveAltar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -600,6 +630,9 @@
   <data name="Spikes" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Tiles\spikes.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="spike_step" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Sounds\spike-step.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="Staff" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAA6ZJREFUWEe1
@@ -621,10 +654,25 @@
         gPPdjRTsfEpKYckBq9UEG6E8NrhehoWFhf0LghZBxLneF1EAAAAASUVORK5CYII=
 </value>
   </data>
+  <data name="step_01" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Sounds\step_01.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="step_02" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Sounds\step_02.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="step_03" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Sounds\step_03.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="step_04" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Sounds\step_04.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="step_05" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Sounds\step_05.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="Sword" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        EAAACxABrSO9dQAAFRRJREFUeF7lmQdYlFe+xk/WbGLUaCzRGKOoKBZQOkyh14EZYEaYYQoMwwzMDDND
+        DwAACw8BkvkDpQAAFRRJREFUeF7lmQdYlFe+xk/WbGLUaCzRGKOoKBZQOkyh14EZYEaYYQoMwwzMDDND
         HXoHKRbsBRs2rLFr1ESNYi/YRY2xRE1yNzG7925JbnZzV957ZnK/hOx+JnFvdJ9deJ7f832+os77nnP+
         5/9HAqBbwyp2J1jF7gSr2J1gFbsTrGJ3glXsTrCKDBzP6B+F5y0k7i6hxNstkvh5xxKOu5B4UwyqQlKp
         rydF2uqnplBTRUoNtaQsq5bkp5eT6pzppN46m9TlziJNJQtJhbmBNFrnkmn588nU7CaydOo6+pxJCnSV
@@ -719,11 +767,11 @@
   </data>
   <data name="wall" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAADLSURBVFhH7ZUxCoNAEEVzEpvUqazTWW6bJn08R67haTcgPAjDV2a3mVmweLA6+/1PWfD2/mz1
-        n/L6unjMZUfNFLaHfB4BFTqjVQDou0/zTryA2uShVwAugXEFOEQIcK32njGeAEVgBUBlFeTjBZ7LWnvg
-        E6qZhzwCLLxQbFF7PcQLqAOisIeNYntfZRXjCQBFPKC1GHiB8QQAATXzcAnkEeg9RL0C9OUTABVStArY
-        njwC6lfpAQE180A+XoAFn+QI9h2hMgqbCxYo9Qfsq/nawXOYCQAAAABJRU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAMtJREFUWEft
+        lTEKg0AQRXMSm9SprNNZbpsmfTxHruFpNyA8CMNXZreZWbB4sDr7/U9Z8Pb+bPWf8vq6eMxlR80Utod8
+        HgEVOqNVAOi7T/NOvIDa5KFXAC6BcQU4RAhwrfaeMZ4ARWAFQGUV5OMFnstae+ATqpmHPAIsvFBsUXs9
+        xAuoA6Kwh41ie19lFeMJAEU8oLUYeIHxBAABNfNwCeQR6D1EvQL05RMAFVK0CtiePALqV+kBATXzQD5e
+        gAWf5Aj2HaEyCpsLFij1B+yr+drBc5gJAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="Wine" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

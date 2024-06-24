@@ -663,10 +663,12 @@
             Controls.Add(MovementBox);
             Controls.Add(TileTable);
             Controls.Add(menuStrip1);
+            KeyPreview = true;
             MainMenuStrip = menuStrip1;
             Margin = new Padding(3, 2, 3, 2);
             Name = "Form1";
             Text = "Form1";
+            KeyDown += Form1_KeyDown;
             MovementBox.ResumeLayout(false);
             PlayerStats.ResumeLayout(false);
             PlayerStats.PerformLayout();

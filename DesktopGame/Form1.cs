@@ -1,6 +1,7 @@
 using DungeonCrawlProject.Properties;
 using Lib;
 using Lib.Enums;
+using Lib.Items;
 using Lib.MapObjects;
 using Lib.Monsters;
 using Lib.Spells;
@@ -8,6 +9,7 @@ using Newtonsoft.Json;
 using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Media;
 using System.Resources;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text.Json;
@@ -26,6 +28,8 @@ namespace DungeonCrawlProject
         }
 
         private Dungeon dungeon;
+
+        private SoundPlayer _SoundPlayer = new SoundPlayer();
 
 
 
@@ -95,7 +99,7 @@ namespace DungeonCrawlProject
                         Character character = (Character)ent;
                         character.OnCombat += (dmg) => { AddMessageToLog($"{character} otrzyma³ {dmg} punktów obra¿eñ"); UpdatePlayerDisplay(); UpdateTiles(dungeon.GetPlayer()); };
                         character.OnAttackDodge += delegate { AddMessageToLog($"{character} unikn¹³ nadchodz¹cy atak!"); };
-                        character.OnDeath += delegate { AddMessageToLog($"{character} umiera!"); };
+                        character.OnDeath += delegate { AddMessageToLog($"{character} umiera!"); PlaySound("monster_death"); };
                         Monster m = (Monster)ent;
                         Player p = dungeon.GetPlayer();
                         m.OnDeath += delegate
@@ -118,7 +122,7 @@ namespace DungeonCrawlProject
 
                     if (ent is Altar)
                     {
-                        ((Altar)ent).OnInteract += delegate { AddMessageToLog("O³tarz wype³ni³ twoje cia³o determinacj¹ i energi¹"); };
+                        ((Altar)ent).OnInteract += delegate { AddMessageToLog("O³tarz wype³ni³ twoje cia³o determinacj¹ i energi¹"); PlaySound("altar_use"); };
                         ((Altar)(ent)).OnInteractFailed += delegate { AddMessageToLog("O³tarz nie emanuje ¿adn¹ energi¹"); };
                     }
 
@@ -135,13 +139,14 @@ namespace DungeonCrawlProject
                         ((Chest)ent).OnInteract += delegate
                         {
                             AddMessageToLog("Otwierasz skrzyniê");
+                            PlaySound("chest_open");
                             LootMonster lootMonster = new LootMonster(ref p, ((Chest)ent).Items, ent.Name); lootMonster.ShowDialog(); UpdateItems();
                         };
                     }
                 }
                 if (ent is Spikes)
                 {
-                    ((Spikes)ent).OnEntityStep += delegate { AddMessageToLog("Nadzia³eœ siê na kolce!"); UpdateTiles(dungeon.GetPlayer()); };
+                    ((Spikes)ent).OnEntityStep += delegate { AddMessageToLog("Nadzia³eœ siê na kolce!"); UpdateTiles(dungeon.GetPlayer()); PlaySound("spike_step"); };
                 }
             }
 
@@ -151,7 +156,7 @@ namespace DungeonCrawlProject
         {
             dungeon.GetPlayer().OnLevelUp += (lvl, oldlvl) =>
             {
-                
+
                 Player p = dungeon.GetPlayer();
                 LevelUpPoints levelup = new LevelUpPoints(ref p, oldlvl);
                 levelup.ShowDialog();
@@ -161,11 +166,14 @@ namespace DungeonCrawlProject
             dungeon.GetPlayer().OnDeath += delegate { MessageBox.Show("Twoja postaæ umar³a!"); this.Close(); };
 
 
-            dungeon.GetPlayer().OnCombat += (dmg) => { AddMessageToLog($"{dungeon.GetPlayer()} otrzyma³ {dmg} punktów obra¿eñ"); UpdatePlayerDisplay(); UpdateTiles(dungeon.GetPlayer()); };
+            dungeon.GetPlayer().OnCombat += (dmg) => { 
+                AddMessageToLog($"{dungeon.GetPlayer()} otrzyma³ {dmg} punktów obra¿eñ"); UpdatePlayerDisplay(); UpdateTiles(dungeon.GetPlayer());
+                Random rand = new Random(); List<String> combat = ["combat_01", "combat_02", "combat_03", "combat_04"]; PlaySound(combat.ElementAt(rand.Next(combat.Count)));
+                };
             dungeon.GetPlayer().OnAttackDodge += delegate { AddMessageToLog($"{dungeon.GetPlayer()} unikn¹³ nadchodz¹cy atak!"); };
             dungeon.GetPlayer().OnDeath += delegate { AddMessageToLog($"{dungeon.GetPlayer()} umiera!"); };
-            dungeon.GetPlayer().OnSpellLearned += spell => { AddMessageToLog($"Uda³o ci siê nauczyæ czar {spell}"); };
-            dungeon.GetPlayer().OnSpellLearnFailed += spell => { AddMessageToLog("Ju¿ znasz czar z tego kamienia!"); };
+            dungeon.GetPlayer().OnSpellLearned += spell => { AddMessageToLog($"Uda³o ci siê nauczyæ czar {spell}"); PlaySound("runestone_success"); };
+            dungeon.GetPlayer().OnSpellLearnFailed += spell => { AddMessageToLog("Ju¿ znasz czar z tego kamienia!"); PlaySound("runestone_failed"); };
 
         }
 
@@ -301,7 +309,7 @@ namespace DungeonCrawlProject
                 else if (ent is Monster)
                 {
 
-                    
+
                     object pic = ResourceManager.GetObject(ent.Name);
                     tile.Image = ((Bitmap)(pic));
                     if (ent is Mimic && !((Mimic)ent).isSeen)
@@ -311,7 +319,7 @@ namespace DungeonCrawlProject
                 }
                 else if (ent is not null)
                 {
-                    
+
                     if (ent is Spikes && ((Spikes)ent).AreFound)
                     {
                         object pic = ResourceManager.GetObject(ent.GetType().Name);
@@ -335,10 +343,43 @@ namespace DungeonCrawlProject
 
         }
 
+        private void PlaySound(string audio_name)
+        {
+            var ResourceManager = new System.Resources.ResourceManager("DungeonCrawlProject.Properties.Resources", typeof(Resources).Assembly);
+            object sound = ResourceManager.GetObject(audio_name);
+            if (sound != null)
+            {
+                _SoundPlayer.Stop();
+                _SoundPlayer.Stream = (Stream?)sound;
+                _SoundPlayer.Play();
+            }
+            
+
+        }
+
 
         private void MoveNorth_Click(object sender, EventArgs e)
         {
             MoveChar(WalkingDirection.North, dungeon.GetPlayer());
+            TileTable.Focus();
+        }
+
+        private void MoveWest_Click(object sender, EventArgs e)
+        {
+            MoveChar(WalkingDirection.West, dungeon.GetPlayer());
+            TileTable.Focus();
+        }
+
+        private void MoveEast_Click(object sender, EventArgs e)
+        {
+            MoveChar(WalkingDirection.East, dungeon.GetPlayer());
+            TileTable.Focus();
+        }
+
+        private void MoveSouth_Click(object sender, EventArgs e)
+        {
+            MoveChar(WalkingDirection.South, dungeon.GetPlayer());
+            TileTable.Focus();
         }
 
         private void MoveChar(WalkingDirection direction, IEntity entity)
@@ -351,7 +392,7 @@ namespace DungeonCrawlProject
 
                 UpdateTiles(entity);
 
-               
+
 
                 for (int x = 1; x < Dungeon.MapWidth; x++)
                 {
@@ -369,18 +410,21 @@ namespace DungeonCrawlProject
 
                     }
 
-                   
+
                 }
 
                 UpdateInteractButton(entity);
 
-               
+
 
                 UpdatePlayerDisplay();
+                List<String> footsteps = ["step_01", "step_02", "step_03", "step_04", "step_05"];
+                Random random = new Random();
+                PlaySound(footsteps.ElementAt(random.Next(footsteps.Count)));
 
 
             }
-            catch (Lib.Exceptions.IllegalMovementException e) { MessageBox.Show("Illegal move"); }
+            catch (Lib.Exceptions.IllegalMovementException e) { /*MessageBox.Show("Illegal move");*/ AddMessageToLog("Nie mo¿esz iœæ w tym kierunku!"); }
 
 
         }
@@ -389,7 +433,7 @@ namespace DungeonCrawlProject
         {
             List<IEntity> interactableEnts = dungeon.GetInteractableEntitiesAroundEnt(entity);
 
-           
+
             //Console.WriteLine(interactableEnts.Count.ToString());
             if (interactableEnts.Count > 0)
             {
@@ -577,6 +621,10 @@ namespace DungeonCrawlProject
                 else if (item.Type == ItemTypes.Consumable)
                 {
                     dungeon.GetPlayer().RemoveItem(item, true); UpdateItems(); UpdatePlayerDisplay();
+                    if (item.Name != "Ryba" && item is not RuneStone)
+                    {
+                        PlaySound("potion_use");
+                    }
                 }
 
             }
@@ -586,20 +634,7 @@ namespace DungeonCrawlProject
             }
         }
 
-        private void MoveWest_Click(object sender, EventArgs e)
-        {
-            MoveChar(WalkingDirection.West, dungeon.GetPlayer());
-        }
-
-        private void MoveEast_Click(object sender, EventArgs e)
-        {
-            MoveChar(WalkingDirection.East, dungeon.GetPlayer());
-        }
-
-        private void MoveSouth_Click(object sender, EventArgs e)
-        {
-            MoveChar(WalkingDirection.South, dungeon.GetPlayer());
-        }
+        
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -612,23 +647,32 @@ namespace DungeonCrawlProject
             map.Show();
         }
 
-        private void InteractButton_Click(object sender, EventArgs e)
+        private void Interact()
         {
+            if (dungeon == null) return;
             Player p = dungeon.GetPlayer();
 
             IEntity targetEnt = dungeon.GetInteractableEntitiesAroundEnt(p).ElementAt(0);
+            if (targetEnt != null)
+            {
+                if (targetEnt is Monster)
+                {
+                    Dungeon.Combat(p, (Monster)targetEnt);
+                    UpdatePlayerDisplay();
+                }
+                if (targetEnt is InteractableObject)
+                {
+                    InteractableObject obj = (InteractableObject)targetEnt;
+                    obj.Interact(p);
+                    UpdatePlayerDisplay();
+                }
+            }
+            
+        }
 
-            if (targetEnt is Monster)
-            {
-                Dungeon.Combat(p, (Monster)targetEnt);
-                UpdatePlayerDisplay();
-            }
-            if (targetEnt is InteractableObject)
-            {
-                InteractableObject obj = (InteractableObject)targetEnt;
-                obj.Interact(p);
-                UpdatePlayerDisplay();
-            }
+        private void InteractButton_Click(object sender, EventArgs e)
+        {
+            Interact();
         }
 
         private void GiveFish_Click(object sender, EventArgs e)
@@ -689,7 +733,7 @@ namespace DungeonCrawlProject
                     }
                 }
             }
-            catch (NullReferenceException) {  }
+            catch (NullReferenceException) { }
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -777,6 +821,32 @@ namespace DungeonCrawlProject
         private void zakoñczGrêToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (dungeon == null) return;
+            if (e.KeyCode == Keys.Up || e.KeyCode == Keys.W)
+            {
+                MoveChar(WalkingDirection.North, dungeon.GetPlayer());
+            }
+            if (e.KeyCode == Keys.Right || e.KeyCode == Keys.D)
+            {
+                MoveChar(WalkingDirection.East, dungeon.GetPlayer());
+            }
+            if (e.KeyCode == Keys.Left || e.KeyCode == Keys.A)
+            {
+                MoveChar(WalkingDirection.West, dungeon.GetPlayer());
+            }
+            if (e.KeyCode == Keys.Down || e.KeyCode == Keys.S)
+            {
+                MoveChar(WalkingDirection.South, dungeon.GetPlayer());
+            }
+            if (e.KeyCode == Keys.Enter)
+            {
+                Interact();
+            }
+            e.Handled = true;
         }
     }
 }
